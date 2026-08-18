@@ -37,7 +37,7 @@ export default defineConfig({
     ]
   },
   html: {
-    title: 'Bruno'
+    title: 'Bruno 中文版'
   },
   tools: {
     rspack: {

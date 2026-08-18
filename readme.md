@@ -31,6 +31,8 @@
 | [Nederlands](docs/readme/readme_nl.md)
 | [فارسی](docs/readme/readme_fa.md)
 
+> **Bruno 中文版（简体中文默认版）：** 此 fork 默认使用简体中文（`zh-CN`），Windows 安装版和 Portable 构建产物带 `zh-CN` 标识。当前已翻译现有接入 i18n 的界面；尚未接入 i18n 的页面或控件可能仍显示英文。
+
 Bruno is a new and innovative API client, aimed at revolutionizing the status quo represented by Postman and similar tools out there.
 
 Bruno stores your collections directly in a folder on your filesystem. We use a plain text markup language, Bru, to save information about API requests.

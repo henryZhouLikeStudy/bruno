@@ -33,6 +33,8 @@ if (os.platform() === 'linux') {
   app.commandLine.appendSwitch('xdg-portal-required-version', '4');
 }
 
+app.commandLine.appendSwitch('lang', 'zh-CN');
+
 const menuTemplate = require('./app/menu-template');
 const { openCollection } = require('./app/collections');
 const registerNetworkIpc = require('./ipc/network');

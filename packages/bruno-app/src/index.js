@@ -4,6 +4,8 @@ import App from './pages/index';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
+document.documentElement.lang = 'zh-CN';
+
 const rootElement = document.getElementById('root');
 
 const Main = () => {

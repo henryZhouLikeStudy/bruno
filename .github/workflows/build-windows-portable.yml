@@ -96,7 +96,7 @@ jobs:
             throw "Expected exactly one top-level EXE in $outDir, found $($exeFiles.Count)"
           }
           New-Item -ItemType Directory -Force -Path "artifacts/installer" | Out-Null
-          Copy-Item -Force $exeFiles[0].FullName "artifacts/installer/Bruno_Windows_x64_Setup.exe"
+          Copy-Item -Force $exeFiles[0].FullName "artifacts/installer/Bruno_zh-CN_Windows_x64_Setup.exe"
 
       - name: Remove NSIS output
         shell: pwsh
@@ -128,14 +128,14 @@ jobs:
             throw "Expected exactly one top-level EXE in $outDir, found $($exeFiles.Count)"
           }
           New-Item -ItemType Directory -Force -Path "artifacts/portable" | Out-Null
-          Copy-Item -Force $exeFiles[0].FullName "artifacts/portable/Bruno_Windows_x64_Portable.exe"
+          Copy-Item -Force $exeFiles[0].FullName "artifacts/portable/Bruno_zh-CN_Windows_x64_Portable.exe"
 
       - name: Verify artifacts and print SHA256
         shell: pwsh
         run: |
           $files = @(
-            "artifacts/installer/Bruno_Windows_x64_Setup.exe",
-            "artifacts/portable/Bruno_Windows_x64_Portable.exe"
+            "artifacts/installer/Bruno_zh-CN_Windows_x64_Setup.exe",
+            "artifacts/portable/Bruno_zh-CN_Windows_x64_Portable.exe"
           )
           foreach ($file in $files) {
             $info = Get-Item $file
@@ -149,15 +149,15 @@ jobs:
       - name: Upload installer artifact
         uses: actions/upload-artifact@v6
         with:
-          name: Bruno_Windows_x64_Setup
-          path: artifacts/installer/Bruno_Windows_x64_Setup.exe
+          name: Bruno_zh-CN_Windows_x64_Setup
+          path: artifacts/installer/Bruno_zh-CN_Windows_x64_Setup.exe
           if-no-files-found: error
           retention-days: 7
 
       - name: Upload portable artifact
         uses: actions/upload-artifact@v6
         with:
-          name: Bruno_Windows_x64_Portable
-          path: artifacts/portable/Bruno_Windows_x64_Portable.exe
+          name: Bruno_zh-CN_Windows_x64_Portable
+          path: artifacts/portable/Bruno_zh-CN_Windows_x64_Portable.exe
           if-no-files-found: error
           retention-days: 7
