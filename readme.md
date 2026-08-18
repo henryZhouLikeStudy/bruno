@@ -1,16 +1,15 @@
 <br />
 <img src="assets/images/logo-transparent.png" width="80"/>
 
-### Bruno - Opensource IDE for exploring and testing APIs.
+### Bruno - 开源 IDE，用于探索和测试 API。
 
-[![GitHub version](https://badge.fury.io/gh/usebruno%2Fbruno.svg)](https://badge.fury.io/gh/usebruno%2Fbruno)
-[![CI](https://github.com/usebruno/bruno/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/usebruno/bruno/actions/workflows/tests.yml)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/usebruno/bruno)](https://github.com/usebruno/bruno/pulse)
+[![中文版构建](https://github.com/henryZhouLikeStudy/bruno/actions/workflows/build-windows-portable.yml/badge.svg?branch=main)](https://github.com/henryZhouLikeStudy/bruno/actions/workflows/build-windows-portable.yml)
+[![提交活动](https://img.shields.io/github/commit-activity/m/henryZhouLikeStudy/bruno)](https://github.com/henryZhouLikeStudy/bruno/pulse)
 [![X](https://img.shields.io/twitter/follow/use_bruno?style=social&logo=x)](https://twitter.com/use_bruno)
-[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.usebruno.com)
-[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.usebruno.com/downloads)
+[![网站](https://img.shields.io/badge/Website-Visit-blue)](https://www.usebruno.com)
+[![下载中文版](https://img.shields.io/badge/下载-中文版-brightgreen)](https://github.com/henryZhouLikeStudy/bruno/actions/workflows/build-windows-portable.yml)
 
-**English**
+[English](https://github.com/usebruno/bruno/blob/main/readme.md)
 | [Українська](docs/readme/readme_ua.md)
 | [Русский](docs/readme/readme_ru.md)
 | [Türkçe](docs/readme/readme_tr.md)
@@ -23,86 +22,77 @@
 | [Italiano](docs/readme/readme_it.md)
 | [Română](docs/readme/readme_ro.md)
 | [Polski](docs/readme/readme_pl.md)
-| [简体中文](docs/readme/readme_cn.md)
+| **简体中文**
 | [正體中文](docs/readme/readme_zhtw.md)
 | [العربية](docs/readme/readme_ar.md)
 | [日本語](docs/readme/readme_ja.md)
 | [ქართული](docs/readme/readme_ka.md)
-| [Nederlands](docs/readme/readme_nl.md)
-| [فارسی](docs/readme/readme_fa.md)
 
 > **Bruno 中文版（简体中文默认版）：** 此 fork 默认使用简体中文（`zh-CN`），Windows 安装版和 Portable 构建产物带 `zh-CN` 标识。当前已翻译现有接入 i18n 的界面；尚未接入 i18n 的页面或控件可能仍显示英文。
 
-Bruno is a new and innovative API client, aimed at revolutionizing the status quo represented by Postman and similar tools out there.
+Bruno 是一款全新且创新的 API 客户端，旨在颠覆 Postman 和其他类似工具。
 
-Bruno stores your collections directly in a folder on your filesystem. We use a plain text markup language, Bru, to save information about API requests.
+Bruno 直接在您的电脑文件夹中存储您的 API 信息。我们使用纯文本标记语言 Bru 来保存有关 API 的信息。
 
-You can use Git or any version control of your choice to collaborate over your API collections.
+您可以使用 Git 或您选择的任何版本控制系统来对您的 API 信息进行版本控制和协作。
 
-Bruno is offline-only. There are no plans to add cloud-sync to Bruno, ever. We value your data privacy and believe it should stay on your device. Read our long-term vision [here](https://github.com/usebruno/bruno/discussions/269)
+Bruno 仅限离线使用。我们计划永不向 Bruno 添加云同步功能。我们重视您的数据隐私，并认为它应该留在您的设备上。阅读我们的长期愿景 [点击查看](https://github.com/usebruno/bruno/discussions/269)
 
-[Download Bruno](https://www.usebruno.com/downloads)
+[下载 Bruno](https://www.usebruno.com/downloads)
 
-📢 Watch our recent talk at India FOSS 3.0 Conference [here](https://www.youtube.com/watch?v=7bSMFpbcPiY)
+📢 观看我们在印度 FOSS 3.0 会议上的最新演讲 [点击查看](https://www.youtube.com/watch?v=7bSMFpbcPiY)
 
-![bruno](assets/images/landing-2-dark.png#gh-light-mode-only)
-![bruno](assets/images/landing-2-light.png#gh-dark-mode-only) <br /><br />
+![bruno](assets/images/landing-2.png) <br /><br />
 
-## Commercial Versions ✨
+## 商业版本 ✨
 
-Majority of our features are free and open source.
-We strive to strike a harmonious balance between [open-source principles and sustainability](https://github.com/usebruno/bruno/discussions/269)
+我们的大多数功能都是免费且开源的。
+我们致力于在 [开源与可持续性发展](https://github.com/usebruno/bruno/discussions/269) 之间取得和谐的平衡
 
-You can explore our [paid versions](https://www.usebruno.com/pricing) to see if there are additional features that you or your team may find useful! <br/>
+欢迎使用我们的 [付费版本](https://www.usebruno.com/pricing) ，看看附加的功能是否对您或团队有所帮助！ <br/>
 
-## Table of Contents
+## 目录
+- [安装](#安装)
+- [特性](#特性)
+    - [跨平台使用 🖥️](#跨平台使用-)
+    - [通过Git协作 👩‍💻🧑‍💻](#通过git协作-)
+- [重要链接 📌](#重要链接-)
+- [展示 🎥](#展示-)
+- [分享评价 📣](#分享评价-)
+- [发布到新的包管理器](#发布到新的包管理器)
+- [联系方式 🌐](#联系方式-)
+- [商标](#商标)
+- [贡献 👩‍💻🧑‍💻](#贡献-)
+- [作者](#作者)
+- [许可证 📄](#许可证-)
 
-- [Installation](#installation)
-- [Bruno CLI](#bruno-cli)
-- [Run with Docker](#run-with-docker)
-- [Features](#features)
-  - [Run across multiple platforms 🖥️](#run-across-multiple-platforms-%EF%B8%8F)
-  - [Collaborate via Git 👩‍💻🧑‍💻](#collaborate-via-git-%E2%80%8D%E2%80%8D)
-- [Important Links 📌](#important-links-)
-- [Showcase 🎥](#showcase-)
-- [Share Testimonials 📣](#share-testimonials-)
-- [Publishing to New Package Managers](#publishing-to-new-package-managers)
-- [Stay in touch 🌐](#stay-in-touch-)
-- [Trademark](#trademark)
-- [Contribute 👩‍💻🧑‍💻](#contribute-%E2%80%8D%E2%80%8D)
-- [Authors](#authors)
-- [License 📄](#license-)
+## 安装
 
-## Installation
+Bruno 可以在我们的 [网站上下载](https://www.usebruno.com/downloads) 适用于Mac、Windows 和 Linux 的可执行文件。
 
-Bruno is available as binary download [on our website](https://www.usebruno.com/downloads) for Mac, Windows and Linux.
-
-You can also install Bruno via package managers like Homebrew, Chocolatey, Scoop, Snap, Flatpak and Apt.
+您也可以通过包管理器如 Homebrew、Chocolatey、Scoop、Snap 和 Apt 安装 Bruno。
 
 ```sh
-# On Mac via Homebrew
+# 在 Mac 电脑上用 Homebrew 安装
 brew install bruno
 
-# On Windows via Chocolatey
+# 在 Windows 上用 Chocolatey 安装
 choco install bruno
 
-# On Windows via Scoop
+# 在 Windows 上用 Scoop 安装
 scoop bucket add extras
 scoop install bruno
 
-# On Windows via winget
+# 在 Windows 上用 winget 安装
 winget install Bruno.Bruno
 
-# On Linux via Snap
+# 在 Linux 上用 Snap 安装
 snap install bruno
 
-# On Linux via Flatpak
+# 在 Linux 上用 Flatpak 安装
 flatpak install com.usebruno.Bruno
 
-# On Arch Linux via AUR
-yay -S bruno
-
-# On Linux via Apt
+# 在 Linux 上用 Apt 安装
 sudo mkdir -p /etc/apt/keyrings
 sudo apt update && sudo apt install gpg curl
 curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9FA6017ECABE0266" \
@@ -114,106 +104,66 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/bruno.gpg] http://debian.usebr
 sudo apt update && sudo apt install bruno
 ```
 
-## Bruno CLI
+## 特性
 
-The **Bruno CLI** lets you run your API collections from the command line, which is ideal for automated testing and CI/CD pipelines. Install it from npm using the package manager of your choice:
-
-```sh
-npm install -g @usebruno/cli
-```
-
-Navigate to the directory containing your collection and run it:
-
-```sh
-# Run every request in the collection
-bru run
-
-# Run a single request
-bru run request.bru
-
-# Run a folder against a specific environment
-bru run folder --env Local
-```
-
-For the full command reference, see the [Bruno CLI documentation](https://docs.usebruno.com/bru-cli/overview).
-
-## Run with Docker
-
-Official Docker images for the **Bruno CLI** let you run API collections in CI/CD pipelines and locally without installing Node.js or npm on the host. Images are published to both [Docker Hub](https://hub.docker.com/r/usebruno/cli) and the [GitHub Container Registry](https://ghcr.io/usebruno/cli) on every CLI release, with `alpine` and `debian` variants for `linux/amd64` and `linux/arm64`.
-
-```sh
-# Pull from Docker Hub
-docker pull usebruno/cli:latest
-
-# Or pull from the GitHub Container Registry
-docker pull ghcr.io/usebruno/cli:latest
-
-# Run a collection by mounting the current directory
-docker run -v $(pwd):/bruno usebruno/cli run
-```
-
-For variants, tag matrix, environment files, and CI examples (GitHub Actions, GitLab CI, Jenkins), see the full [Bruno CLI Docker documentation](https://docs.usebruno.com/bru-cli/docker).
-
-## Features
-
-### Run across multiple platforms 🖥️
+### 跨平台使用 🖥️
 
 ![bruno](assets/images/run-anywhere.png) <br /><br />
 
-### Collaborate via Git 👩‍💻🧑‍💻
+### 通过Git协作 👩‍💻🧑‍💻
 
-Or any version control system of your choice
+或者任何您选择的版本控制系统
 
 ![bruno](assets/images/version-control.png) <br /><br />
 
-## Important Links 📌
+## 重要链接 📌
 
-- [Our Long Term Vision](https://github.com/usebruno/bruno/discussions/269)
-- [Roadmap](https://www.usebruno.com/roadmap)
-- [Documentation](https://docs.usebruno.com)
+- [我们的愿景](https://github.com/usebruno/bruno/discussions/269)
+- [路线图](https://www.usebruno.com/roadmap)
+- [文档](https://docs.usebruno.com)
 - [Stack Overflow](https://stackoverflow.com/questions/tagged/bruno)
-- [Website](https://www.usebruno.com)
-- [Pricing](https://www.usebruno.com/pricing)
-- [Download](https://www.usebruno.com/downloads)
+- [网站](https://www.usebruno.com)
+- [价格](https://www.usebruno.com/pricing)
+- [下载](https://www.usebruno.com/downloads)
 
-## Showcase 🎥
+## 展示 🎥
 
 - [Testimonials](https://github.com/usebruno/bruno/discussions/343)
 - [Knowledge Hub](https://github.com/usebruno/bruno/discussions/386)
 - [Scriptmania](https://github.com/usebruno/bruno/discussions/385)
 
-## Share Testimonials 📣
+## 分享评价 📣
 
-If Bruno has helped you at work and your teams, please don't forget to share your [testimonials on our GitHub discussion](https://github.com/usebruno/bruno/discussions/343)
+如果 Bruno 在您的工作和团队中帮助了您，请不要忘记在我们的 GitHub 讨论上分享您的 [评价](https://github.com/usebruno/bruno/discussions/343)
 
-## Publishing to New Package Managers
+## 发布到新的包管理器
 
-Please see [here](publishing.md) for more information.
+如需了解更多信息，请参见 [此处](docs/publishing/publishing_cn.md) 。
 
-## Stay in touch 🌐
+## 联系方式 🌐
 
 [𝕏 (Twitter)](https://twitter.com/use_bruno) <br />
 [Website](https://www.usebruno.com) <br />
 [Discord](https://discord.com/invite/KgcZUncpjq) <br />
 [LinkedIn](https://www.linkedin.com/company/usebruno)
 
-## Trademark
+## 商标
 
-**Name**
+**名称**
 
-`Bruno` is a trademark held by [Anoop M D](https://www.helloanoop.com/)
+`Bruno` 是由 [Anoop M D](https://www.helloanoop.com/) 持有的商标。
 
 **Logo**
 
-The logo is sourced from [OpenMoji](https://openmoji.org/library/emoji-1F436/). License: CC [BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+Logo 源自 [OpenMoji](https://openmoji.org/library/emoji-1F436/). License: CC [BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 
-## Contribute 👩‍💻🧑‍💻
+## 贡献 👩‍💻🧑‍💻
 
-I am happy that you are looking to improve bruno. Please check out the [contributing guide](contributing.md)
+很高兴您希望改进 bruno。请查看 [贡献指南](docs/contributing/contributing_cn.md)。
 
-Even if you are not able to make contributions via code, please don't hesitate to file bugs and feature requests that needs to be implemented to solve your use case.
+即使您无法通过代码做出贡献，我们仍然欢迎您提出 BUG 和新的功能需求。
 
-## Authors
+## 作者
 
 <div align="center">
     <a href="https://github.com/usebruno/bruno/graphs/contributors">
@@ -221,6 +171,6 @@ Even if you are not able to make contributions via code, please don't hesitate t
     </a>
 </div>
 
-## License 📄
+## 许可证 📄
 
 [MIT](license.md)
