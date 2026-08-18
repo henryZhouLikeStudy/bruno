@@ -32,7 +32,6 @@
 2. 点击 **Run workflow**。
 3. 构建成功后下载对应 artifact。
 
-## 来源与许可
+## 来源
 
 来源：[usebruno/bruno](https://github.com/usebruno/bruno)
-许可证：[MIT](license.md)
