@@ -1,0 +1,146 @@
+name: Build Windows Installers
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build bruno-common
+        run: npm run build:bruno-common
+
+      - name: Build bruno-requests
+        run: npm run build:bruno-requests
+
+      - name: Build bruno-filestore
+        run: npm run build:bruno-filestore
+
+      - name: Build bruno-sqlite
+        run: npm run build:bruno-sqlite
+
+      - name: Build bruno-converters
+        run: npm run build:bruno-converters
+
+      - name: Build bruno-query
+        run: npm run build:bruno-query
+
+      - name: Build graphql-docs
+        run: npm run build:graphql-docs
+
+      - name: Build schema-types
+        run: npm run build:schema-types
+
+      - name: Build web
+        run: npm run build:web
+
+      - name: Prepare Electron web assets
+        shell: pwsh
+        run: |
+          $outDir = "packages/bruno-electron/out"
+          $webDir = "packages/bruno-electron/web"
+
+          if (Test-Path $outDir) { Remove-Item -Recurse -Force $outDir }
+          if (Test-Path $webDir) { Remove-Item -Recurse -Force $webDir }
+          New-Item -ItemType Directory -Force -Path $webDir | Out-Null
+
+          Copy-Item -Recurse -Force "packages/bruno-app/dist/*" $webDir
+
+          Get-ChildItem -Path $webDir -Filter "*.html" -File | ForEach-Object {
+            $content = Get-Content $_.FullName -Raw
+            $content = $content -replace '/static', './static'
+            Set-Content -Path $_.FullName -Value $content -NoNewline
+          }
+
+          $cssDir = "$webDir/static/css"
+          if (Test-Path $cssDir) {
+            Get-ChildItem -Path $cssDir -Filter "*.css" -File | ForEach-Object {
+              $content = Get-Content $_.FullName -Raw
+              $content = $content -replace '/static/font', '../../static/font'
+              Set-Content -Path $_.FullName -Value $content -NoNewline
+            }
+          }
+
+          Get-ChildItem -Path $webDir -Filter "*.map" -Recurse -File | Remove-Item -Force
+
+      - name: Build NSIS installer (x64)
+        run: npm run dist:win --workspace=packages/bruno-electron -- --x64 --publish never
+
+      - name: Copy NSIS installer to artifacts
+        shell: pwsh
+        run: |
+          $outDir = "packages/bruno-electron/out"
+          $exeFiles = @(Get-ChildItem -Path $outDir -Filter "*.exe" -File)
+          if ($exeFiles.Count -ne 1) {
+            throw "Expected exactly one top-level EXE in $outDir, found $($exeFiles.Count)"
+          }
+          New-Item -ItemType Directory -Force -Path "artifacts/installer" | Out-Null
+          Copy-Item -Force $exeFiles[0].FullName "artifacts/installer/Bruno_Windows_x64_Setup.exe"
+
+      - name: Remove NSIS output
+        shell: pwsh
+        run: Remove-Item -Recurse -Force "packages/bruno-electron/out"
+
+      - name: Build portable (x64)
+        working-directory: packages/bruno-electron
+        run: npx electron-builder --win portable --x64 --config electron-builder-config.js --publish never
+
+      - name: Copy portable to artifacts
+        shell: pwsh
+        run: |
+          $outDir = "packages/bruno-electron/out"
+          $exeFiles = @(Get-ChildItem -Path $outDir -Filter "*.exe" -File)
+          if ($exeFiles.Count -ne 1) {
+            throw "Expected exactly one top-level EXE in $outDir, found $($exeFiles.Count)"
+          }
+          New-Item -ItemType Directory -Force -Path "artifacts/portable" | Out-Null
+          Copy-Item -Force $exeFiles[0].FullName "artifacts/portable/Bruno_Windows_x64_Portable.exe"
+
+      - name: Verify artifacts and print SHA256
+        shell: pwsh
+        run: |
+          $files = @(
+            "artifacts/installer/Bruno_Windows_x64_Setup.exe",
+            "artifacts/portable/Bruno_Windows_x64_Portable.exe"
+          )
+          foreach ($file in $files) {
+            $info = Get-Item $file
+            if ($info.Length -eq 0) {
+              throw "$file is empty"
+            }
+            $hash = (Get-FileHash -Algorithm SHA256 $file).Hash
+            Write-Host "$file size=$($info.Length) bytes SHA256=$hash"
+          }
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: Bruno_Windows_x64_Setup
+          path: artifacts/installer/Bruno_Windows_x64_Setup.exe
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload portable artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: Bruno_Windows_x64_Portable
+          path: artifacts/portable/Bruno_Windows_x64_Portable.exe
+          if-no-files-found: error
+          retention-days: 7
