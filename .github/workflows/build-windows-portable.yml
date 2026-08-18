@@ -81,7 +81,8 @@ jobs:
           Get-ChildItem -Path $webDir -Filter "*.map" -Recurse -File | Remove-Item -Force
 
       - name: Build NSIS installer (x64)
-        run: npm run dist:win --workspace=packages/bruno-electron -- --x64 --publish never
+        working-directory: packages/bruno-electron
+        run: npx electron-builder --win nsis --x64 --config electron-builder-config.js --publish never
 
       - name: Copy NSIS installer to artifacts
         shell: pwsh
