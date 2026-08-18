@@ -30,6 +30,9 @@ jobs:
       - name: Build bruno-common
         run: npm run build:bruno-common
 
+      - name: Bundle JS sandbox libraries
+        run: npm run sandbox:bundle-libraries --workspace=packages/bruno-js
+
       - name: Build bruno-requests
         run: npm run build:bruno-requests
 
@@ -102,6 +105,19 @@ jobs:
       - name: Build portable (x64)
         working-directory: packages/bruno-electron
         run: npx electron-builder --win portable --x64 --config electron-builder-config.js --publish never
+
+      - name: Verify portable app bundle
+        shell: pwsh
+        run: |
+          $asar = "packages/bruno-electron/out/win-unpacked/resources/app.asar"
+          if (-not (Test-Path $asar)) {
+            throw "$asar not found"
+          }
+          $entries = node node_modules/@electron/asar/bin/asar.js list $asar
+          $target = "\node_modules\@usebruno\js\src\sandbox\bundle-browser-rollup.js"
+          if ($entries -notcontains $target) {
+            throw "Missing required asar entry: $target"
+          }
 
       - name: Copy portable to artifacts
         shell: pwsh
