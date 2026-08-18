@@ -11,7 +11,7 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconSettings size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name">Collection</span>
+            <span className="ml-1 tab-name">集合</span>
           </>
         );
       }
@@ -19,7 +19,7 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconSettings size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name">Overview</span>
+            <span className="ml-1 tab-name">概览</span>
           </>
         );
       }
@@ -27,7 +27,7 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconFolder size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name">{tabName || 'Folder'}</span>
+            <span className="ml-1 tab-name">{tabName || '文件夹'}</span>
           </>
         );
       }
@@ -35,7 +35,7 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconVariable size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name">Variables</span>
+            <span className="ml-1 tab-name">变量</span>
           </>
         );
       }
@@ -43,7 +43,7 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconRun size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name">Runner</span>
+            <span className="ml-1 tab-name">运行器</span>
           </>
         );
       }
@@ -51,7 +51,7 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconDatabase size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name">Environments</span>
+            <span className="ml-1 tab-name">环境</span>
           </>
         );
       }
@@ -59,7 +59,7 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconWorld size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name">Global Environments</span>
+            <span className="ml-1 tab-name">全局环境</span>
           </>
         );
       }
@@ -67,7 +67,7 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconSettings size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name">Preferences</span>
+            <span className="ml-1 tab-name">首选项</span>
           </>
         );
       }
@@ -75,7 +75,7 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconHome size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name">Overview</span>
+            <span className="ml-1 tab-name">概览</span>
           </>
         );
       }
@@ -83,7 +83,7 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconWorld size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name">Environments</span>
+            <span className="ml-1 tab-name">环境</span>
           </>
         );
       }
@@ -107,8 +107,8 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconServer2 size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name mr-1">{tabName || 'Mock Server'}</span>
-            <StatusBadge status="info" size="xs">Beta</StatusBadge>
+            <span className="ml-1 tab-name mr-1">{tabName || '模拟服务器'}</span>
+            <StatusBadge status="info" size="xs">测试版</StatusBadge>
           </>
         );
       }
@@ -116,7 +116,7 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconConfetti size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name">What's New</span>
+            <span className="ml-1 tab-name">更新日志</span>
           </>
         );
       }

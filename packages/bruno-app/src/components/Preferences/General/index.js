@@ -32,10 +32,10 @@ const General = () => {
         return originalValue === '' ? undefined : value;
       })
       .nullable()
-      .test('isNumber', 'Request Timeout must be a number', (value) => {
+      .test('isNumber', '请求超时必须是数字', (value) => {
         return value === undefined || !isNaN(value);
       })
-      .test('isValidTimeout', 'Request Timeout must be equal or greater than 0', (value) => {
+      .test('isValidTimeout', '请求超时必须大于或等于 0', (value) => {
         return value === undefined || Number(value) >= 0;
       }),
     autoSave: Yup.object({
@@ -44,13 +44,13 @@ const General = () => {
         .transform((value, originalValue) => {
           return originalValue === '' ? undefined : value;
         })
-        .test('isNumber', 'Save Delay must be a number', (value) => {
+        .test('isNumber', '保存延迟必须是数字', (value) => {
           return value === undefined || !isNaN(value);
         })
-        .test('isValidInterval', 'Save Delay must be at least 500ms', (value) => {
+        .test('isValidInterval', '保存延迟至少为 500 毫秒', (value) => {
           return value === undefined || Number(value) >= 500;
         })
-    }).test('intervalRequired', 'Save Delay is required when Auto Save is enabled', (value) => {
+    }).test('intervalRequired', '启用自动保存时必须填写保存延迟', (value) => {
       // If autosave is enabled, interval must be provided
       if (value.enabled && (value.interval === undefined || value.interval === '')) {
         return false;
@@ -125,7 +125,7 @@ const General = () => {
           defaultLocation: newPreferences.defaultLocation
         }
       }))
-      .catch((err) => console.log(err) && toast.error('Failed to update preferences'));
+      .catch((err) => console.log(err) && toast.error('更新偏好设置失败'));
   }, [dispatch, preferences]);
 
   const handleSaveRef = useRef(handleSave);
@@ -178,7 +178,7 @@ const General = () => {
 
   return (
     <StyledWrapper className="w-full">
-      <div className="section-header">General Settings</div>
+      <div className="section-header">常规设置</div>
       <form className="bruno-form" onSubmit={formik.handleSubmit}>
         <div className="flex items-center mb-2">
           <input
@@ -190,7 +190,7 @@ const General = () => {
             className="mousetrap mr-0"
           />
           <label className="block ml-2 select-none" htmlFor="sslVerification">
-            SSL/TLS Certificate Verification
+            SSL/TLS 证书验证
           </label>
         </div>
         <div className="flex items-center mt-2">
@@ -203,7 +203,7 @@ const General = () => {
             className="mousetrap mr-0"
           />
           <label className="block ml-2 select-none" htmlFor="customCaCertificateEnabled">
-            Use Custom CA Certificate
+            使用自定义 CA 证书
           </label>
         </div>
         {formik.values.customCaCertificate.filePath ? (
@@ -234,7 +234,7 @@ const General = () => {
               disabled={formik.values.customCaCertificate.enabled ? false : true}
               onClick={() => inputFileCaCertificateRef.current.click()}
             >
-              Select File
+              选择文件
               <input
                 id="caCertFilePath"
                 type="file"
@@ -261,7 +261,7 @@ const General = () => {
             className={`block ml-2 select-none ${formik.values.customCaCertificate.enabled && formik.values.customCaCertificate.filePath ? '' : 'opacity-25'}`}
             htmlFor="keepDefaultCaCertificatesEnabled"
           >
-            Keep Default CA Certificates
+            保留默认 CA 证书
           </label>
         </div>
         <div className="flex items-center mt-2">
@@ -274,7 +274,7 @@ const General = () => {
             className="mousetrap mr-0"
           />
           <label className="block ml-2 select-none" htmlFor="storeCookies">
-            Store Cookies automatically
+            自动存储 Cookie
           </label>
         </div>
         <div className="flex items-center mt-2">
@@ -287,7 +287,7 @@ const General = () => {
             className="mousetrap mr-0"
           />
           <label className="block ml-2 select-none" htmlFor="sendCookies">
-            Send Cookies automatically
+            自动发送 Cookie
           </label>
         </div>
         <div className="flex items-center mt-2">
@@ -300,12 +300,12 @@ const General = () => {
             className="mousetrap mr-0"
           />
           <label className="block ml-2 select-none" htmlFor="oauth2.useSystemBrowser">
-            Use System Browser for OAuth2 Authorization
+            使用系统浏览器进行 OAuth2 授权
           </label>
         </div>
         <div className="flex flex-col mt-6">
           <label className="block select-none" htmlFor="timeout">
-            Request Timeout (in ms)
+            请求超时（毫秒）
           </label>
           <input
             type="text"
@@ -332,12 +332,12 @@ const General = () => {
             className="mousetrap mr-0"
           />
           <label className="block ml-2 select-none" htmlFor="autoSaveEnabled">
-            Enable Auto Save
+            启用自动保存
           </label>
         </div>
         <div className={`flex flex-col mt-2 ${!formik.values.autoSave.enabled ? 'opacity-50' : ''}`}>
           <label className="block select-none" htmlFor="autoSaveInterval">
-            Save Delay (in ms)
+            保存延迟（毫秒）
           </label>
           <input
             type="text"
@@ -361,10 +361,10 @@ const General = () => {
         )}
         <div className="flex flex-col mt-6">
           <label className="block select-none default-location-label" htmlFor="defaultLocation">
-            Default Location
+            默认位置
           </label>
           <p className="text-muted mt-1 text-xs">
-            Used as the default location for new workspaces and collections
+            用作新工作区和集合的默认位置
           </p>
           <input
             type="text"
@@ -379,14 +379,14 @@ const General = () => {
             onChange={formik.handleChange}
             value={formik.values.defaultLocation || ''}
             onClick={browseDefaultLocation}
-            placeholder="Click to browse for default location"
+            placeholder="点击浏览默认位置"
           />
           <div className="mt-1">
             <span
               className="text-link cursor-pointer hover:underline default-location-browse"
               onClick={browseDefaultLocation}
             >
-              Browse
+              浏览
             </span>
           </div>
         </div>

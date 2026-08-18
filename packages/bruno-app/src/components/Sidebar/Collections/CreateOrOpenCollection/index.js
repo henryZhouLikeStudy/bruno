@@ -22,21 +22,21 @@ const CreateOrOpenCollection = ({ onCreateClick }) => {
       theme={theme}
       onClick={onCreateClick}
     >
-      Create
+      创建
     </LinkStyle>
   );
   const OpenLink = () => (
     <LinkStyle className="underline text-link cursor-pointer" theme={theme} onClick={() => handleOpenCollection(true)}>
-      Open
+      打开
     </LinkStyle>
   );
 
   return (
     <StyledWrapper className="px-2 mt-4">
       <div className="text-xs text-center">
-        <div>No collections found.</div>
+        <div>未找到集合。</div>
         <div className="mt-2">
-          <CreateLink /> or <OpenLink /> Collection.
+          <CreateLink /> 或 <OpenLink /> 集合。
         </div>
       </div>
     </StyledWrapper>

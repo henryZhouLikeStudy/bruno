@@ -87,23 +87,23 @@ const GoldenEdition = ({ onClose }) => {
   };
 
   const goldenEditionIndividuals = [
-    'Inbuilt Bru File Explorer',
-    'Visual Git (Like Gitlens for Vscode)',
-    'GRPC, Websocket, SocketIO, MQTT',
-    'Load Data from File for Collection Run',
-    'Developer Tools',
-    'OpenAPI Designer',
-    'Performance/Load Testing',
-    'Inbuilt Terminal',
-    'Custom Themes'
+    '内置 Bru 文件浏览器',
+    '可视化 Git（类似 VSCode 的 Gitlens）',
+    'GRPC、Websocket、SocketIO、MQTT',
+    '从文件加载集合运行数据',
+    '开发者工具',
+    'OpenAPI 设计器',
+    '性能/负载测试',
+    '内置终端',
+    '自定义主题'
   ];
 
   const goldenEditionOrganizations = [
-    'Centralized License Management',
-    'Integration with Secret Managers',
-    'Private Collection Registry',
-    'Request Forms',
-    'Priority Support'
+    '集中式许可证管理',
+    '集成密钥管理器',
+    '私有集合仓库',
+    '请求表单',
+    '优先支持'
   ];
 
   const [pricingOption, setPricingOption] = useState('individuals');
@@ -131,7 +131,7 @@ const GoldenEdition = ({ onClose }) => {
               target="_blank"
               className="flex text-white bg-yellow-600 hover:bg-yellow-700 font-medium rounded-lg px-4 py-2 text-center cursor-pointer"
             >
-              <IconHeart size={18} strokeWidth={1.5} /> <span className="ml-2">Buy</span>
+              <IconHeart size={18} strokeWidth={1.5} /> <span className="ml-2">购买</span>
             </a>
           </div>
           {pricingOption === 'individuals' ? (
@@ -139,8 +139,8 @@ const GoldenEdition = ({ onClose }) => {
               <div className="my-4">
                 <span className="text-3xl font-extrabold">$19</span>
               </div>
-              <p className="bg-yellow-200 text-black rounded-md px-2 py-1 mb-2 inline-flex">One Time Payment</p>
-              <p>perpetual license for 2 devices, with 2 years of updates</p>
+              <p className="bg-yellow-200 text-black rounded-md px-2 py-1 mb-2 inline-flex">一次性付款</p>
+              <p>2 台设备的永久许可证，包含 2 年更新</p>
             </div>
           ) : (
             <div>
@@ -148,8 +148,8 @@ const GoldenEdition = ({ onClose }) => {
                 <span className="text-3xl font-extrabold">$49</span>
                 <span className="ml-2">/&nbsp;user</span>
               </div>
-              <p className="bg-yellow-200 text-black rounded-md px-2 py-1 mb-2 inline-flex">One Time Payment</p>
-              <p>perpetual license with 2 years of updates</p>
+              <p className="bg-yellow-200 text-black rounded-md px-2 py-1 mb-2 inline-flex">一次性付款</p>
+              <p>永久许可证，包含 2 年更新</p>
             </div>
           )}
           <div
@@ -162,7 +162,7 @@ const GoldenEdition = ({ onClose }) => {
               }`}
               onClick={() => handlePricingOptionChange('individuals')}
             >
-              <IconUser className="text-gray-500 mr-2 icon" size={16} strokeWidth={1.5} /> Individuals
+              <IconUser className="text-gray-500 mr-2 icon" size={16} strokeWidth={1.5} /> 个人版
             </div>
             <div
               className={`cursor-pointer w-1/2 h-8 flex items-center justify-center rounded-full ${
@@ -170,13 +170,13 @@ const GoldenEdition = ({ onClose }) => {
               }`}
               onClick={() => handlePricingOptionChange('organizations')}
             >
-              <IconUsers className="text-gray-500 mr-2 icon" size={16} strokeWidth={1.5} /> Organizations
+              <IconUsers className="text-gray-500 mr-2 icon" size={16} strokeWidth={1.5} /> 团队版
             </div>
           </div>
           <ul role="list" className="space-y-3 text-left">
             <li className="flex items-center space-x-3">
               <HeartIcon />
-              <span>Support Bruno's Development</span>
+              <span>支持 Bruno 的发展</span>
             </li>
             {pricingOption === 'individuals' ? (
               <>
@@ -191,7 +191,7 @@ const GoldenEdition = ({ onClose }) => {
               <>
                 <li className="flex items-center space-x-3 pb-4">
                   <IconPlus size={16} strokeWidth={1.5} style={{ marginLeft: '2px' }} />
-                  <span>Everything in the Individual Plan</span>
+                  <span>个人版中的所有功能</span>
                 </li>
                 {goldenEditionOrganizations.map((item, index) => (
                   <li className="flex items-center space-x-3" key={index}>

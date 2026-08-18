@@ -56,7 +56,7 @@ const ApiSpecItem = ({ apiSpec }) => {
             <span className="dropdown-icon">
               <IconX size={16} strokeWidth={2} />
             </span>
-            Remove
+            移除
           </div>
         </Dropdown>
       </div>

@@ -49,9 +49,9 @@ const Themes = () => {
   const darkThemes = getDarkThemes();
 
   const themeModes = [
-    { key: 'light', label: 'Light', icon: IconBrightnessUp },
-    { key: 'dark', label: 'Dark', icon: IconMoon },
-    { key: 'system', label: 'System', icon: IconDeviceDesktop }
+    { key: 'light', label: '浅色', icon: IconBrightnessUp },
+    { key: 'dark', label: '深色', icon: IconMoon },
+    { key: 'system', label: '跟随系统', icon: IconDeviceDesktop }
   ];
 
   const handleModeChange = (mode) => {
@@ -78,7 +78,7 @@ const Themes = () => {
     <StyledWrapper>
       <div className="flex flex-col gap-4 w-full appearance-container">
         <div>
-          <div className="section-header">Appearance</div>
+          <div className="section-header">外观</div>
         </div>
 
         <div className="flex gap-3 theme-mode-selector justify-start">
@@ -105,21 +105,21 @@ const Themes = () => {
 
         {storedTheme === 'light' && (
           <>
-            {renderThemeVariants(lightThemes, themeVariantLight, setThemeVariantLight, 'Light Theme')}
+            {renderThemeVariants(lightThemes, themeVariantLight, setThemeVariantLight, '浅色主题')}
           </>
         )}
 
         {storedTheme === 'dark' && (
           <>
-            {renderThemeVariants(darkThemes, themeVariantDark, setThemeVariantDark, 'Dark Theme')}
+            {renderThemeVariants(darkThemes, themeVariantDark, setThemeVariantDark, '深色主题')}
           </>
         )}
 
         {storedTheme === 'system' && (
           <>
-            {renderThemeVariants(lightThemes, themeVariantLight, setThemeVariantLight, 'Light Theme')}
+            {renderThemeVariants(lightThemes, themeVariantLight, setThemeVariantLight, '浅色主题')}
             <div className="section-divider" />
-            {renderThemeVariants(darkThemes, themeVariantDark, setThemeVariantDark, 'Dark Theme')}
+            {renderThemeVariants(darkThemes, themeVariantDark, setThemeVariantDark, '深色主题')}
           </>
         )}
       </div>

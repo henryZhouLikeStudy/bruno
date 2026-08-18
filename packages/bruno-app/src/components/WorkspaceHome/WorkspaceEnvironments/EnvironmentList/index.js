@@ -209,16 +209,16 @@ const EnvironmentList = ({
     e.stopPropagation();
     dispatch(selectGlobalEnvironment({ environmentUid: env.uid }))
       .then(() => {
-        toast.success(`Environment "${env.name}" activated`);
+        toast.success(`环境 "${env.name}" 已激活`);
       })
       .catch(() => {
-        toast.error('Failed to activate environment');
+        toast.error('激活环境失败');
       });
   }, [dispatch]);
 
   const validateEnvironmentName = (name, excludeUid = null) => {
     if (!name || name.trim() === '') {
-      return 'Name is required';
+      return '名称为必填项';
     }
 
     if (!validateName(name)) {
@@ -230,7 +230,7 @@ const EnvironmentList = ({
       (env) => env?.uid !== excludeUid && env?.name?.toLowerCase().trim() === trimmedName
     );
     if (isDuplicate) {
-      return 'Environment already exists';
+      return '环境已存在';
     }
 
     return null;
@@ -266,13 +266,13 @@ const EnvironmentList = ({
 
     dispatch(addGlobalEnvironment({ name: newEnvName }))
       .then(() => {
-        toast.success('Environment created!');
+        toast.success('环境创建成功！');
         setIsCreatingInline(false);
         setNewEnvName('');
         setEnvNameError('');
       })
       .catch(() => {
-        toast.error('An error occurred while creating the environment');
+        toast.error('创建环境时出错');
       });
   };
 
@@ -312,13 +312,13 @@ const EnvironmentList = ({
 
     dispatch(renameGlobalEnvironment({ name: newEnvName, environmentUid: renamingEnvUid }))
       .then(() => {
-        toast.success('Environment renamed!');
+        toast.success('环境重命名成功！');
         setRenamingEnvUid(null);
         setNewEnvName('');
         setEnvNameError('');
       })
       .catch(() => {
-        toast.error('An error occurred while renaming the environment');
+        toast.error('重命名环境时出错');
       });
   };
 
@@ -387,21 +387,21 @@ const EnvironmentList = ({
 
   const validateDotEnvName = (name) => {
     if (!name || name.trim() === '') {
-      return 'Name is required';
+      return '名称为必填项';
     }
 
     if (!name.startsWith('.env')) {
-      return 'File name must start with .env';
+      return '文件名必须以 .env 开头';
     }
 
     const validPattern = /^\.env[a-zA-Z0-9._-]*$/;
     if (!validPattern.test(name)) {
-      return 'Invalid file name';
+      return '文件名无效';
     }
 
     const exists = dotEnvFiles.some((f) => f.filename === name);
     if (exists) {
-      return 'File already exists';
+      return '文件已存在';
     }
 
     return null;
@@ -416,7 +416,7 @@ const EnvironmentList = ({
 
     dispatch(createWorkspaceDotEnvFile(workspace.uid, newDotEnvName))
       .then(() => {
-        toast.success(`${newDotEnvName} file created!`);
+        toast.success(`${newDotEnvName} 文件创建成功！`);
         setIsCreatingDotEnvInline(false);
         setNewDotEnvName('.env');
         setDotEnvNameError('');
@@ -425,7 +425,7 @@ const EnvironmentList = ({
         setDotEnvExpanded(true);
       })
       .catch((error) => {
-        toast.error(error.message || 'Failed to create .env file');
+        toast.error(error.message || '.env 文件创建失败');
       });
   };
 
@@ -459,7 +459,7 @@ const EnvironmentList = ({
   const handleDeleteDotEnvFile = (filename) => {
     dispatch(deleteWorkspaceDotEnvFile(workspace.uid, filename))
       .then(() => {
-        toast.success(`${filename} file deleted!`);
+        toast.success(`${filename} 文件删除成功！`);
         handleDotEnvModifiedChange(false);
         if (selectedDotEnvFile === filename) {
           const remainingFiles = dotEnvFiles.filter((f) => f.filename !== filename);
@@ -475,7 +475,7 @@ const EnvironmentList = ({
         }
       })
       .catch((error) => {
-        toast.error(error.message || 'Failed to delete .env file');
+        toast.error(error.message || '.env 文件删除失败');
       });
   };
 
@@ -531,13 +531,13 @@ const EnvironmentList = ({
     return (
       <div className="empty-state">
         <IconFileAlert size={48} strokeWidth={1.5} />
-        <div className="title">No Environments</div>
+        <div className="title">没有环境</div>
         <div className="actions">
           <Button size="sm" color="secondary" onClick={() => handleCreateEnvClick()}>
-            Create Environment
+            创建环境
           </Button>
           <Button size="sm" color="secondary" onClick={() => handleImportClick()}>
-            Import Environment
+            导入环境
           </Button>
         </div>
       </div>
@@ -559,7 +559,7 @@ const EnvironmentList = ({
 
           <div className="sections-container">
             <CollapsibleSection
-              title="Environments"
+              title="环境"
               expanded={environmentsExpanded}
               onToggle={() => setEnvironmentsExpanded(!environmentsExpanded)}
               actions={(
@@ -573,7 +573,7 @@ const EnvironmentList = ({
                       }
                       handleCreateEnvClick();
                     }}
-                    title="Create environment"
+                    title="创建环境"
                   >
                     <IconPlus size={14} strokeWidth={1.5} />
                   </button>
@@ -586,7 +586,7 @@ const EnvironmentList = ({
                       }
                       handleImportClick();
                     }}
-                    title="Import environment"
+                    title="导入环境"
                   >
                     <IconDownload size={14} strokeWidth={1.5} />
                   </button>
@@ -599,7 +599,7 @@ const EnvironmentList = ({
                       }
                       handleExportClick();
                     }}
-                    title="Export environment"
+                    title="导出环境"
                   >
                     <IconUpload size={14} strokeWidth={1.5} />
                   </button>
@@ -611,7 +611,7 @@ const EnvironmentList = ({
                 <input
                   ref={envListSearchInputRef}
                   type="text"
-                  placeholder="Search environments..."
+                  placeholder="搜索环境…"
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                   className="env-list-search-input"
@@ -621,7 +621,7 @@ const EnvironmentList = ({
                   spellCheck="false"
                 />
                 {searchText && (
-                  <button className="env-list-search-clear" title="Clear search" onClick={() => setSearchText('')} onMouseDown={(e) => e.preventDefault()}>
+                  <button className="env-list-search-clear" title="清除搜索" onClick={() => setSearchText('')} onMouseDown={(e) => e.preventDefault()}>
                     <IconX size={12} strokeWidth={1.5} />
                   </button>
                 )}
@@ -659,7 +659,7 @@ const EnvironmentList = ({
                             className="inline-action-btn save"
                             onClick={handleSaveRename}
                             onMouseDown={(e) => e.preventDefault()}
-                            title="Save"
+                            title="保存"
                           >
                             <IconCheck size={14} strokeWidth={2} />
                           </button>
@@ -667,7 +667,7 @@ const EnvironmentList = ({
                             className="inline-action-btn cancel"
                             onClick={handleCancelRename}
                             onMouseDown={(e) => e.preventDefault()}
-                            title="Cancel"
+                            title="取消"
                           >
                             <IconX size={14} strokeWidth={2} />
                           </button>
@@ -679,14 +679,14 @@ const EnvironmentList = ({
                         <span className="environment-name">{env.name}</span>
                         <div className="environment-actions">
                           {activeEnvironmentUid === env.uid ? (
-                            <div className="activated-checkmark" title="Active environment">
+                            <div className="activated-checkmark" title="当前活动环境">
                               <IconCheck size={16} strokeWidth={2} />
                             </div>
                           ) : (
                             <button
                               className="activate-btn"
                               onClick={(e) => handleActivateEnvironment(e, env)}
-                              title="Activate environment"
+                              title="激活环境"
                             >
                               <IconCheck size={16} strokeWidth={2} />
                             </button>
@@ -706,7 +706,7 @@ const EnvironmentList = ({
                       value={newEnvName}
                       onChange={handleEnvNameChange}
                       onKeyDown={handleEnvNameKeyDown}
-                      placeholder="Environment name..."
+                      placeholder="环境名称…"
                       autoComplete="off"
                       autoCorrect="off"
                       autoCapitalize="off"
@@ -717,7 +717,7 @@ const EnvironmentList = ({
                         className="inline-action-btn save"
                         onClick={handleSaveNewEnv}
                         onMouseDown={(e) => e.preventDefault()}
-                        title="Save"
+                        title="保存"
                       >
                         <IconCheck size={14} strokeWidth={2} />
                       </button>
@@ -725,7 +725,7 @@ const EnvironmentList = ({
                         className="inline-action-btn cancel"
                         onClick={handleCancelCreate}
                         onMouseDown={(e) => e.preventDefault()}
-                        title="Cancel"
+                        title="取消"
                       >
                         <IconX size={14} strokeWidth={2} />
                       </button>
@@ -737,14 +737,14 @@ const EnvironmentList = ({
 
                 {filteredEnvironments.length === 0 && !isCreatingInline && (
                   <div className="no-env-file">
-                    <span>No environments</span>
+                    <span>没有环境</span>
                   </div>
                 )}
               </div>
             </CollapsibleSection>
 
             <CollapsibleSection
-              title=".env Files"
+              title=".env 文件"
               testId="dotenv-files-section"
               expanded={dotEnvExpanded}
               onToggle={() => setDotEnvExpanded(!dotEnvExpanded)}
@@ -753,7 +753,7 @@ const EnvironmentList = ({
                 <button
                   className="btn-action"
                   onClick={handleCreateDotEnvInlineClick}
-                  title="Create .env file"
+                  title="创建 .env 文件"
                   data-testid="create-dotenv-file"
                 >
                   <IconPlus size={14} strokeWidth={1.5} />
@@ -793,7 +793,7 @@ const EnvironmentList = ({
                         className="inline-action-btn save"
                         onClick={handleSaveNewDotEnv}
                         onMouseDown={(e) => e.preventDefault()}
-                        title="Create"
+                        title="创建"
                       >
                         <IconCheck size={14} strokeWidth={2} />
                       </button>
@@ -801,7 +801,7 @@ const EnvironmentList = ({
                         className="inline-action-btn cancel"
                         onClick={handleCancelDotEnvCreate}
                         onMouseDown={(e) => e.preventDefault()}
-                        title="Cancel"
+                        title="取消"
                       >
                         <IconX size={14} strokeWidth={2} />
                       </button>
@@ -813,7 +813,7 @@ const EnvironmentList = ({
 
                 {dotEnvFiles.length === 0 && !isCreatingDotEnvInline && (
                   <div className="no-env-file">
-                    <span>No .env files</span>
+                    <span>没有 .env 文件</span>
                   </div>
                 )}
               </div>

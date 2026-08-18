@@ -29,7 +29,7 @@ const convertFileToObject = async (file) => {
     }
     return parsed;
   } catch {
-    throw new Error('Failed to parse the file – ensure it is valid JSON or YAML');
+    throw new Error('解析文件失败 - 请确保其为有效的 JSON 或 YAML');
   }
 };
 
@@ -84,9 +84,9 @@ const FileTab = ({
         return;
       }
 
-      toastError(new Error('The ZIP file is not a valid Bruno collection'));
+      toastError(new Error('该 ZIP 文件不是有效的 Bruno 集合'));
     } catch (err) {
-      toastError(err, 'Import ZIP file failed');
+      toastError(err, '导入 ZIP 文件失败');
     } finally {
       setIsLoading(false);
     }
@@ -130,10 +130,10 @@ const FileTab = ({
         // Pass raw filesData to be processed in BulkImportCollectionLocation
         handleSubmit({ filesData, type: 'multiple' });
       } else {
-        throw new Error('No valid collections found in the selected files');
+        throw new Error('所选文件中未找到有效的集合');
       }
     } catch (err) {
-      toastError(err, 'Import multiple files failed');
+      toastError(err, '导入多个文件失败');
     } finally {
       setIsLoading(false);
     }
@@ -145,7 +145,7 @@ const FileTab = ({
       const data = await convertFileToObject(file);
 
       if (!data) {
-        throw new Error('Failed to parse file content');
+        throw new Error('解析文件内容失败');
       }
 
       let type = null;
@@ -163,7 +163,7 @@ const FileTab = ({
       } else if (isBrunoCollection(data)) {
         type = 'bruno';
       } else {
-        throw new Error('Unsupported collection format');
+        throw new Error('不支持的集合格式');
       }
 
       if (type === 'openapi') {
@@ -174,7 +174,7 @@ const FileTab = ({
         await handleSubmit({ rawData: data, type });
       }
     } catch (err) {
-      toastError(err, 'Import collection failed');
+      toastError(err, '导入集合失败');
     } finally {
       setIsLoading(false);
     }
@@ -188,12 +188,12 @@ const FileTab = ({
 
     // If both ZIP and non-ZIP files are selected, show error
     if (zipFiles.length && (fileArray.length - zipFiles.length > 0)) {
-      setErrorMessage('Cannot mix ZIP files with other file types. Please select either a single ZIP file OR collection files (JSON/YAML)');
+      setErrorMessage('不能将 ZIP 文件与其他文件类型混合。请选择单个 ZIP 文件或集合文件（JSON/YAML）');
       return;
     }
 
     if (zipFiles.length > 1) {
-      setErrorMessage('Multiple ZIP files selected. Please select only one ZIP file at a time for import.');
+      setErrorMessage('选择了多个 ZIP 文件。每次只能选择一个 ZIP 文件进行导入。');
       return;
     }
 
@@ -261,17 +261,17 @@ const FileTab = ({
             accept={acceptedFileTypes.join(',')}
           />
           <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-            Drop file(s) to import or{' '}
+            拖放文件以导入，或{' '}
             <button
               className="underline cursor-pointer"
               onClick={handleBrowseFiles}
               style={{ color: theme.textLink }}
             >
-              choose file(s)
+              选择文件
             </button>
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-            Supports Bruno, OpenCollection, Postman, Insomnia, OpenAPI 3.x / Swagger 2.0, WSDL, and ZIP formats
+            支持 Bruno、OpenCollection、Postman、Insomnia、OpenAPI 3.x / Swagger 2.0、WSDL 和 ZIP 格式
           </p>
         </div>
       </div>

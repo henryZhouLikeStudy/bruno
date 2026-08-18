@@ -13,30 +13,30 @@ const CloseWorkspace = ({ workspaceUid, onClose }) => {
   const onConfirm = async () => {
     try {
       if (!workspace) {
-        toast.error('Workspace not found');
+        toast.error('未找到工作区');
         onClose();
         return;
       }
       if (workspace.type === 'default') {
-        toast.error('Cannot close the default workspace');
+        toast.error('无法关闭默认工作区');
         onClose();
         return;
       }
 
       await dispatch(closeWorkspaceAction(workspace.uid));
-      toast.success('Workspace closed');
+      toast.success('工作区已关闭');
       onClose();
     } catch (error) {
       console.error('Error closing workspace:', error);
-      toast.error('An error occurred while closing the workspace');
+      toast.error('关闭工作区时发生错误');
     }
   };
 
   return (
     <Modal
       size="sm"
-      title="Close Workspace"
-      confirmText="Close"
+      title="关闭工作区"
+      confirmText="关闭"
       handleConfirm={onConfirm}
       handleCancel={onClose}
     >
@@ -48,10 +48,10 @@ const CloseWorkspace = ({ workspaceUid, onClose }) => {
         <div className="break-words text-xs mt-1">{workspace.pathname}</div>
       )}
       <div className="mt-4">
-        Are you sure you want to close workspace <span className="font-semibold">{workspace?.name}</span>?
+        确定要关闭工作区 <span className="font-semibold">{workspace?.name}</span> 吗？
       </div>
       <div className="mt-4">
-        It will still be available in the file system at the above location and can be re-opened later.
+        它仍可在上述文件系统位置找到，稍后也可以重新打开。
       </div>
     </Modal>
   );

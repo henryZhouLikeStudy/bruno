@@ -93,27 +93,27 @@ const Preferences = () => {
         <div className="flex flex-col items-center tabs tablist" role="tablist">
           <div className={getTabClassname('general')} role="tab" onClick={() => setTab('general')}>
             <IconSettings size={16} strokeWidth={1.5} />
-            General
+            常规
           </div>
           <div className={getTabClassname('themes')} role="tab" onClick={() => setTab('themes')}>
             <IconPalette size={16} strokeWidth={1.5} />
-            Themes
+            主题
           </div>
           <div className={getTabClassname('display')} role="tab" onClick={() => setTab('display')}>
             <IconBrowser size={16} strokeWidth={1.5} />
-            Display
+            显示
           </div>
           <div className={getTabClassname('proxy')} role="tab" onClick={() => setTab('proxy')}>
             <IconUserCircle size={16} strokeWidth={1.5} />
-            Proxy
+            代理
           </div>
           <div className={getTabClassname('clientCert')} role="tab" onClick={() => setTab('clientCert')}>
             <IconCertificate size={16} strokeWidth={1.5} />
-            Client Certificates
+            客户端证书
           </div>
           <div className={getTabClassname('keybindings')} role="tab" onClick={() => setTab('keybindings')}>
             <IconKeyboard size={16} strokeWidth={1.5} />
-            Keybindings
+            快捷键
           </div>
           <div className={getTabClassname('ai')} role="tab" onClick={() => setTab('ai')}>
             <IconSparkles size={16} strokeWidth={1.5} />
@@ -121,15 +121,15 @@ const Preferences = () => {
           </div>
           <div className={getTabClassname('cache')} role="tab" onClick={() => setTab('cache')}>
             <IconDatabase size={16} strokeWidth={1.5} />
-            Cache
+            缓存
           </div>
           <div className={getTabClassname('support')} role="tab" onClick={() => setTab('support')}>
             <IconZoomQuestion size={16} strokeWidth={1.5} />
-            Support
+            支持
           </div>
           <div className={getTabClassname('beta')} role="tab" onClick={() => setTab('beta')}>
             <IconSquareLetterB size={16} strokeWidth={1.5} />
-            Beta
+            测试版
           </div>
         </div>
         <section

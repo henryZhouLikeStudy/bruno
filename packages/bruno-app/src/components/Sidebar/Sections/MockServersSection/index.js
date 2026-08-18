@@ -10,7 +10,7 @@ const MockServersSection = () => {
 
   const sectionActions = (
     <ActionIcon
-      label="Create mock server"
+      label="创建 Mock 服务器"
       onClick={() => setCreateModalOpen(true)}
       data-testid="mock-servers-create-btn"
     >
@@ -25,7 +25,7 @@ const MockServersSection = () => {
       )}
       <SidebarSection
         id="mock-servers"
-        title="Mock Servers"
+        title="Mock 服务器"
         icon={IconServer}
         actions={sectionActions}
         className="mock-servers-section"

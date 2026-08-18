@@ -26,7 +26,7 @@ const MoveToWorkspace = ({ onClose, collectionUid }) => {
 
   const onConfirm = () => {
     if (!collection) {
-      toast.error('Collection not found');
+      toast.error('未找到集合');
       onClose();
       return;
     }
@@ -36,17 +36,17 @@ const MoveToWorkspace = ({ onClose, collectionUid }) => {
     setIsMoving(true);
     dispatch(moveCollectionToWorkspace(collection.uid))
       .then(() => {
-        toast.success('Collection moved into workspace');
+        toast.success('集合已移入工作区');
         onClose();
       })
       .catch((err) => {
-        toast.error(err?.message || 'An error occurred while moving the collection');
+        toast.error(err?.message || '移动集合时发生错误');
         setIsMoving(false);
       });
   };
 
   if (!collection) {
-    return <div>Collection not found</div>;
+    return <div>未找到集合</div>;
   }
 
   if (!activeWorkspace?.pathname) {
@@ -64,25 +64,25 @@ const MoveToWorkspace = ({ onClose, collectionUid }) => {
     <StyledWrapper>
       <Modal
         size="sm"
-        title="Move into Workspace"
-        confirmText={isMoving ? 'Moving...' : 'Move'}
+        title="移入工作区"
+        confirmText={isMoving ? '移动中...' : '移动'}
         confirmDisabled={isMoving}
         handleConfirm={onConfirm}
         handleCancel={onClose}
       >
         <p className="mb-4">
-          This will move the following collection's files into {activeWorkspace?.name} workspace.
+          这会将以下集合的文件移动到 {activeWorkspace?.name} 工作区。
         </p>
         <div className="collection-info-card">
           <div className="collection-name">{collection.name}</div>
           <div className="collection-path">{collection.pathname}</div>
         </div>
         <div className="mt-3 collection-info-card">
-          <div className="collection-label">Destination</div>
+          <div className="collection-label">目标位置</div>
           <div className="collection-path">{targetLocation}</div>
         </div>
         <p className="mt-4 text-muted text-sm">
-          The collection reloads from its new location, so any open request tabs will close.
+          集合将从新位置重新加载，因此所有打开的请求标签页都将关闭。
         </p>
       </Modal>
     </StyledWrapper>

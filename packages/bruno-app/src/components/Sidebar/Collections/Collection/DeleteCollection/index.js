@@ -17,18 +17,18 @@ const DeleteCollection = ({ onClose, collectionUid, workspaceUid }) => {
 
   const onConfirm = async () => {
     if (!collection || !workspace) {
-      toast.error('Collection or workspace not found');
+      toast.error('未找到集合或工作区');
       onClose();
       return;
     }
 
     try {
       await dispatch(removeCollectionFromWorkspaceAction(workspace.uid, collection.pathname, { deleteFiles: true }));
-      toast.success(`Deleted "${collection.name}" collection`);
+      toast.success(`已删除集合 "${collection.name}"`);
       onClose();
     } catch (error) {
       console.error('Error deleting collection:', error);
-      toast.error(error.message || 'An error occurred while deleting the collection');
+      toast.error(error.message || '删除集合时发生错误');
     }
   };
 
@@ -40,27 +40,27 @@ const DeleteCollection = ({ onClose, collectionUid, workspaceUid }) => {
     <StyledWrapper>
       <Modal
         size="sm"
-        title="Delete Collection"
-        confirmText="Delete"
-        cancelText="Cancel"
+        title="删除集合"
+        confirmText="删除"
+        cancelText="取消"
         confirmButtonColor="danger"
         confirmDisabled={!isConfirmed}
         handleConfirm={onConfirm}
         handleCancel={onClose}
       >
         <p className="modal-description">
-          Are you sure you want to permanently delete <strong>"{collection.name}"</strong>?
+          确定要永久删除 <strong>"{collection.name}"</strong> 吗？
         </p>
         <div className="collection-info-card">
           <div className="collection-name">{collection.name}</div>
           <div className="collection-path">{collection.pathname}</div>
         </div>
         <p className="warning-text">
-          This action cannot be undone. The collection files will be permanently deleted from disk.
+          此操作无法撤销。集合文件将从磁盘永久删除。
         </p>
         <div className="delete-confirmation">
           <label htmlFor="delete-confirm-input">
-            Type <span className="delete-keyword">delete</span> to confirm
+            输入 <span className="delete-keyword">delete</span> 以确认
           </label>
           <input
             id="delete-confirm-input"

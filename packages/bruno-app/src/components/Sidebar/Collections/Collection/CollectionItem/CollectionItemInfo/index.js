@@ -8,7 +8,7 @@ const CollectionItemInfo = ({ item, onClose }) => {
   return (
     <Modal
       size="md"
-      title="Info"
+      title="信息"
       handleCancel={onClose}
       hideCancel={true}
       hideFooter={true}
@@ -18,7 +18,7 @@ const CollectionItemInfo = ({ item, onClose }) => {
           <tbody>
             <tr className="">
               <td className="py-2 px-2 text-left text-muted ">
-                {type == 'folder' ? 'Folder Name' : 'Request Name'}
+                {type == 'folder' ? '文件夹名称' : '请求名称'}
               </td>
               <td className="py-2 px-2 text-nowrap truncate max-w-[500px]" title={name}>
                 <span className="mr-2">:</span>{name}
@@ -26,18 +26,18 @@ const CollectionItemInfo = ({ item, onClose }) => {
             </tr>
             <tr className="">
               <td className="py-2 px-2 text-left text-muted flex items-center">
-                {type == 'folder' ? 'Folder Name' : 'File Name'}
-                <small className="font-normal text-muted ml-1">(on filesystem)</small>
+                {type == 'folder' ? '文件夹名称' : '文件名称'}
+                <small className="font-normal text-muted ml-1">（文件系统中）</small>
                 {type == 'folder' ? (
                   <Help width="300">
                     <p>
-                      The name of the folder on your filesystem.
+                      文件系统上的文件夹名称。
                     </p>
                   </Help>
                 ) : (
                   <Help width="300">
                     <p>
-                      Bruno saves each request as a file in your collection's folder.
+                      Bruno 将每个请求保存为集合文件夹中的一个文件。
                     </p>
                   </Help>
                 )}

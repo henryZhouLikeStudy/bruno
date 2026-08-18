@@ -24,7 +24,7 @@ const EnvironmentSelectionList = ({
   selectedUids = [],
   onToggle,
   onToggleAll,
-  title = 'Environments',
+  title = '环境',
   disabled = false
 }) => {
   // O(1) membership checks regardless of how many environments are rendered.
@@ -79,7 +79,7 @@ const EnvironmentSelectionList = ({
         <div className="env-section-heading">
           <h4 className="env-section-title" data-testid="env-section-title">{title}</h4>
           <span className="env-section-count" data-testid="env-selected-count">
-            ({selectedCount}/{environments.length} selected)
+            （已选择 {selectedCount}/{environments.length}）
           </span>
         </div>
         <label className="env-select-all">
@@ -92,7 +92,7 @@ const EnvironmentSelectionList = ({
             onChange={handleToggleAll}
             data-testid="env-select-all"
           />
-          <span className="env-select-all-label" data-testid="env-select-all-label">Select All</span>
+          <span className="env-select-all-label" data-testid="env-select-all-label">全选</span>
         </label>
       </div>
       <Virtuoso

@@ -11,24 +11,24 @@ const CloseApiSpec = ({ onClose, apiSpec }) => {
   const onConfirm = () => {
     dispatch(closeApiSpecFile({ uid: apiSpec.uid }))
       .then(() => {
-        toast.success('API Spec closed');
+        toast.success('API 规范已关闭');
         onClose();
       })
-      .catch(() => toast.error('An error occurred while closing the API Spec'));
+      .catch(() => toast.error('关闭 API 规范时发生错误'));
   };
 
   return (
-    <Modal size="sm" title="Close Api Spec" confirmText="Close" handleConfirm={onConfirm} handleCancel={onClose}>
+    <Modal size="sm" title="关闭 API 规范" confirmText="关闭" handleConfirm={onConfirm} handleCancel={onClose}>
       <div className="flex items-center">
         <IconFileCode size={18} strokeWidth={1.5} />
         <span className="ml-2 mr-4 font-semibold">{apiSpec.name}</span>
       </div>
       <div className="break-words text-xs mt-1">{apiSpec.pathname}</div>
       <div className="mt-4">
-        Are you sure you want to close API Spec <span className="font-semibold">{apiSpec.name}</span> in Bruno?
+        确定要在 Bruno 中关闭 API 规范 <span className="font-semibold">{apiSpec.name}</span> 吗？
       </div>
       <div className="mt-4">
-        It will still be available in the file system at the above location and can be re-opened later.
+        它仍可在上述文件系统位置找到，稍后也可以重新打开。
       </div>
     </Modal>
   );

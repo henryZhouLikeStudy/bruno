@@ -88,7 +88,7 @@ const Zoom = () => {
   return (
     <StyledWrapper>
       <div>
-        <label className="block">Interface Zoom</label>
+        <label className="block">界面缩放</label>
       </div>
       <div className="flex flex-row gap-1 items-center mt-2">
         <div className="zoom-field" ref={dropdownRef}>

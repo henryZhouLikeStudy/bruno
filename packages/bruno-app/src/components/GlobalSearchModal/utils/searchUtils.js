@@ -64,9 +64,9 @@ export const sortResults = (results) => {
 
 export const getTypeLabel = (type) => {
   const baseLabels = {
-    [SEARCH_TYPES.DOCUMENTATION]: 'Documentation',
-    [SEARCH_TYPES.COLLECTION]: 'Collection',
-    [SEARCH_TYPES.FOLDER]: 'Folder'
+    [SEARCH_TYPES.DOCUMENTATION]: '文档',
+    [SEARCH_TYPES.COLLECTION]: '集合',
+    [SEARCH_TYPES.FOLDER]: '文件夹'
   };
 
   return baseLabels[type] || '';

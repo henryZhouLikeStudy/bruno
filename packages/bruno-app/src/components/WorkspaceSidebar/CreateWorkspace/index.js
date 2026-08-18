@@ -34,24 +34,24 @@ const CreateWorkspace = ({ onClose }) => {
     validationSchema: Yup.object({
       workspaceName: Yup.string()
         .trim()
-        .min(1, 'Workspace name can\'t be empty')
-        .max(255, 'Must be 255 characters or less')
-        .required('Workspace name is required')
-        .test('unique-name', 'A workspace with this name already exists', function (value) {
+        .min(1, '工作区名称不能为空')
+        .max(255, '最多 255 个字符')
+        .required('工作区名称是必填项')
+        .test('unique-name', '已存在同名工作区', function (value) {
           if (!value) return true;
 
           return !workspaces.some((w) =>
             !w.isCreating && w.name && w.name.toLowerCase() === value.toLowerCase());
         }),
       workspaceFolderName: Yup.string()
-        .min(1, 'Must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, '至少需要 1 个字符')
+        .max(255, '最多 255 个字符')
         .test('is-valid-folder-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('Folder name is required'),
-      workspaceLocation: Yup.string().min(1, 'Location is required').required('Location is required')
+        .required('文件夹名称是必填项'),
+      workspaceLocation: Yup.string().min(1, '位置是必填项').required('位置是必填项')
     }),
     onSubmit: async (values) => {
       if (isSubmitting) return;
@@ -60,10 +60,10 @@ const CreateWorkspace = ({ onClose }) => {
         setIsSubmitting(true);
 
         await dispatch(createWorkspaceAction(values.workspaceName.trim(), values.workspaceFolderName, values.workspaceLocation));
-        toast.success('Workspace created!');
+        toast.success('工作区创建成功！');
         onClose();
       } catch (error) {
-        toast.error(multiLineMsg('An error occurred while creating the workspace', formatIpcError(error)));
+        toast.error(multiLineMsg('创建工作区时发生错误', formatIpcError(error)));
       } finally {
         setIsSubmitting(false);
       }
@@ -92,9 +92,9 @@ const CreateWorkspace = ({ onClose }) => {
   return (
     <Modal
       size="md"
-      title="Create Workspace"
-      description="Give your new workspace a name and choose its type to get started."
-      confirmText={isSubmitting ? 'Creating...' : 'Create Workspace'}
+      title="创建工作区"
+      description="为你的新工作区命名，选择类型后即可开始。"
+      confirmText={isSubmitting ? '创建中...' : '创建工作区'}
       handleConfirm={formik.handleSubmit}
       handleCancel={onClose}
       style="new"
@@ -104,7 +104,7 @@ const CreateWorkspace = ({ onClose }) => {
         <form className="bruno-form" onSubmit={formik.handleSubmit}>
           <div className="mb-4">
             <label htmlFor="workspaceName" className="block font-semibold mb-2">
-              Name
+              名称
             </label>
             <input
               id="workspace-name"
@@ -140,13 +140,13 @@ const CreateWorkspace = ({ onClose }) => {
             <div className="mb-4">
               <div className="flex items-center justify-between mb-2">
                 <label htmlFor="workspaceFolderName" className="flex items-center font-semibold">
-                  Folder Name
+                  文件夹名称
                   <Help width="300">
                     <p>
-                      The name of the folder used to store the workspace.
+                      用于存储工作区的文件夹名称。
                     </p>
                     <p className="mt-2">
-                      You can choose a folder name different from your workspace's name or one compatible with filesystem rules.
+                      你可以选择与工作区名称不同的文件夹名称，或符合文件系统规则的名称。
                     </p>
                   </Help>
                 </label>
@@ -190,13 +190,13 @@ const CreateWorkspace = ({ onClose }) => {
 
           <div className="mb-4">
             <label htmlFor="workspaceLocation" className="font-semibold mb-2 flex items-center">
-              Location
+              位置
               <Help>
                 <p>
-                  Bruno stores your workspaces on your computer's filesystem.
+                  Bruno 将工作区存储在你电脑的文件系统中。
                 </p>
                 <p className="mt-2">
-                  Choose the location where you want to store this workspace.
+                  选择你要存储该工作区的位置。
                 </p>
               </Help>
             </label>
@@ -221,7 +221,7 @@ const CreateWorkspace = ({ onClose }) => {
                 className="text-link cursor-pointer hover:underline"
                 onClick={browse}
               >
-                Browse
+                浏览
               </span>
             </div>
           </div>

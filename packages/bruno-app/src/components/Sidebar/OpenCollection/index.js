@@ -27,10 +27,10 @@ const OpenCollectionModal = ({ onClose }) => {
     const openedCount = result?.opened?.length || 0;
     const failedCount = (result?.failed?.length || 0) + (result?.invalid?.length || 0);
     if (openedCount > 0) {
-      toast.success(`${openedCount === 1 ? 'Collection' : 'Collections'} added to workspace`);
+      toast.success(`${openedCount === 1 ? '集合' : '集合'}已添加到工作区`);
     }
     if (failedCount > 0) {
-      toast.error(`Failed to open ${failedCount} collection${failedCount === 1 ? '' : 's'}`);
+      toast.error(`打开 ${failedCount} 个集合失败`);
     }
   };
 
@@ -73,18 +73,18 @@ const OpenCollectionModal = ({ onClose }) => {
 
         if (items.length === 0) {
           if (failedScans.length) {
-            toast.error(`Failed to scan ${failedScans.length} folder${failedScans.length === 1 ? '' : 's'} for collections`);
+            toast.error(`扫描 ${failedScans.length} 个文件夹以查找集合失败`);
           } else if (skippedItems.length) {
-            toast.error(`No Bruno collections found. ${skippedItems.length} skipped, config could not be read`);
+            toast.error(`未找到 Bruno 集合。已跳过 ${skippedItems.length} 个，无法读取配置`);
           } else {
-            toast.error('No Bruno collections found. Couldn\'t find a bruno.json or opencollection.yml');
+            toast.error('未找到 Bruno 集合。找不到 bruno.json 或 opencollection.yml');
           }
           onClose();
           return;
         }
 
         if (failedScans.length) {
-          toast.error(`Failed to scan ${failedScans.length} folder${failedScans.length === 1 ? '' : 's'} for collections`);
+          toast.error(`扫描 ${failedScans.length} 个文件夹以查找集合失败`);
         }
 
         // If all selected folders are collections, open them directly
@@ -100,7 +100,7 @@ const OpenCollectionModal = ({ onClose }) => {
             const result = await dispatch(openMultipleCollections(items.map((item) => item.pathname), { silent: true }));
             notifyOpenResult(result);
           } catch {
-            toast.error('An error occurred while opening the collections');
+            toast.error('打开集合时发生错误');
           }
           onClose();
           return;
@@ -112,7 +112,7 @@ const OpenCollectionModal = ({ onClose }) => {
         setShowSelection(true);
       } catch (err) {
         console.error(err);
-        toast.error('An error occurred while scanning for collections');
+        toast.error('扫描集合时发生错误');
         onClose();
       }
     })();
@@ -145,7 +145,7 @@ const OpenCollectionModal = ({ onClose }) => {
         onClose();
       }
     } catch {
-      toast.error('An error occurred while opening the collections');
+      toast.error('打开集合时发生错误');
     }
   };
 
@@ -164,26 +164,26 @@ const OpenCollectionModal = ({ onClose }) => {
     <Portal id="open-collection-portal">
       <Modal
         size="md"
-        title="Open Collection"
-        confirmText="Open"
+        title="打开集合"
+        confirmText="打开"
         handleConfirm={handleConfirm}
         handleCancel={onClose}
         confirmDisabled={selectedCollectionPaths.length === 0}
         footerLeft={(
           <SelectionFooter>
-            <span>{selectedCollectionPaths.length}</span> of {collectionPaths.length} selected
+            已选择 <span>{selectedCollectionPaths.length}</span> / {collectionPaths.length}
           </SelectionFooter>
         )}
       >
         <StyledWrapper>
           <p className="modal-description">
-            These collections were found inside your selection. Choose which ones to open.
+            在你的选择中找到了以下集合。请选择要打开的集合。
           </p>
           <div className="w-full min-w-0 flex flex-col gap-3">
             <SkippedPathsWarning paths={skippedCollectionPaths} itemNoun="collections" />
             <SelectionList
-              title="Collections"
-              searchPlaceholder="Search Collections"
+              title="集合"
+              searchPlaceholder="搜索集合"
               items={collectionPaths}
               selectedItems={selectedCollectionPaths}
               onSelectAll={handleSelectAllCollections}

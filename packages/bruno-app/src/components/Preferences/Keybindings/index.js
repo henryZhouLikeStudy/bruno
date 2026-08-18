@@ -417,13 +417,13 @@ const Keybindings = () => {
     const sig = comboSignature(arr);
 
     if (!sig) {
-      return { code: ERROR.EMPTY, message: `Shortcut can’t be empty.` };
+      return { code: ERROR.EMPTY, message: `快捷键不能为空。` };
     }
 
     if (isOnlyModifiers(arr)) {
       return {
         code: ERROR.ONLY_MODIFIERS,
-        message: 'Add a non-modifier key (e.g. Ctrl + K).'
+        message: '请添加一个非修饰键（例如 Ctrl + K）。'
       };
     }
 
@@ -432,8 +432,8 @@ const Keybindings = () => {
         code: ERROR.MISSING_REQUIRED_MOD,
         message:
           os === 'mac'
-            ? 'macOS shortcuts must include at least one modifier (command/alt/shift/ctrl).'
-            : 'Windows shortcuts must include at least one modifier (ctrl/alt/shift).'
+            ? 'macOS 快捷键必须包含至少一个修饰键（command/alt/shift/ctrl）。'
+            : 'Windows 快捷键必须包含至少一个修饰键（ctrl/alt/shift）。'
       };
     }
 
@@ -441,21 +441,21 @@ const Keybindings = () => {
     if (nonModifierCount > 1) {
       return {
         code: ERROR.MULTIPLE_NON_MODIFIERS,
-        message: 'Only one non-modifier key allowed (e.g. Cmd + Shift + K).'
+        message: '只允许一个非修饰键（例如 Cmd + Shift + K）。'
       };
     }
 
     if (RESERVED_BY_OS[os]?.has(sig)) {
       return {
         code: ERROR.RESERVED,
-        message: 'This shortcut is reserved by the OS.'
+        message: '该快捷键已被操作系统保留。'
       };
     }
 
     if (buildUsedSignatures(action).has(sig)) {
       return {
         code: ERROR.DUPLICATE,
-        message: 'This shortcut is already in use.'
+        message: '该快捷键已被使用。'
       };
     }
 
@@ -549,7 +549,7 @@ const Keybindings = () => {
     };
 
     dispatch(savePreferences(updatedPreferences));
-    toast.success('All shortcuts have been reset to default');
+    toast.success('所有快捷键已恢复为默认');
   };
 
   const startEditing = (action) => {
@@ -656,7 +656,7 @@ const Keybindings = () => {
       setDraftByAction((prev) => ({ ...prev, [action]: [] }));
       setErrorByAction((prev) => ({
         ...prev,
-        [action]: { code: ERROR.EMPTY, message: `Shortcut can't be empty.` }
+        [action]: { code: ERROR.EMPTY, message: `快捷键不能为空。` }
       }));
       return;
     }
@@ -763,7 +763,7 @@ const Keybindings = () => {
   return (
     <StyledWrapper className="w-full">
       <div className="section-header">
-        <span>Keybindings</span>
+        <span>快捷键</span>
 
         <div className="section-actions">
           <ToggleSwitch
@@ -779,7 +779,7 @@ const Keybindings = () => {
             data-testid="reset-all-keybindings-btn"
             disabled={!hasCustomizedKeybindings}
           >
-            Reset Default
+            恢复默认
           </button>
         </div>
       </div>
@@ -790,8 +790,8 @@ const Keybindings = () => {
             <table>
               <thead>
                 <tr>
-                  <td>Command</td>
-                  <td>Keybinding</td>
+                  <td>命令</td>
+                  <td>快捷键</td>
                 </tr>
               </thead>
               <tbody>
@@ -892,7 +892,7 @@ const Keybindings = () => {
                                       onClick={(e) => {
                                         e.stopPropagation(); resetRowToDefault(action);
                                       }}
-                                      title="Reset to default"
+                                      title="恢复默认"
                                     >
                                       <IconReload size={14} stroke={1.5} />
                                     </button>
@@ -902,7 +902,7 @@ const Keybindings = () => {
                                     <span
                                       className="pencil-icon"
                                       data-testid={`keybinding-edit-${action}`}
-                                      title="Customize keys"
+                                      title="自定义按键"
                                     >
                                       <IconPencil size={14} stroke={1.5} />
                                     </span>
@@ -913,7 +913,7 @@ const Keybindings = () => {
                                       type="button"
                                       className="edit-btn"
                                       data-testid={`keybinding-locked-${action}`}
-                                      title="Reserved shortcut"
+                                      title="保留快捷键"
                                     >
                                       <IconLock size={14} stroke={1.5} />
                                     </button>
@@ -936,7 +936,7 @@ const Keybindings = () => {
             </table>
           </div>
         ) : (
-          <div className="empty-state">No key bindings available</div>
+          <div className="empty-state">没有可用的快捷键</div>
         )}
       </div>
     </StyledWrapper>

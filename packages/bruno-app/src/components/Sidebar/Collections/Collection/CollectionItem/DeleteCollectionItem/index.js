@@ -31,7 +31,7 @@ const DeleteCollectionItem = ({ onClose, item, collectionUid }) => {
       }
     }).catch((error) => {
       console.error('Error deleting item', error);
-      toast.error(error?.message || 'Error deleting item');
+      toast.error(error?.message || '删除项目时出错');
     });
     onClose();
   };
@@ -40,14 +40,14 @@ const DeleteCollectionItem = ({ onClose, item, collectionUid }) => {
     <StyledWrapper>
       <Modal
         size="md"
-        title={`Delete ${isFolder ? 'Folder' : 'Request'}`}
-        confirmText="Delete"
+        title={`删除${isFolder ? '文件夹' : '请求'}`}
+        confirmText="删除"
         confirmButtonColor="danger"
         handleConfirm={onConfirm}
         handleCancel={onClose}
         dataTestId="delete-collection-item-modal"
       >
-        Are you sure you want to delete <span className="font-medium">{item.name}</span> ?
+        确定要删除 <span className="font-medium">{item.name}</span> 吗？
       </Modal>
     </StyledWrapper>
   );

@@ -52,17 +52,17 @@ const WorkspaceDocs = ({ workspace }) => {
 
   const onSave = async () => {
     if (!workspace) {
-      toast.error('Workspace not found');
+      toast.error('未找到工作区');
       return;
     }
 
     try {
       await dispatch(saveWorkspaceDocs(workspace.uid, localDocs));
-      toast.success('Documentation saved successfully');
+      toast.success('文档保存成功');
       toggleViewMode();
     } catch (error) {
       console.error('Error saving workspace docs:', error);
-      toast.error('Failed to save documentation');
+      toast.error('保存文档失败');
     }
   };
 
@@ -77,7 +77,7 @@ const WorkspaceDocs = ({ workspace }) => {
       <div className="docs-header">
         <div className="docs-title">
           <IconFileText size={16} strokeWidth={1.5} />
-          <span>Documentation</span>
+          <span>文档</span>
         </div>
         {hasDocs && !isEditing && (
           <ActionIcon className="edit-btn" onClick={toggleViewMode}>
@@ -107,7 +107,7 @@ const WorkspaceDocs = ({ workspace }) => {
             {isEditing && (
               <div className="editor-actions">
                 <Button onClick={onSave}>
-                  Save
+                  保存
                 </Button>
               </div>
             )}
@@ -118,17 +118,17 @@ const WorkspaceDocs = ({ workspace }) => {
               <IconFileText size={52} strokeWidth={1} />
             </div>
             <p className="empty-text">
-              Add documentation to help your team work smoothly.
+              添加文档，帮助团队顺畅协作。
             </p>
-            <p className="empty-subtext">You can include:</p>
+            <p className="empty-subtext">你可以包含：</p>
             <ul className="suggestions-list">
-              <li>Project overview</li>
-              <li>Setup instructions</li>
-              <li>Key workflows</li>
-              <li>Resources & FAQs</li>
+              <li>项目概览</li>
+              <li>安装说明</li>
+              <li>关键工作流</li>
+              <li>资源与常见问题</li>
             </ul>
             <Button color="light" size="sm" icon={<IconPlus size={14} strokeWidth={1.5} />} onClick={handleAddDocumentation}>
-              Add Documentation
+              添加文档
             </Button>
           </div>
         )}

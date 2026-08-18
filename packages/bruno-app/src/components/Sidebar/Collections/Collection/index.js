@@ -212,17 +212,17 @@ const Collection = ({ collection, searchText }) => {
   const handleShowInFolder = () => {
     dispatch(showInFolder(collection.pathname)).catch((error) => {
       console.error('Error opening the folder', error);
-      toast.error('Error opening the folder');
+      toast.error('打开文件夹时出错');
     });
   };
 
   const handlePasteItem = () => {
     dispatch(pasteItem(collection.uid, null))
       .then(() => {
-        toast.success('Item pasted successfully');
+        toast.success('项目粘贴成功');
       })
       .catch((err) => {
-        toast.error(err ? err.message : 'An error occurred while pasting the item');
+        toast.error(err ? err.message : '粘贴项目时发生错误');
       });
   };
 
@@ -368,7 +368,7 @@ const Collection = ({ collection, searchText }) => {
     {
       id: 'new-request',
       leftSection: IconFilePlus,
-      label: 'New Request',
+      label: '新建请求',
       onClick: () => {
         ensureCollectionIsMounted();
         setShowNewRequestModal(true);
@@ -377,7 +377,7 @@ const Collection = ({ collection, searchText }) => {
     {
       id: 'new-folder',
       leftSection: IconFolderPlus,
-      label: 'New Folder',
+      label: '新建文件夹',
       onClick: () => {
         ensureCollectionIsMounted();
         setShowNewFolderModal(true);
@@ -386,7 +386,7 @@ const Collection = ({ collection, searchText }) => {
     {
       id: 'new-app',
       leftSection: IconAppWindow,
-      label: 'New App',
+      label: '新建 App',
       onClick: () => {
         ensureCollectionIsMounted();
         setShowNewAppModal(true);
@@ -395,7 +395,7 @@ const Collection = ({ collection, searchText }) => {
     {
       id: 'run',
       leftSection: IconPlayerPlay,
-      label: 'Run',
+      label: '运行',
       onClick: () => {
         ensureCollectionIsMounted();
         handleRun();
@@ -404,7 +404,7 @@ const Collection = ({ collection, searchText }) => {
     {
       id: 'clone',
       leftSection: IconCopy,
-      label: 'Clone',
+      label: '克隆',
       testId: 'clone-collection',
       onClick: () => {
         setShowCloneCollectionModalOpen(true);
@@ -421,7 +421,7 @@ const Collection = ({ collection, searchText }) => {
           {
             id: 'paste',
             leftSection: IconClipboard,
-            label: 'Paste',
+            label: '粘贴',
             onClick: handlePasteItem
           }
         ]
@@ -429,7 +429,7 @@ const Collection = ({ collection, searchText }) => {
     {
       id: 'rename',
       leftSection: IconEdit,
-      label: 'Rename',
+      label: '重命名',
       onClick: () => {
         setShowRenameCollectionModal(true);
       }
@@ -437,7 +437,7 @@ const Collection = ({ collection, searchText }) => {
     {
       id: 'share',
       leftSection: IconShare,
-      label: 'Share',
+      label: '分享',
       onClick: () => {
         ensureCollectionIsMounted();
         setShowShareCollectionModal(true);
@@ -446,7 +446,7 @@ const Collection = ({ collection, searchText }) => {
     {
       id: 'generate-docs',
       leftSection: IconBook,
-      label: 'Generate Docs',
+      label: '生成文档',
       onClick: () => {
         ensureCollectionIsMounted();
         setShowGenerateDocumentationModal(true);
@@ -455,7 +455,7 @@ const Collection = ({ collection, searchText }) => {
     {
       id: 'collapse',
       leftSection: IconFoldDown,
-      label: 'Collapse',
+      label: '收起',
       onClick: handleCollapseFullCollection
     },
     {
@@ -467,8 +467,8 @@ const Collection = ({ collection, searchText }) => {
     ...(isMockServerEnabled ? [{
       id: 'create-mock-server',
       leftSection: IconServer,
-      label: 'Create Mock server',
-      rightSection: <StatusBadge status="info" size="xs">Beta</StatusBadge>,
+      label: '创建 Mock 服务器',
+      rightSection: <StatusBadge status="info" size="xs">测试版</StatusBadge>,
       onClick: openMockServerDashboard
     }] : []),
     {
@@ -478,13 +478,13 @@ const Collection = ({ collection, searchText }) => {
     {
       id: 'settings',
       leftSection: IconSettings,
-      label: 'Settings',
+      label: '设置',
       onClick: viewCollectionSettings
     },
     {
       id: 'terminal',
       leftSection: IconTerminal2,
-      label: 'Open in Terminal',
+      label: '在终端中打开',
       onClick: async () => {
         const collectionCwd = collection.pathname;
         await openDevtoolsAndSwitchToTerminal(dispatch, collectionCwd);
@@ -495,7 +495,7 @@ const Collection = ({ collection, searchText }) => {
           {
             id: 'move-to-workspace',
             leftSection: IconFileArrowRight,
-            label: 'Move into Workspace',
+            label: '移入工作区',
             testId: 'move-collection-to-workspace',
             onClick: () => {
               setShowMoveToWorkspaceModal(true);
@@ -506,7 +506,7 @@ const Collection = ({ collection, searchText }) => {
     {
       id: 'remove',
       leftSection: IconX,
-      label: 'Remove',
+      label: '移除',
       onClick: () => {
         setShowRemoveCollectionModal(true);
       }
@@ -618,7 +618,7 @@ const Collection = ({ collection, searchText }) => {
                     appendTo={dropdownContainerRef?.current || document.body}
                     popperOptions={{ strategy: 'fixed' }}
                   >
-                    <button className="ml-1 add-request-link">+ Add request</button>
+                    <button className="ml-1 add-request-link">+ 添加请求</button>
                   </MenuDropdown>
                 </div>
               </div>

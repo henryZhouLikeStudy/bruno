@@ -35,7 +35,7 @@ const getOsClass = () => {
 
 // Helper to get display name for workspace
 export const getWorkspaceDisplayName = (name) => {
-  if (!name) return 'Untitled Workspace';
+  if (!name) return '未命名工作区';
   return name;
 };
 
@@ -58,7 +58,7 @@ const AppTitleBar = () => {
         setIsFullScreen(fullscreen);
       })
       .catch((error) => {
-        console.error('Error getting initial fullscreen state:', error);
+        console.error('获取初始全屏状态时出错：', error);
       });
 
     const removeEnterFullScreenListener = ipcRenderer.on('main:enter-full-screen', () => {
@@ -85,7 +85,7 @@ const AppTitleBar = () => {
         setIsMaximized(maximized);
       })
       .catch((error) => {
-        console.error('Error getting initial maximized state:', error);
+        console.error('获取初始最大化状态时出错：', error);
       });
 
     const removeMaximizedListener = ipcRenderer.on('main:window-maximized', () => {
@@ -150,17 +150,17 @@ const AppTitleBar = () => {
     if (workspaceUid === activeWorkspaceUid) return;
 
     dispatch(switchWorkspace(workspaceUid));
-    toast.success(`Switched to ${getWorkspaceDisplayName(workspaces.find((w) => w.uid === workspaceUid)?.name)}`);
+    toast.success(`已切换到 ${getWorkspaceDisplayName(workspaces.find((w) => w.uid === workspaceUid)?.name)}`);
   };
 
   const handleOpenWorkspace = async () => {
     try {
       const result = await dispatch(openWorkspaceDialog());
       if (result) {
-        toast.success('Workspace opened successfully');
+        toast.success('工作区打开成功');
       }
     } catch (error) {
-      toast.error(error.message || 'Failed to open workspace');
+      toast.error(error.message || '打开工作区失败');
     }
   };
 
@@ -174,7 +174,7 @@ const AppTitleBar = () => {
     try {
       await dispatch(createWorkspaceWithUniqueName(defaultLocation));
     } catch (error) {
-      toast.error(error?.message || 'Failed to create workspace');
+      toast.error(error?.message || '创建工作区失败');
     }
   }, [preferences, dispatch]);
 
@@ -223,7 +223,7 @@ const AppTitleBar = () => {
               <ActionIcon
                 className={`pin-btn ${isPinned ? 'pinned' : ''}`}
                 onClick={(e) => handlePinWorkspace(workspace.uid, e)}
-                label={isPinned ? 'Unpin workspace' : 'Pin workspace'}
+                label={isPinned ? '取消固定工作区' : '固定工作区'}
                 size="sm"
               >
                 {isPinned ? <IconPinned size={14} stroke={1.5} /> : <IconPin size={14} stroke={1.5} />}
@@ -237,29 +237,29 @@ const AppTitleBar = () => {
 
     // Add label and action items
     items.push(
-      { type: 'label', label: 'Workspaces' },
+      { type: 'label', label: '工作区' },
       {
         id: 'create-workspace',
         leftSection: IconPlus,
-        label: 'Create workspace',
+        label: '新建工作区',
         onClick: handleCreateWorkspace
       },
       {
         id: 'open-workspace',
         leftSection: IconFolder,
-        label: 'Open workspace',
+        label: '打开工作区',
         onClick: handleOpenWorkspace
       },
       {
         id: 'import-workspace',
         leftSection: IconDownload,
-        label: 'Import workspace',
+        label: '导入工作区',
         onClick: handleImportWorkspace
       },
       {
         id: 'manage-workspaces',
         leftSection: IconSettings,
-        label: 'Manage workspaces',
+        label: '管理工作区',
         onClick: handleManageWorkspaces
       }
     );
@@ -280,7 +280,7 @@ const AppTitleBar = () => {
         <div className="titlebar-left">
           {showWindowControls && <AppMenu />}
 
-          <ActionIcon onClick={handleHomeClick} label="Home" size="lg" className="home-button">
+          <ActionIcon onClick={handleHomeClick} label="主页" size="lg" className="home-button">
             <IconHome size={16} stroke={1.5} />
           </ActionIcon>
 
@@ -307,7 +307,7 @@ const AppTitleBar = () => {
             {/* Toggle sidebar */}
             <ActionIcon
               onClick={handleToggleSidebar}
-              label={sidebarCollapsed ? 'Show sidebar' : 'Hide sidebar'}
+              label={sidebarCollapsed ? '显示侧边栏' : '隐藏侧边栏'}
               size="lg"
               data-testid="toggle-sidebar-button"
             >
@@ -317,7 +317,7 @@ const AppTitleBar = () => {
             {/* Toggle devtools */}
             <ActionIcon
               onClick={handleToggleDevtools}
-              label={isConsoleOpen ? 'Hide devtools' : 'Show devtools'}
+              label={isConsoleOpen ? '隐藏开发者工具' : '显示开发者工具'}
               size="lg"
               data-testid="toggle-devtools-button"
             >
@@ -332,21 +332,21 @@ const AppTitleBar = () => {
               <button
                 className="window-control-btn minimize"
                 onClick={handleMinimize}
-                aria-label="Minimize"
+                aria-label="最小化"
               >
                 <IconMinus size={16} stroke={1} />
               </button>
               <button
                 className="window-control-btn maximize"
                 onClick={handleMaximize}
-                aria-label={isMaximized ? 'Restore' : 'Maximize'}
+                aria-label={isMaximized ? '还原' : '最大化'}
               >
                 {isMaximized ? <IconCopy size={14} stroke={1} /> : <IconSquare size={14} stroke={1} />}
               </button>
               <button
                 className="window-control-btn close"
                 onClick={handleClose}
-                aria-label="Close"
+                aria-label="关闭"
               >
                 <IconX size={16} stroke={1} />
               </button>

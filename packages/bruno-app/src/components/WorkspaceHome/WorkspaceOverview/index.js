@@ -38,7 +38,7 @@ const WorkspaceOverview = ({ workspace }) => {
     }
 
     if (!workspace?.pathname) {
-      toast.error('Workspace path not found');
+      toast.error('未找到工作区路径');
       return;
     }
 
@@ -52,7 +52,7 @@ const WorkspaceOverview = ({ workspace }) => {
       dispatch(setIsCreatingCollection(true));
     } catch (error) {
       console.error('Error ensuring collections folder exists:', error);
-      toast.error('Error preparing workspace for collection creation');
+      toast.error('准备工作区以创建集合时出错');
     }
   };
 
@@ -143,16 +143,16 @@ const WorkspaceOverview = ({ workspace }) => {
           <div className="stats-row">
             <div className="stat-item">
               <span className="stat-value">{workspaceCollectionsCount}</span>
-              <span className="stat-label">Collections</span>
+              <span className="stat-label">集合</span>
             </div>
             <div className="stat-item">
               <span className="stat-value">{workspaceEnvironmentsCount}</span>
-              <span className="stat-label">Environments</span>
+              <span className="stat-label">环境</span>
             </div>
           </div>
 
           <div className="quick-actions-section">
-            <div className="section-title">Quick Actions</div>
+            <div className="section-title">快速操作</div>
             <div className="quick-actions-buttons">
               <Button
                 color="light"
@@ -161,7 +161,7 @@ const WorkspaceOverview = ({ workspace }) => {
                 onClick={handleCreateCollection}
                 disabled={isCreatingCollection}
               >
-                Create Collection
+                创建集合
               </Button>
               <Button
                 color="light"
@@ -169,7 +169,7 @@ const WorkspaceOverview = ({ workspace }) => {
                 icon={<IconFolder size={14} strokeWidth={1.5} />}
                 onClick={handleOpenCollection}
               >
-                Open Collection
+                打开集合
               </Button>
               <Button
                 color="light"
@@ -177,13 +177,13 @@ const WorkspaceOverview = ({ workspace }) => {
                 icon={<IconDownload size={14} strokeWidth={1.5} />}
                 onClick={handleImportCollection}
               >
-                Import Collection
+                导入集合
               </Button>
             </div>
           </div>
 
           <div className="collections-section">
-            <div className="section-title">Collections</div>
+            <div className="section-title">集合</div>
             <CollectionsList workspace={workspace} />
           </div>
         </div>

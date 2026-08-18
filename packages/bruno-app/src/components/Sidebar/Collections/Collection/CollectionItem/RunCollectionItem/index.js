@@ -60,31 +60,31 @@ const RunCollectionItem = ({ collectionUid, item, onClose }) => {
 
   return (
     <StyledWrapper>
-      <Modal size="md" title="Collection Runner" hideFooter={true} handleCancel={onClose}>
+      <Modal size="md" title="集合运行器" hideFooter={true} handleCancel={onClose}>
         <div>
           <div className="mb-1">
-            <span className="font-medium">Run</span>
-            <span className="ml-1 text-xs">({totalRequestItemsCountForFolderRun} requests)</span>
+            <span className="font-medium">运行</span>
+            <span className="ml-1 text-xs">（{totalRequestItemsCountForFolderRun} 个请求）</span>
           </div>
-          <div className="mb-3 description">This will only run the requests in this folder.</div>
+          <div className="mb-3 description">仅运行此文件夹中的请求。</div>
           <div className="mb-1">
-            <span className="font-medium">Recursive Run</span>
-            <span className="ml-1 text-xs">({totalRequestItemsCountForRecursiveFolderRun} requests)</span>
+            <span className="font-medium">递归运行</span>
+            <span className="ml-1 text-xs">（{totalRequestItemsCountForRecursiveFolderRun} 个请求）</span>
           </div>
-          <div className={`description ${isFolderLoading ? 'mb-2' : 'mb-6'}`}>This will run all the requests in this folder and all its subfolders.</div>
-          {isFolderLoading ? <div className="mb-8 warning">Requests in this folder are still loading.</div> : null}
-          {isCollectionRunInProgress ? <div className="mb-6 warning">A Collection Run is already in progress.</div> : null}
+          <div className={`description ${isFolderLoading ? 'mb-2' : 'mb-6'}`}>将运行此文件夹及其所有子文件夹中的请求。</div>
+          {isFolderLoading ? <div className="mb-8 warning">此文件夹中的请求仍在加载。</div> : null}
+          {isCollectionRunInProgress ? <div className="mb-6 warning">集合运行已在进行中。</div> : null}
 
           <hr className="divider" />
 
           {/* Timings */}
           <div className="flex flex-col items-start gap-2 mb-8">
-            <label htmlFor="runner-delay" className="block text-sm">Delay between requests (ms)</label>
+            <label htmlFor="runner-delay" className="block text-sm">请求间隔（毫秒）</label>
             <input
               id="runner-delay"
               type="number"
               className="textbox w-1/2"
-              placeholder="e.g. 5"
+              placeholder="例如 5"
               autoComplete="off"
               autoCorrect="off"
               autoCapitalize="off"
@@ -99,22 +99,22 @@ const RunCollectionItem = ({ collectionUid, item, onClose }) => {
 
           <div className="flex justify-end bruno-modal-footer">
             <Button type="button" color="secondary" variant="ghost" onClick={onClose} className="mr-3">
-              Cancel
+              取消
             </Button>
             {
               isCollectionRunInProgress
                 ? (
                     <Button type="submit" onClick={handleViewRunner}>
-                      View Run
+                      查看运行
                     </Button>
                   )
                 : (
                     <>
                       <Button type="submit" disabled={shouldDisableRecursiveFolderRun} onClick={() => onSubmit(true)} className="mr-3">
-                        Recursive Run
+                        递归运行
                       </Button>
                       <Button type="submit" disabled={shouldDisableFolderRun} onClick={() => onSubmit(false)}>
-                        Run
+                        运行
                       </Button>
                     </>
                   )

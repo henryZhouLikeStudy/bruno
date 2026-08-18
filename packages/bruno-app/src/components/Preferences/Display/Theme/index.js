@@ -13,7 +13,7 @@ const Theme = () => {
       theme: storedTheme
     },
     validationSchema: Yup.object({
-      theme: Yup.string().oneOf(['light', 'dark', 'system']).required('theme is required')
+      theme: Yup.string().oneOf(['light', 'dark', 'system']).required('主题为必填项')
     }),
     onSubmit: (values) => {
       setStoredTheme(values.theme);
@@ -37,7 +37,7 @@ const Theme = () => {
             checked={formik.values.theme === 'light'}
           />
           <label htmlFor="light-theme" className="ml-1 cursor-pointer select-none">
-            Light
+            浅色
           </label>
 
           <input
@@ -53,7 +53,7 @@ const Theme = () => {
             checked={formik.values.theme === 'dark'}
           />
           <label htmlFor="dark-theme" className="ml-1 cursor-pointer select-none">
-            Dark
+            深色
           </label>
 
           <input
@@ -69,7 +69,7 @@ const Theme = () => {
             checked={formik.values.theme === 'system'}
           />
           <label htmlFor="system-theme" className="ml-1 cursor-pointer select-none">
-            System
+            跟随系统
           </label>
         </div>
       </div>

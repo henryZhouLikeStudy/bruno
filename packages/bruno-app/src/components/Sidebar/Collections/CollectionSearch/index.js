@@ -9,7 +9,7 @@ const CollectionSearch = ({ searchText, setSearchText }) => {
         type="text"
         name="search"
         data-testid="sidebar-search-input"
-        placeholder="Search requests..."
+        placeholder="搜索请求..."
         id="search"
         autoComplete="off"
         autoCorrect="off"

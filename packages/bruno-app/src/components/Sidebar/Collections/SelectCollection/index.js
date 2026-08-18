@@ -9,7 +9,7 @@ const SelectCollection = ({ onClose, onSelect, title }) => {
 
   return (
     <StyledWrapper>
-      <Modal size="sm" title={title || 'Select Collection'} hideFooter={true} handleCancel={onClose}>
+      <Modal size="sm" title={title || '选择集合'} hideFooter={true} handleCancel={onClose}>
         <ul className="mb-2">
           {collections && collections.length ? (
             collections.map((c) => (
@@ -18,7 +18,7 @@ const SelectCollection = ({ onClose, onSelect, title }) => {
               </div>
             ))
           ) : (
-            <div>No collections found</div>
+            <div>未找到集合</div>
           )}
         </ul>
       </Modal>

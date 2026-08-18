@@ -10,23 +10,23 @@ import StyledWrapper from './StyledWrapper';
 const highlights = [
   {
     icon: IconFolderTabler,
-    title: 'Filesystem only',
-    desc: 'Collections are plain files on your disk. No cloud sync, no proprietary lock-in.'
+    title: '仅文件系统',
+    desc: '集合是你磁盘上的普通文件。没有云同步，没有专有锁定。'
   },
   {
     icon: IconGitFork,
-    title: 'Git-friendly',
-    desc: 'Every request is a readable file. Commit, branch, review, and collaborate using the tools you already know.'
+    title: '支持 Git',
+    desc: '每个请求都是一个可读文件。提交、分支、评审和协作都可以使用你已熟悉的工具。'
   },
   {
     icon: IconLock,
-    title: 'Privacy-focused',
-    desc: 'No account, no login. Bruno works entirely offline, your API keys never leave your machine.'
+    title: '注重隐私',
+    desc: '无需账户，无需登录。Bruno 完全离线运行，你的 API 密钥永远不会离开你的机器。'
   },
   {
     icon: IconRocket,
-    title: 'Fast and lightweight',
-    desc: 'Built to be snappy. No bloated runtimes, just a fast, focused tool for exploring and testing APIs.'
+    title: '快速且轻量',
+    desc: '为迅捷而生。没有臃肿的运行时，只有快速、专注的 API 探索和测试工具。'
   }
 ];
 

@@ -32,13 +32,13 @@ const ApiSpecs = () => {
 
   const handleOpenApiSpec = () => {
     dispatch(openApiSpec()).catch(
-      (err) => console.log(err) && toast.error('An error occurred while opening the API spec')
+      (err) => console.log(err) && toast.error('打开 API 规范时发生错误')
     );
   };
 
   const OpenLink = () => (
     <LinkStyle className="underline text-link cursor-pointer" theme={theme} onClick={() => handleOpenApiSpec()}>
-      Open
+      打开
     </LinkStyle>
   );
 
@@ -46,9 +46,9 @@ const ApiSpecs = () => {
     return (
       <StyledWrapper>
         <div className="text-xs text-center placeholder py-4">
-          <div>No API Specs found.</div>
+          <div>未找到 API 规范。</div>
           <div className="mt-2">
-            <OpenLink /> API Spec.
+            <OpenLink /> API 规范。
           </div>
         </div>
       </StyledWrapper>

@@ -20,8 +20,8 @@ const ConnectGitRemote = ({ collectionPath, collectionName, initialUrl = '', onC
     validationSchema: Yup.object({
       remoteUrl: Yup.string()
         .trim()
-        .required('Git remote URL is required')
-        .test('is-git-url', 'Enter a valid Git URL', (value) => isGitRepositoryUrl(value))
+        .required('Git 远程 URL 为必填项')
+        .test('is-git-url', '请输入有效的 Git URL', (value) => isGitRepositoryUrl(value))
     }),
     onSubmit: (values) => {
       dispatch(
@@ -32,7 +32,7 @@ const ConnectGitRemote = ({ collectionPath, collectionName, initialUrl = '', onC
         })
       )
         .then(() => {
-          toast.success('Git remote connected');
+          toast.success('Git 远程连接成功');
           onClose();
         })
         .catch(() => {
@@ -45,8 +45,8 @@ const ConnectGitRemote = ({ collectionPath, collectionName, initialUrl = '', onC
     inputRef.current?.focus();
   }, []);
 
-  const title = initialUrl ? 'Update Git Remote' : 'Connect to Git';
-  const confirmText = initialUrl ? 'Update' : 'Connect';
+  const title = initialUrl ? '更新 Git 远程' : '连接 Git';
+  const confirmText = initialUrl ? '更新' : '连接';
 
   return (
     <Modal size="md" title={title} confirmText={confirmText} handleConfirm={() => formik.handleSubmit()} handleCancel={onClose}>
@@ -54,21 +54,20 @@ const ConnectGitRemote = ({ collectionPath, collectionName, initialUrl = '', onC
         {collectionName ? (
           <div className="text-sm text-muted mb-3 leading-relaxed break-words space-y-2">
             <p className="m-0">
-              Linking{' '}
+              正在将{' '}
               <span className="font-medium text-inherit break-words" title={collectionName}>
                 {collectionName}
               </span>{' '}
-              to a remote Git repository.
+              连接到 Git 远程仓库。
             </p>
             <p className="m-0">
-              The URL is saved in <span className="font-mono">workspace.yml</span> only. Your collection files on disk are not
-              modified.
+              URL 仅保存在 <span className="font-mono">workspace.yml</span> 中，磁盘上的集合文件不会被修改。
             </p>
           </div>
         ) : null}
         <div>
           <label htmlFor="remoteUrl" className="block font-medium">
-            Git Remote URL
+            Git 远程 URL
           </label>
           <input
             id="remoteUrl"

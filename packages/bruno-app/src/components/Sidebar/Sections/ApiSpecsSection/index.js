@@ -17,7 +17,7 @@ const ApiSpecsSection = () => {
   const handleOpenApiSpec = () => {
     dispatch(openApiSpec()).catch((err) => {
       console.error(err);
-      toast.error('An error occurred while opening the API spec');
+      toast.error('打开 API 规范时发生错误');
     });
   };
 
@@ -25,7 +25,7 @@ const ApiSpecsSection = () => {
     {
       id: 'create-api-spec',
       leftSection: IconPlus,
-      label: 'Create API Spec',
+      label: '创建 API 规范',
       onClick: () => {
         setCreateApiSpecModalOpen(true);
       }
@@ -33,7 +33,7 @@ const ApiSpecsSection = () => {
     {
       id: 'open-api-spec',
       leftSection: IconFileCode,
-      label: 'Open API Spec',
+      label: '打开 API 规范',
       onClick: () => {
         handleOpenApiSpec();
       }
@@ -48,7 +48,7 @@ const ApiSpecsSection = () => {
         placement="bottom-end"
       >
         <ActionIcon
-          label="Add new API Spec"
+          label="新建 API 规范"
         >
           <IconPlus size={14} stroke={1.5} aria-hidden="true" />
         </ActionIcon>
@@ -65,7 +65,7 @@ const ApiSpecsSection = () => {
       )}
       <SidebarSection
         id="api-specs"
-        title="API Specs"
+        title="API 规范"
         icon={IconFileCode}
         actions={sectionActions}
         className="api-specs-section"

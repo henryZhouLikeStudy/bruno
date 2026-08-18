@@ -12,7 +12,7 @@ const ConfirmSwitchEnv = ({ onCancel }) => {
   const modalContent = (
     <Modal
       size="md"
-      title="Unsaved changes"
+      title="未保存的更改"
       disableEscapeKey={true}
       disableCloseOnOutsideClick={true}
       closeModalFadeTimeout={150}
@@ -25,14 +25,14 @@ const ConfirmSwitchEnv = ({ onCancel }) => {
     >
       <div className="flex items-center font-normal">
         <IconAlertTriangle color={warningColor} size={32} strokeWidth={1.5} />
-        <h1 className="ml-2 text-lg font-semibold">Hold on..</h1>
+        <h1 className="ml-2 text-lg font-semibold">请稍候…</h1>
       </div>
-      <div className="font-normal mt-4">You have unsaved changes in this environment.</div>
+      <div className="font-normal mt-4">当前环境有未保存的更改。</div>
 
       <div className="flex justify-end mt-6">
         <div>
           <Button color="warning" onClick={onCancel}>
-            Close
+            关闭
           </Button>
         </div>
       </div>

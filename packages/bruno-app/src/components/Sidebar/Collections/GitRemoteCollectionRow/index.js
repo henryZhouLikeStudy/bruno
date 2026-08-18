@@ -20,9 +20,9 @@ const GitRemoteCollectionRow = ({ entry }) => {
   const handleCopyUrl = async () => {
     try {
       await navigator.clipboard.writeText(entry.remote);
-      toast.success('Git URL copied');
+      toast.success('Git URL 已复制');
     } catch (e) {
-      toast.error('Failed to copy URL');
+      toast.error('复制 URL 失败');
     }
   };
 
@@ -35,19 +35,19 @@ const GitRemoteCollectionRow = ({ entry }) => {
     {
       id: 'clone-git',
       leftSection: IconBrandGit,
-      label: 'Clone from Git',
+      label: '从 Git 克隆',
       onClick: openCloneModal
     },
     {
       id: 'copy-url',
       leftSection: IconCopy,
-      label: 'Copy Git URL',
+      label: '复制 Git URL',
       onClick: handleCopyUrl
     },
     {
       id: 'remove-git-remote',
       leftSection: IconUnlink,
-      label: 'Remove Git Remote',
+      label: '移除 Git 远程',
       onClick: () => setShowRemoveGitModal(true)
     }
   ];
@@ -73,7 +73,7 @@ const GitRemoteCollectionRow = ({ entry }) => {
         className="git-collection-row"
         onClick={openCloneModal}
         onContextMenu={handleRightClick}
-        title={`${entry.name} — click to clone from ${entry.remote}`}
+        title={`${entry.name} — 点击从 ${entry.remote} 克隆`}
         data-testid="sidebar-git-collection-row"
       >
         <div className="flex flex-grow items-center overflow-hidden">

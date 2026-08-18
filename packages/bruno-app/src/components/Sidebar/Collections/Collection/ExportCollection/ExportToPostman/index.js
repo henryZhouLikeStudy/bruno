@@ -13,7 +13,7 @@ import { browseDirectory, exportCollectionToPostman } from 'providers/ReduxStore
 import { exportPostmanCollection } from 'utils/exporters/postman-collection';
 import StyledWrapper from './StyledWrapper';
 
-const FILE_EXISTS_ERROR = 'Name already exists in this location.';
+const FILE_EXISTS_ERROR = '该位置已存在相同名称。';
 
 const ExportToPostman = ({ onClose, onExported, collection }) => {
   const dispatch = useDispatch();
@@ -33,15 +33,15 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
     validationSchema: Yup.object({
       fileName: Yup.string()
         .trim()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
+        .min(1, '至少需要 1 个字符')
+        .max(255, '最多 255 个字符')
         .test('is-valid-name', function (value) {
           if (!value) return true;
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('Name is required'),
-      location: Yup.string().min(1, 'Location is required').required('Location is required')
+        .required('名称为必填项'),
+      location: Yup.string().min(1, '位置不能为空').required('位置为必填项')
     }),
     onSubmit: (values) => handleExport(values, false)
   });
@@ -56,7 +56,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
     try {
       const content = exportPostmanCollection(cloneDeep(collection), { preserveScripts });
       await dispatch(exportCollectionToPostman(values.location, `${values.fileName.trim()}.json`, content, overwrite));
-      toast.success('Collection exported successfully');
+      toast.success('集合导出成功');
       onExported();
     } catch (error) {
       const message = error?.message || String(error);
@@ -66,7 +66,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
         formik.setFieldError('fileName', FILE_EXISTS_ERROR);
         return;
       }
-      toast.error('Failed to export collection: ' + message);
+      toast.error('导出集合失败：' + message);
     } finally {
       setIsExporting(false);
     }
@@ -98,7 +98,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
     return (
       <div ref={ref} className="flex items-center text-link cursor-pointer">
         <button className="btn-advanced" type="button">
-          Options
+          选项
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -110,9 +110,9 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
       <StyledWrapper>
         <Modal
           size="md"
-          title="Export to Postman"
+          title="导出为 Postman"
           dataTestId="export-to-postman-modal"
-          confirmText={fileExists ? 'Replace' : 'Export'}
+          confirmText={fileExists ? '替换' : '导出'}
           confirmButtonColor={fileExists ? 'danger' : 'primary'}
           confirmDisabled={isExporting}
           handleConfirm={() => (fileExists ? handleReplace() : formik.handleSubmit())}
@@ -128,7 +128,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
                     setShowAdvancedOptions(!showAdvancedOptions);
                   }}
                 >
-                  {showAdvancedOptions ? 'Hide Advanced Options' : 'Show Advanced Options'}
+                  {showAdvancedOptions ? '隐藏高级选项' : '显示高级选项'}
                 </div>
               </Dropdown>
             </div>
@@ -136,7 +136,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
         >
           <form className="bruno-form" onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="fileName" className="block font-medium">
-              Name
+              名称
             </label>
             <div className="relative">
               <input
@@ -159,7 +159,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
             ) : null}
 
             <label htmlFor="location" className="block font-medium mt-4">
-              Location
+              位置
             </label>
             <input
               id="location"
@@ -179,7 +179,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
             ) : null}
             <div className="mt-1">
               <span className="text-link cursor-pointer hover:underline" onClick={browse}>
-                Browse
+                浏览
               </span>
             </div>
 
@@ -193,9 +193,9 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
                   data-testid="preserve-scripts-toggle"
                 />
                 <div>
-                  <span className="preserve-scripts-label">Preserve scripts</span>
+                  <span className="preserve-scripts-label">保留脚本</span>
                   <p className="preserve-scripts-description">
-                    Export Bruno scripts without translating them.
+                    导出不经过转换的 Bruno 脚本。
                   </p>
                 </div>
               </label>

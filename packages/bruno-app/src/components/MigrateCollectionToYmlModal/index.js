@@ -27,7 +27,6 @@ import {
   hasRequestChanges,
   isItemARequest
 } from 'utils/collections';
-import { pluralizeWord } from 'utils/common';
 import { getInvalidVariableNames } from 'utils/common/variables';
 import { isEnvironmentValidationError } from 'utils/environments';
 import Modal from 'components/Modal';
@@ -35,9 +34,9 @@ import Button from 'ui/Button';
 import StyledWrapper from './StyledWrapper';
 
 const PHASE_LABELS = {
-  parsing: 'Converting files',
-  writing: 'Writing yml files',
-  finalizing: 'Removing bru files'
+  parsing: '正在转换文件',
+  writing: '正在写入 yml 文件',
+  finalizing: '正在移除 bru 文件'
 };
 
 const MAX_UNSAVED_ITEMS_TO_SHOW = 5;
@@ -156,10 +155,10 @@ const MigrateCollectionToYmlModal = () => {
         migration.collectionName
       );
       if (result?.success) {
-        toast.success('Collection backup exported');
+        toast.success('集合备份已导出');
       }
     } catch (error) {
-      toast.error('Failed to export backup: ' + error.message);
+      toast.error('导出备份失败：' + error.message);
     } finally {
       setIsExporting(false);
     }
@@ -226,7 +225,7 @@ const MigrateCollectionToYmlModal = () => {
         const invalidNames = getInvalidVariableNames(draft.variables);
         if (invalidNames.length > 0) {
           hasSkippedEnvs = true;
-          toast.error(`Cannot save environment "${draft.name}": invalid variable name(s) — ${invalidNames.join(', ')}`);
+          toast.error(`无法保存环境 "${draft.name}"：变量名无效 — ${invalidNames.join(', ')}`);
           continue;
         }
 
@@ -236,8 +235,8 @@ const MigrateCollectionToYmlModal = () => {
           hasSkippedEnvs = true;
           toast.error(
             isEnvironmentValidationError(err)
-              ? `Cannot save environment "${draft.name}": ${err.message}`
-              : `Failed to save environment "${draft.name}"`
+              ? `无法保存环境 "${draft.name}"：${err.message}`
+              : `保存环境 "${draft.name}" 失败`
           );
         }
       }
@@ -249,7 +248,7 @@ const MigrateCollectionToYmlModal = () => {
       setShowDraftsStep(false);
       startMigration();
     } catch (error) {
-      toast.error('Failed to save changes');
+      toast.error('保存更改失败');
     } finally {
       setIsResolvingDrafts(false);
     }
@@ -265,13 +264,13 @@ const MigrateCollectionToYmlModal = () => {
   const renderDraftLabel = (draft) => {
     switch (draft.type) {
       case 'collection':
-        return `Collection: ${draft.name}`;
+        return `集合：${draft.name}`;
       case 'folder':
-        return `Folder: ${draft.name}`;
+        return `文件夹：${draft.name}`;
       case 'collection-environment':
-        return `Environment: ${draft.name}`;
+        return `环境：${draft.name}`;
       default:
-        return `Request: ${draft.filename || draft.name}`;
+        return `请求：${draft.filename || draft.name}`;
     }
   };
 
@@ -281,7 +280,7 @@ const MigrateCollectionToYmlModal = () => {
       <StyledWrapper>
         <Modal
           size="md"
-          title="Unsaved changes"
+          title="未保存的更改"
           dataTestId="migration-drafts-step"
           handleCancel={handleBackToConfirm}
           disableEscapeKey={true}
@@ -291,11 +290,10 @@ const MigrateCollectionToYmlModal = () => {
         >
           <div className="flex items-center">
             <IconAlertTriangle size={32} strokeWidth={1.5} className="warning-text" />
-            <h1 className="ml-2 text-lg font-medium">Hold on..</h1>
+            <h1 className="ml-2 text-lg font-medium">请稍候…</h1>
           </div>
           <p className="mt-4">
-            You have unsaved changes in <span className="font-medium">{totalDraftsCount}</span>{' '}
-            {pluralizeWord('item', totalDraftsCount)}. Save or discard them before migrating.
+            您在 <span className="font-medium">{totalDraftsCount}</span> 个项目中有未保存的更改。请先保存或放弃后再迁移。
           </p>
 
           <ul className="mt-4 ml-2">
@@ -308,15 +306,14 @@ const MigrateCollectionToYmlModal = () => {
 
           {totalDraftsCount > MAX_UNSAVED_ITEMS_TO_SHOW && (
             <p className="ml-2 mt-1 text-xs">
-              ...{totalDraftsCount - MAX_UNSAVED_ITEMS_TO_SHOW} additional{' '}
-              {pluralizeWord('item', totalDraftsCount - MAX_UNSAVED_ITEMS_TO_SHOW)} not shown
+              还有 {totalDraftsCount - MAX_UNSAVED_ITEMS_TO_SHOW} 个项目未显示
             </p>
           )}
 
           {hasBlockingTransients && (
             <div className="mt-4">
               <p className="text-xs mb-2">
-                Transient requests need to be saved individually before migrating.
+                临时请求需要在迁移前单独保存。
               </p>
               <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
                 {transientRequestDrafts.map((item) => (
@@ -335,7 +332,7 @@ const MigrateCollectionToYmlModal = () => {
                       onClick={() => handleSaveTransient(item)}
                       icon={<IconDeviceFloppy size={14} strokeWidth={1.5} />}
                     >
-                      Save
+                      保存
                     </Button>
                   </div>
                 ))}
@@ -351,7 +348,7 @@ const MigrateCollectionToYmlModal = () => {
                 onClick={handleDiscardAllDrafts}
                 disabled={isResolvingDrafts}
               >
-                Discard All
+                放弃全部
               </Button>
             </div>
             <div className="flex gap-2">
@@ -362,15 +359,15 @@ const MigrateCollectionToYmlModal = () => {
                 onClick={handleBackToConfirm}
                 disabled={isResolvingDrafts}
               >
-                Back
+                返回
               </Button>
               <Button
                 data-testid="migration-drafts-save-all"
                 onClick={handleSaveAllDrafts}
                 disabled={isResolvingDrafts || hasBlockingTransients}
-                title={hasBlockingTransients ? 'Save transient requests individually first' : ''}
+                title={hasBlockingTransients ? '请先单独保存临时请求' : ''}
               >
-                {isResolvingDrafts ? 'Saving…' : totalDraftsCount > 1 ? 'Save All and Migrate' : 'Save and Migrate'}
+                {isResolvingDrafts ? '保存中…' : totalDraftsCount > 1 ? '保存全部并迁移' : '保存并迁移'}
               </Button>
             </div>
           </div>
@@ -383,14 +380,14 @@ const MigrateCollectionToYmlModal = () => {
   const progressPercent = migration.total ? Math.round((migration.current / migration.total) * 100) : 0;
   const progressLabel = migration.phase
     ? `${PHASE_LABELS[migration.phase] || migration.phase}: ${migration.current}/${migration.total}`
-    : 'Preparing…';
+    : '准备中…';
 
   return (
     <StyledWrapper>
       <Modal
         size="md"
-        title="Migrate to YML format"
-        confirmText={isMigrating ? (isCancelling ? 'Cancelling…' : 'Cancel') : 'Migrate'}
+        title="迁移为 YML 格式"
+        confirmText={isMigrating ? (isCancelling ? '正在取消…' : '取消') : '迁移'}
         confirmButtonColor={isMigrating ? 'danger' : 'primary'}
         confirmDisabled={confirmDisabled}
         handleConfirm={isMigrating ? handleCancelMigration : handleMigrateClick}
@@ -402,7 +399,7 @@ const MigrateCollectionToYmlModal = () => {
       >
         <div>
           <p>
-            This will convert all files in <strong>{migration.collectionName}</strong> from <code>.bru</code> format to <code>.yml</code> format.
+            此操作会将 <strong>{migration.collectionName}</strong> 中的所有文件从 <code>.bru</code> 格式转换为 <code>.yml</code> 格式。
           </p>
           {isMigrating ? (
             <div
@@ -412,7 +409,7 @@ const MigrateCollectionToYmlModal = () => {
               aria-valuenow={progressPercent}
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-label={isCancelling ? 'Cancelling and restoring the collection' : progressLabel}
+              aria-label={isCancelling ? '正在取消并恢复集合' : progressLabel}
             >
               <div className="migration-progress-track">
                 <div
@@ -422,29 +419,29 @@ const MigrateCollectionToYmlModal = () => {
                 />
               </div>
               <div className="migration-progress-label" data-testid="migration-progress-label">
-                {isCancelling ? 'Cancelling and restoring the collection…' : progressLabel}
+                {isCancelling ? '正在取消并恢复集合…' : progressLabel}
               </div>
             </div>
           ) : (
             <>
               <div className="mt-4 text-sm text-muted">
-                <p className="font-medium mb-2">What will happen:</p>
+                <p className="font-medium mb-2">将会发生的变化：</p>
                 <ul className="list-disc ml-5 flex flex-col gap-1">
-                  <li>All <code>.bru</code> request files will be converted to <code>.yml</code></li>
-                  <li>Environment files will be converted to YML format</li>
-                  <li><code>bruno.json</code> will be replaced with <code>opencollection.yml</code></li>
-                  <li>Open tabs will be closed and the collection will be reloaded</li>
+                  <li>所有 <code>.bru</code> 请求文件将被转换为 <code>.yml</code></li>
+                  <li>环境文件将被转换为 YML 格式</li>
+                  <li><code>bruno.json</code> 将被替换为 <code>opencollection.yml</code></li>
+                  <li>已打开的标签页将被关闭，集合将重新加载</li>
                 </ul>
                 {!isCollectionMounted && (
-                  <p className="mt-3">Waiting for the collection to finish loading before migration can start…</p>
+                  <p className="mt-3">正在等待集合加载完成后才能开始迁移…</p>
                 )}
               </div>
               <div className="backup-section mt-4">
                 <div className="backup-section-head">
-                  <span className="backup-section-title">Backup</span>
+                  <span className="backup-section-title">备份</span>
                 </div>
                 <p className="backup-section-help">
-                  Export this collection as a ZIP archive before migrating, in case you want to restore it later.
+                  在迁移前将此集合导出为 ZIP 归档，以便日后需要时恢复。
                 </p>
                 <div className="backup-section-action">
                   <Button
@@ -455,7 +452,7 @@ const MigrateCollectionToYmlModal = () => {
                     onClick={handleExportBackup}
                     disabled={isExporting}
                   >
-                    {isExporting ? 'Exporting…' : 'Export Collection'}
+                    {isExporting ? '正在导出…' : '导出集合'}
                   </Button>
                 </div>
               </div>

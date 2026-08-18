@@ -268,8 +268,8 @@ const RequestTab = ({ tab, collection, tabIndex, collectionRequestTabs, folderUi
           window.dispatchEvent(new Event('dotenv-save'));
         } else {
           dispatch(saveEnvironment(variables, environmentUid, collection.uid))
-            .then(() => toast.success('Changes saved successfully'))
-            .catch(saveErrorHandler('Failed to save environment'));
+            .then(() => toast.success('更改已成功保存'))
+            .catch(saveErrorHandler('保存环境失败'));
         }
       }
     } else if (tab.type === 'global-environment-settings' || tab.type === 'workspaceEnvironments') {
@@ -279,8 +279,8 @@ const RequestTab = ({ tab, collection, tabIndex, collectionRequestTabs, folderUi
           window.dispatchEvent(new Event('dotenv-save'));
         } else {
           dispatch(saveGlobalEnvironment({ variables, environmentUid }))
-            .then(() => toast.success('Changes saved successfully'))
-            .catch(saveErrorHandler('Failed to save global environment'));
+            .then(() => toast.success('更改已成功保存'))
+            .catch(saveErrorHandler('保存全局环境失败'));
         }
       }
     } else if (tab.type === 'folder-settings') {
@@ -440,9 +440,9 @@ const RequestTab = ({ tab, collection, tabIndex, collectionRequestTabs, folderUi
                     dispatch(clearEnvironmentsDraft({ collectionUid: collection.uid }));
                     dispatch(closeTabs({ tabUids: [tab.uid] }));
                     setShowConfirmEnvironmentClose(false);
-                    toast.success('Environment saved');
+                    toast.success('环境已保存');
                   })
-                  .catch(saveErrorHandler('Failed to save environment'));
+                  .catch(saveErrorHandler('保存环境失败'));
               }
             }}
           />
@@ -488,9 +488,9 @@ const RequestTab = ({ tab, collection, tabIndex, collectionRequestTabs, folderUi
                     dispatch(clearGlobalEnvironmentDraft());
                     dispatch(closeTabs({ tabUids: [tab.uid] }));
                     setShowConfirmGlobalEnvironmentClose(false);
-                    toast.success('Global environment saved');
+                    toast.success('全局环境已保存');
                   })
-                  .catch(saveErrorHandler('Failed to save global environment'));
+                  .catch(saveErrorHandler('保存全局环境失败'));
               }
             }}
           />
@@ -774,51 +774,51 @@ function RequestTabMenu({ menuDropdownRef, tabLabelRef, collectionRequestTabs, t
   const menuItems = useMemo(() => [
     {
       id: 'new-request',
-      label: 'New Request',
+      label: '新建请求',
       onClick: () => setShowAddNewRequestModal(true)
     },
     {
       id: 'clone-request',
-      label: 'Clone Request',
+      label: '克隆请求',
       onClick: () => setShowCloneRequestModal(true)
     },
     {
       id: 'revert-changes',
-      label: 'Revert Changes',
+      label: '撤销更改',
       onClick: handleRevertChanges,
       disabled: !currentTabItem?.draft
     },
     {
       id: 'close',
-      label: 'Close',
+      label: '关闭',
       onClick: () => handleCloseTab(currentTabUid)
     },
     {
       id: 'close-others',
-      label: 'Close Others',
+      label: '关闭其他',
       onClick: handleCloseOtherTabs,
       disabled: !hasOtherTabs
     },
     {
       id: 'close-left',
-      label: 'Close to the Left',
+      label: '关闭左侧标签',
       onClick: handleCloseTabsToTheLeft,
       disabled: !hasLeftTabs
     },
     {
       id: 'close-right',
-      label: 'Close to the Right',
+      label: '关闭右侧标签',
       onClick: handleCloseTabsToTheRight,
       disabled: !hasRightTabs
     },
     {
       id: 'close-saved',
-      label: 'Close Saved',
+      label: '关闭已保存的标签',
       onClick: handleCloseSavedTabs
     },
     {
       id: 'close-all',
-      label: 'Close All',
+      label: '关闭全部',
       onClick: handleCloseAllTabs
     }
   ], [currentTabUid, currentTabItem, hasOtherTabs, hasLeftTabs, hasRightTabs, collection, collectionRequestTabs, tabIndex, dispatch]);

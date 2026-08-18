@@ -46,7 +46,7 @@ const CertFileInput = ({ label, name, value, inputRef, onSelect, onClear, error,
           <span className="truncate max-w-[260px]" title={value}>
             {path.basename(value)}
           </span>
-          <ActionIcon type="button" label="Remove file" size="sm" colorOnHover={dangerColor} onClick={onClear}>
+          <ActionIcon type="button" label="移除文件" size="sm" colorOnHover={dangerColor} onClick={onClear}>
             <IconX size={14} strokeWidth={1.5} />
           </ActionIcon>
         </div>
@@ -58,7 +58,7 @@ const CertFileInput = ({ label, name, value, inputRef, onSelect, onClear, error,
           onClick={() => inputRef.current?.click()}
           data-testid={`choose-file-${name}`}
         >
-          Choose file
+          选择文件
         </Button>
       )}
       {touched && error ? <div className="text-red-500 text-xs">{error}</div> : null}
@@ -94,7 +94,7 @@ const ClientCertSettings = () => {
           }
         }
       })
-    ).catch(() => toast.error('Failed to save preferences'));
+    ).catch(() => toast.error('保存偏好设置失败'));
   };
 
   const formik = useFormik({
@@ -110,19 +110,19 @@ const ClientCertSettings = () => {
       domain: Yup.string()
         .required()
         .trim()
-        .test('not-empty-after-trim', 'Domain is required', (value) => value && value.trim().length > 0),
+        .test('not-empty-after-trim', '域名必填', (value) => value && value.trim().length > 0),
       type: Yup.string().required().oneOf(['cert', 'pfx']),
       certFilePath: Yup.string().when('type', {
         is: (type) => type == 'cert',
-        then: Yup.string().min(1, 'certFilePath is a required field').required()
+        then: Yup.string().min(1, '证书文件路径为必填字段').required()
       }),
       keyFilePath: Yup.string().when('type', {
         is: (type) => type == 'cert',
-        then: Yup.string().min(1, 'keyFilePath is a required field').required()
+        then: Yup.string().min(1, '密钥文件路径为必填字段').required()
       }),
       pfxFilePath: Yup.string().when('type', {
         is: (type) => type == 'pfx',
-        then: Yup.string().min(1, 'pfxFilePath is a required field').required()
+        then: Yup.string().min(1, 'PFX 文件路径为必填字段').required()
       }),
       passphrase: Yup.string()
     }),
@@ -228,8 +228,8 @@ const ClientCertSettings = () => {
 
   return (
     <StyledWrapper className="w-full h-full">
-      <h1 className="font-medium text-[0.9375rem]">Client Certificates</h1>
-      <div className="text-xs mt-1 text-muted">Add client certificates to be used for specific domains.</div>
+      <h1 className="font-medium text-[0.9375rem]">客户端证书</h1>
+      <div className="text-xs mt-1 text-muted">为指定域名添加要使用的客户端证书。</div>
 
       <ListGroup
         className="mt-5"
@@ -237,11 +237,11 @@ const ClientCertSettings = () => {
         getKey={(_, index) => `client-cert-${index}`}
         emptyState={{
           icon: <IconCertificate size={24} strokeWidth={1.2} />,
-          title: 'No client certificates',
-          text: 'Certificates added here are sent automatically with requests to their matching domains.'
+          title: '没有客户端证书',
+          text: '此处添加的证书会自动随请求发送到匹配的域名。'
         }}
         addButton={{
-          label: 'Add Certificate',
+          label: '添加证书',
           onClick: openAddCertModal,
           icon: <IconPlus size={15} strokeWidth={1.5} />,
           dataTestId: 'add-client-cert'
@@ -256,10 +256,10 @@ const ClientCertSettings = () => {
                   size="2xs"
                   isOn={!clientCert.disabled}
                   handleToggle={() => handleToggleDisabled(index)}
-                  title={clientCert.disabled ? 'Enable certificate' : 'Disable certificate'}
+                  title={clientCert.disabled ? '启用证书' : '禁用证书'}
                 />
                 <ActionIcon
-                  label="Remove certificate"
+                  label="移除证书"
                   colorOnHover={theme.colors.text.danger}
                   onClick={() => handleRemove(index)}
                 >
@@ -268,24 +268,24 @@ const ClientCertSettings = () => {
               </>
             )}
           >
-            <CertField label="Host" value={clientCert.domain} title={clientCert.domain} />
+            <CertField label="主机" value={clientCert.domain} title={clientCert.domain} />
             {clientCert.type === 'pfx' ? (
-              <CertField label="PFX File" value={path.basename(clientCert.pfxFilePath || '')} title={clientCert.pfxFilePath} />
+              <CertField label="PFX 文件" value={path.basename(clientCert.pfxFilePath || '')} title={clientCert.pfxFilePath} />
             ) : (
               <>
-                <CertField label="Cert File" value={path.basename(clientCert.certFilePath || '')} title={clientCert.certFilePath} />
-                <CertField label="Key File" value={path.basename(clientCert.keyFilePath || '')} title={clientCert.keyFilePath} />
+                <CertField label="证书文件" value={path.basename(clientCert.certFilePath || '')} title={clientCert.certFilePath} />
+                <CertField label="密钥文件" value={path.basename(clientCert.keyFilePath || '')} title={clientCert.keyFilePath} />
               </>
             )}
             {clientCert.passphrase ? (
               <CertField
-                label="Passphrase"
+                label="密码短语"
                 value={visiblePassphrases.includes(index) ? clientCert.passphrase : '••••••••'}
                 action={(
                   <ActionIcon
                     size="sm"
                     className={visiblePassphrases.includes(index) ? 'stay-visible' : ''}
-                    label={visiblePassphrases.includes(index) ? 'Hide passphrase' : 'Show passphrase'}
+                    label={visiblePassphrases.includes(index) ? '隐藏密码短语' : '显示密码短语'}
                     onClick={() => togglePassphraseVisibility(index)}
                   >
                     {visiblePassphrases.includes(index) ? (
@@ -304,20 +304,20 @@ const ClientCertSettings = () => {
       {showAddCertModal && (
         <Modal
           size="md"
-          title="Add Client Certificate"
-          confirmText="Add"
+          title="添加客户端证书"
+          confirmText="添加"
           dataTestId="add-client-cert-modal"
           handleConfirm={formik.handleSubmit}
           handleCancel={() => setShowAddCertModal(false)}
         >
           <div className="text-xs mb-4 text-muted">
-            The certificate and key files are stored as absolute paths and apply to every collection.
+            证书和密钥文件以绝对路径存储，并应用于所有集合。
           </div>
           {/* Submission is driven by the Modal's confirm button/Enter (handleConfirm); prevent the form's own submit to avoid firing twice */}
           <form className="bruno-form" onSubmit={(e) => e.preventDefault()}>
             <div className="mb-3 flex items-start">
               <label className="settings-label mt-1" htmlFor="domain">
-                Domain
+                域名
               </label>
               <div className="flex flex-col gap-1">
                 <div className="relative flex items-center">
@@ -345,7 +345,7 @@ const ClientCertSettings = () => {
             </div>
             <div className="mb-3 flex items-center">
               <label id="type-label" className="settings-label">
-                Type
+                类型
               </label>
               <div className="type-picker" role="radiogroup" aria-labelledby="type-label">
                 <button
@@ -355,7 +355,7 @@ const ClientCertSettings = () => {
                   className={`type-option ${formik.values.type === 'cert' ? 'active' : ''}`}
                   onClick={() => handleTypeChange('cert')}
                 >
-                  Cert &amp; Key
+                  证书与密钥
                 </button>
                 <button
                   type="button"
@@ -371,7 +371,7 @@ const ClientCertSettings = () => {
             {formik.values.type === 'cert' ? (
               <>
                 <CertFileInput
-                  label="Cert file"
+                  label="证书文件"
                   name="certFilePath"
                   value={formik.values.certFilePath}
                   inputRef={certFilePathInputRef}
@@ -382,7 +382,7 @@ const ClientCertSettings = () => {
                   dangerColor={theme.colors.text.danger}
                 />
                 <CertFileInput
-                  label="Key file"
+                  label="密钥文件"
                   name="keyFilePath"
                   value={formik.values.keyFilePath}
                   inputRef={keyFilePathInputRef}
@@ -395,7 +395,7 @@ const ClientCertSettings = () => {
               </>
             ) : (
               <CertFileInput
-                label="PFX file"
+                label="PFX 文件"
                 name="pfxFilePath"
                 value={formik.values.pfxFilePath}
                 inputRef={pfxFilePathInputRef}
@@ -408,7 +408,7 @@ const ClientCertSettings = () => {
             )}
             <div className="mb-3 flex items-start">
               <label className="settings-label mt-1" htmlFor="passphrase">
-                Passphrase
+                密码短语
               </label>
               <div className="flex flex-col gap-1">
                 <div className="textbox flex flex-row items-center w-[300px] h-[1.70rem] relative">

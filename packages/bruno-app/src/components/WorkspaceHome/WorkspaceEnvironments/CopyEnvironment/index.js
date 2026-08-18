@@ -17,18 +17,18 @@ const CopyEnvironment = ({ environment, onClose }) => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(50, 'must be 50 characters or less')
-        .required('name is required')
+        .min(1, '至少需要 1 个字符')
+        .max(50, '最多 50 个字符')
+        .required('名称为必填项')
     }),
     onSubmit: (values) => {
       dispatch(copyGlobalEnvironment({ name: values.name, environmentUid: environment.uid }))
         .then(() => {
-          toast.success('Environment created!');
+          toast.success('环境创建成功！');
           onClose();
         })
         .catch((error) => {
-          toast.error('An error occurred while creating the environment');
+          toast.error('创建环境时出错');
           console.error(error);
         });
     }
@@ -46,11 +46,11 @@ const CopyEnvironment = ({ environment, onClose }) => {
 
   return (
     <Portal>
-      <Modal size="sm" title="Copy Environment" confirmText="Copy" handleConfirm={onSubmit} handleCancel={onClose}>
+      <Modal size="sm" title="复制环境" confirmText="复制" handleConfirm={onSubmit} handleCancel={onClose}>
         <form className="bruno-form" onSubmit={(e) => e.preventDefault()}>
           <div>
             <label htmlFor="environment-name" className="block font-semibold">
-              New Environment Name
+              新环境名称
             </label>
             <input
               id="environment-name"

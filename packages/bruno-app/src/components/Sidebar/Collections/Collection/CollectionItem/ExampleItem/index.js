@@ -114,7 +114,7 @@ const ExampleItem = ({ example, item, collection }) => {
     ) {
       setGenerateCodeItemModalOpen(true);
     } else {
-      toast.error('URL is required');
+      toast.error('URL 为必填项');
     }
   };
 
@@ -130,7 +130,7 @@ const ExampleItem = ({ example, item, collection }) => {
     }));
     dispatch(saveRequest(item.uid, collection.uid, true))
       .then(() => {
-        toast.success(`Example renamed to "${newName}"`);
+        toast.success(`示例已重命名为 "${newName}"`);
         setShowRenameModal(false);
       });
   };
@@ -141,21 +141,21 @@ const ExampleItem = ({ example, item, collection }) => {
       {
         id: 'rename',
         leftSection: IconEdit,
-        label: 'Rename',
+        label: '重命名',
         onClick: handleRename,
         testId: 'response-example-rename-option'
       },
       {
         id: 'clone',
         leftSection: IconCopy,
-        label: 'Clone',
+        label: '克隆',
         onClick: handleClone,
         testId: 'response-example-clone-option'
       },
       {
         id: 'generate-code',
         leftSection: IconCode,
-        label: 'Generate Code',
+        label: '生成代码',
         onClick: handleGenerateCode,
         testId: 'response-example-generate-code-option'
       },
@@ -163,7 +163,7 @@ const ExampleItem = ({ example, item, collection }) => {
       {
         id: 'delete',
         leftSection: IconTrash,
-        label: 'Delete',
+        label: '删除',
         className: 'delete-item',
         onClick: handleDelete,
         testId: 'response-example-delete-option'
@@ -226,19 +226,19 @@ const ExampleItem = ({ example, item, collection }) => {
       {showRenameModal && (
         <Modal
           size="sm"
-          title="Rename Example"
+          title="重命名示例"
           handleCancel={() => {
             setShowRenameModal(false);
             setEditName(example.name); // Reset to original name on cancel
           }}
           handleConfirm={() => handleRenameConfirm(editName)}
-          confirmText="Rename"
-          cancelText="Cancel"
+          confirmText="重命名"
+          cancelText="取消"
           confirmDisabled={!editName || !editName.trim()}
         >
           <div>
             <label htmlFor="renameExampleName" className="block font-medium">
-              Example Name
+              示例名称
             </label>
             <input
               data-testid="rename-example-name-input"
@@ -247,7 +247,7 @@ const ExampleItem = ({ example, item, collection }) => {
               className="textbox mt-2"
               value={editName}
               onChange={(e) => setEditName(e.target.value)}
-              placeholder="Enter example name..."
+              placeholder="输入示例名称..."
               autoFocus
               required
             />

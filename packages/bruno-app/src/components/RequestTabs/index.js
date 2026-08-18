@@ -123,7 +123,7 @@ const RequestTabs = () => {
           )}
           <div className="flex items-center gap-2 pl-2" ref={collectionTabsRef}>
             <div className={classnames('scroll-chevrons', { hidden: !showChevrons })}>
-              <ActionIcon size="lg" onClick={leftSlide} aria-label="Left Chevron" style={{ marginBottom: '3px' }}>
+              <ActionIcon size="lg" onClick={leftSlide} aria-label="向左滚动" style={{ marginBottom: '3px' }}>
                 <IconChevronLeft size={18} strokeWidth={1.5} />
               </ActionIcon>
             </div>
@@ -175,7 +175,7 @@ const RequestTabs = () => {
             )}
 
             <div className={classnames('scroll-chevrons', { hidden: !showChevrons })}>
-              <ActionIcon size="lg" onClick={rightSlide} aria-label="Right Chevron" style={{ marginBottom: '3px' }}>
+              <ActionIcon size="lg" onClick={rightSlide} aria-label="向右滚动" style={{ marginBottom: '3px' }}>
                 <IconChevronRight size={18} strokeWidth={1.5} />
               </ActionIcon>
             </div>

@@ -67,18 +67,18 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
       ...prev,
       {
         step: 'clone',
-        title: 'Cloning repository',
+        title: '正在克隆仓库',
         completed: false
       }
     ]);
   };
 
   const cloneFinished = () => {
-    toast.success('Repository cloned successfully');
+    toast.success('仓库克隆成功');
     setSteps((prev) =>
       prev.map((step) =>
         step.step === 'clone'
-          ? { ...step, title: 'Cloning successful', completed: true, info: '' }
+          ? { ...step, title: '克隆成功', completed: true, info: '' }
           : step
       )
     );
@@ -88,7 +88,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
     setSteps((prev) =>
       prev.map((step) =>
         step.step === 'clone'
-          ? { ...step, title: 'Cloning failed', completed: true, error: true }
+          ? { ...step, title: '克隆失败', completed: true, error: true }
           : step
       )
     );
@@ -99,17 +99,17 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
       ...prev,
       {
         step: 'scan',
-        title: 'Scanning for Bruno files',
+        title: '正在扫描 Bruno 文件',
         completed: false
       }
     ]);
   };
 
   const scanFinished = () => {
-    toast.success('Repository scanned successfully');
+    toast.success('仓库扫描成功');
     setSteps((prev) =>
       prev.map((step) =>
-        step.step === 'scan' ? { ...step, title: 'Scan successful', completed: true, info: '' } : step
+        step.step === 'scan' ? { ...step, title: '扫描成功', completed: true, info: '' } : step
       )
     );
   };
@@ -121,8 +121,8 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
       collectionLocation: defaultLocation
     },
     validationSchema: Yup.object({
-      repositoryUrl: Yup.string().required('Repository URL is required'),
-      collectionLocation: Yup.string().min(1, 'Location is required').required('Location is required')
+      repositoryUrl: Yup.string().required('仓库 URL 为必填项'),
+      collectionLocation: Yup.string().min(1, '位置为必填项').required('位置为必填项')
     }),
     onSubmit: async (values) => {
       try {
@@ -205,14 +205,14 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
           onClick={handleBackButtonClick}
           data-testid="clone-git-repository-modal-back-btn"
         >
-          Back
+          返回
         </Button>
       );
     }
     if (isScanCompleted() && collectionPaths?.length > 0) {
       return (
         <SelectionFooter>
-          <span>{selectedCollectionPaths.length}</span> of {collectionPaths.length} selected
+          已选择 <span>{selectedCollectionPaths.length}</span> / {collectionPaths.length}
         </SelectionFooter>
       );
     }
@@ -222,13 +222,13 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
   const handleConfirm = () => {
     const buttonText = getConfirmText();
     switch (buttonText) {
-      case 'Clone':
+      case '克隆':
         formik.handleSubmit();
         break;
-      case 'Close':
+      case '关闭':
         onClose();
         break;
-      case 'Open':
+      case '打开':
         if (collectionPaths.length > 0 && selectedCollectionPaths.length > 0) {
           dispatch(openMultipleCollections(selectedCollectionPaths));
           onClose();
@@ -242,10 +242,10 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
 
   const getConfirmText = () =>
     !steps.length
-      ? 'Clone'
+      ? '克隆'
       : steps.some((step) => !step.completed || step.error || (isScanCompleted() && !collectionPaths?.length))
-        ? 'Close'
-        : 'Open';
+        ? '关闭'
+        : '打开';
 
   if (!gitVersion) {
     return <GitNotFoundModal onClose={onClose} />;
@@ -255,7 +255,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
     <Portal id="clone-repository-portal">
       <Modal
         size="md"
-        title="Clone Git Repository"
+        title="克隆 Git 仓库"
         confirmText={getConfirmText()}
         handleConfirm={handleConfirm}
         handleCancel={onClose}
@@ -285,7 +285,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
                   : (
                       <>
                         <label htmlFor="repository-url" className="flex items-center font-semibold">
-                          Git Repository URL
+                          Git 仓库 URL
                         </label>
                         <input
                           id="repository-url"
@@ -306,7 +306,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
                   <div className="text-red-500">{formik.errors.repositoryUrl}</div>
                 )}
                 <label htmlFor="collection-location" className="block font-semibold mt-3">
-                  Location
+                  位置
                 </label>
                 <input
                   id="collection-location"
@@ -326,7 +326,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
                 )}
                 <div className="mt-1">
                   <span className="text-link cursor-pointer hover:underline" onClick={browse}>
-                    Browse
+                    浏览
                   </span>
                 </div>
               </div>
@@ -359,17 +359,17 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
               )}
               {isScanCompleted() && (
                 <div className="w-full min-w-0 flex flex-col gap-3">
-                  <SkippedPathsWarning paths={skippedCollectionPaths} itemNoun="collections" />
+                  <SkippedPathsWarning paths={skippedCollectionPaths} itemNoun="集合" />
                   {collectionPaths.length === 0 && (
                     <div className="scan-warning flex items-start gap-2">
                       <IconAlertCircle className="scan-warning-icon" size={18} strokeWidth={1.5} />
-                      <div>No Bruno collections were found in this repository.</div>
+                      <div>未在此仓库中找到 Bruno 集合。</div>
                     </div>
                   )}
                   {collectionPaths.length > 0 && (
                     <SelectionList
-                      title="Collections"
-                      searchPlaceholder="Search Collections"
+                      title="集合"
+                      searchPlaceholder="搜索集合"
                       items={collectionPaths}
                       selectedItems={selectedCollectionPaths}
                       onSelectAll={handleSelectAllCollections}

@@ -75,13 +75,13 @@ const StatusBar = () => {
       <div className="status-bar">
         <div className="status-bar-section">
           <div className="status-bar-group">
-            <ToolHint text="Preferences" toolhintId="Preferences" place="top-start" offset={10}>
+            <ToolHint text="偏好设置" toolhintId="Preferences" place="top-start" offset={10}>
               <button
                 className="status-bar-button preferences-button"
                 data-trigger="preferences"
                 onClick={handlePreferencesClick}
                 tabIndex={0}
-                aria-label="Open Preferences"
+                aria-label="打开偏好设置"
               >
                 <IconSettings size={16} strokeWidth={1.5} aria-hidden="true" />
               </button>
@@ -92,26 +92,26 @@ const StatusBar = () => {
                 className="status-bar-button"
                 data-trigger="theme"
                 tabIndex={0}
-                aria-label="Change Theme"
+                aria-label="切换主题"
               >
                 <IconPalette size={16} strokeWidth={1.5} aria-hidden="true" />
               </button>
             </ThemeDropdown>
 
-            <ToolHint text="Notifications" toolhintId="Notifications" place="top" offset={10}>
+            <ToolHint text="通知" toolhintId="Notifications" place="top" offset={10}>
               <div className="status-bar-button">
                 <Notifications />
               </div>
             </ToolHint>
 
-            <ToolHint text="GitHub Repository" toolhintId="GitHub" place="top" offset={10}>
+            <ToolHint text="GitHub 仓库" toolhintId="GitHub" place="top" offset={10}>
               <button
                 className="status-bar-button"
                 onClick={() => {
                   window?.ipcRenderer?.openExternal('https://github.com/usebruno/bruno');
                 }}
                 tabIndex={0}
-                aria-label="Open GitHub Repository"
+                aria-label="打开 GitHub 仓库"
               >
                 <IconBrandGithub size={16} strokeWidth={1.5} aria-hidden="true" />
               </button>
@@ -126,11 +126,11 @@ const StatusBar = () => {
               data-trigger="search"
               onClick={openGlobalSearch}
               tabIndex={0}
-              aria-label="Global Search"
+              aria-label="全局搜索"
             >
               <div className="console-button-content">
                 <IconSearch size={16} strokeWidth={1.5} aria-hidden="true" />
-                <span className="console-label">Search</span>
+                <span className="console-label">搜索</span>
               </div>
             </button>
 
@@ -139,7 +139,7 @@ const StatusBar = () => {
               data-trigger="cookies"
               onClick={() => setCookiesOpen(true)}
               tabIndex={0}
-              aria-label="Open Cookies"
+              aria-label="打开 Cookies"
             >
               <div className="console-button-content">
                 <IconCookie size={16} strokeWidth={1.5} aria-hidden="true" />
@@ -152,11 +152,11 @@ const StatusBar = () => {
               data-trigger="dev-tools"
               onClick={handleConsoleClick}
               tabIndex={0}
-              aria-label={`Open Dev Tools${errorCount > 0 ? ` (${errorCount} errors)` : ''}`}
+              aria-label={`打开开发者工具${errorCount > 0 ? `（${errorCount} 个错误）` : ''}`}
             >
               <div className="console-button-content">
                 <IconTool size={16} strokeWidth={1.5} aria-hidden="true" />
-                <span className="console-label">Dev Tools</span>
+                <span className="console-label">开发者工具</span>
                 {errorCount > 0 && (
                   <span className="error-count-inline">{errorCount}</span>
                 )}

@@ -135,15 +135,15 @@ const CollectionsList = ({ workspace }) => {
     }
 
     if (collection.failedToOpen) {
-      toast.error(`Collection "${collection.name}" could not be opened`);
+      toast.error(`集合 "${collection.name}" 无法打开`);
       return;
     }
 
     if (collection.isLoaded === false) {
       if (collection.isGitBacked) {
-        toast.error(`Collection "${collection.name}" needs to be cloned first`);
+        toast.error(`集合 "${collection.name}" 需要先克隆`);
       } else {
-        toast.error(`Collection "${collection.name}" does not exist on disk`);
+        toast.error(`集合 "${collection.name}" 在磁盘上不存在`);
       }
       return;
     }
@@ -168,7 +168,7 @@ const CollectionsList = ({ workspace }) => {
   const handleRenameCollection = (collection) => {
     dropdownRefs.current[collection.uid]?.hide();
     if (collection.isLoaded === false) {
-      toast.error('Cannot rename collections that are not cloned yet');
+      toast.error('尚未克隆的集合无法重命名');
       return;
     }
     setSelectedCollectionUid(collection.uid);
@@ -178,7 +178,7 @@ const CollectionsList = ({ workspace }) => {
   const handleShareCollection = (collection) => {
     dropdownRefs.current[collection.uid]?.hide();
     if (collection.isLoaded === false) {
-      toast.error('Please clone this collection first before sharing it');
+      toast.error('请先克隆此集合再进行分享');
       return;
     }
 
@@ -198,12 +198,12 @@ const CollectionsList = ({ workspace }) => {
     dropdownRefs.current[collection.uid]?.hide();
     if (collection.failedToOpen || collection.notFoundLocally) {
       dispatch(removeCollectionFromWorkspaceAction(workspace.uid, collection.pathname))
-        .then(() => toast.success('Collection removed from workspace'))
-        .catch(() => toast.error('An error occurred while removing the collection'));
+        .then(() => toast.success('集合已从工作区移除'))
+        .catch(() => toast.error('移除集合时出错'));
       return;
     }
     if (collection.isLoaded === false) {
-      toast.error('Cannot remove collections that are not loaded');
+      toast.error('未加载的集合无法移除');
       return;
     }
     setSelectedCollectionUid(collection.uid);
@@ -213,7 +213,7 @@ const CollectionsList = ({ workspace }) => {
   const handleDeleteCollection = (collection) => {
     dropdownRefs.current[collection.uid]?.hide();
     if (collection.isLoaded === false) {
-      toast.error('Cannot delete collections that are not loaded');
+      toast.error('未加载的集合无法删除');
       return;
     }
     setSelectedCollectionUid(collection.uid);
@@ -224,14 +224,14 @@ const CollectionsList = ({ workspace }) => {
     dropdownRefs.current[collection.uid]?.hide();
     dispatch(showInFolder(collection.pathname)).catch((error) => {
       console.error('Error opening the folder', error);
-      toast.error('Error opening the folder');
+      toast.error('打开文件夹出错');
     });
   };
 
   const handleConnectGit = (collection) => {
     dropdownRefs.current[collection.uid]?.hide();
     if (collection.isLoaded === false) {
-      toast.error('Cannot connect a Git remote to a collection that is not present locally');
+      toast.error('无法为本地不存在的集合连接 Git 远程');
       return;
     }
     setGitTarget({
@@ -257,9 +257,9 @@ const CollectionsList = ({ workspace }) => {
     if (!collection.gitRemoteUrl) return;
     try {
       await navigator.clipboard.writeText(collection.gitRemoteUrl);
-      toast.success('Git URL copied');
+      toast.success('Git URL 已复制');
     } catch (e) {
-      toast.error('Failed to copy URL');
+      toast.error('复制 URL 失败');
     }
   };
 
@@ -334,8 +334,8 @@ const CollectionsList = ({ workspace }) => {
         {workspaceCollections.length === 0 ? (
           <div className="empty-state">
             <IconBox size={32} strokeWidth={1.5} className="empty-icon" />
-            <h3 className="empty-title">No collections yet</h3>
-            <p className="empty-description">Create your first collection or open an existing one to get started.</p>
+            <h3 className="empty-title">暂无集合</h3>
+            <p className="empty-description">创建你的第一个集合，或打开一个现有集合开始使用。</p>
           </div>
         ) : (
           workspaceCollections.map((collection, index) => (
@@ -360,10 +360,10 @@ const CollectionsList = ({ workspace }) => {
                     </StatusBadge>
                   )}
                   {collection.failedToOpen && (
-                    <StatusBadge status="danger" size="xs">Failed to open</StatusBadge>
+                    <StatusBadge status="danger" size="xs">打开失败</StatusBadge>
                   )}
                   {isNotCloned(collection) && (
-                    <StatusBadge status="warning" size="xs">Not cloned</StatusBadge>
+                    <StatusBadge status="warning" size="xs">未克隆</StatusBadge>
                   )}
                 </div>
                 <div className="collection-path">{collection.pathname}</div>
@@ -392,7 +392,7 @@ const CollectionsList = ({ workspace }) => {
                           }}
                         >
                           <IconEdit size={16} strokeWidth={1.5} />
-                          <span>Rename</span>
+                          <span>重命名</span>
                         </div>
                         <div
                           className="dropdown-item"
@@ -402,7 +402,7 @@ const CollectionsList = ({ workspace }) => {
                           }}
                         >
                           <IconShare size={16} strokeWidth={1.5} />
-                          <span>Share</span>
+                          <span>分享</span>
                         </div>
                         <div
                           className="dropdown-item"
@@ -429,7 +429,7 @@ const CollectionsList = ({ workspace }) => {
                                 }}
                               >
                                 <IconCopy size={16} strokeWidth={1.5} />
-                                <span>Copy Git URL</span>
+                                <span>复制 Git URL</span>
                               </div>
                             )}
                             {!collection.isGitBacked && collection.isLoaded !== false && (
@@ -441,7 +441,7 @@ const CollectionsList = ({ workspace }) => {
                                 }}
                               >
                                 <IconBrandGit size={16} strokeWidth={1.5} />
-                                <span>Connect to Git</span>
+                                <span>连接 Git</span>
                               </div>
                             )}
                             {collection.isGitBacked && (
@@ -453,7 +453,7 @@ const CollectionsList = ({ workspace }) => {
                                 }}
                               >
                                 <IconUnlink size={16} strokeWidth={1.5} />
-                                <span>Remove Git Remote</span>
+                                <span>移除 Git 远程</span>
                               </div>
                             )}
                           </>
@@ -468,7 +468,7 @@ const CollectionsList = ({ workspace }) => {
                       }}
                     >
                       <IconX size={16} strokeWidth={1.5} />
-                      <span>Remove</span>
+                      <span>移除</span>
                     </div>
                     {!collection.failedToOpen && !isNotCloned(collection) && (
                       <div
@@ -479,7 +479,7 @@ const CollectionsList = ({ workspace }) => {
                         }}
                       >
                         <IconTrash size={16} strokeWidth={1.5} />
-                        <span>Delete</span>
+                        <span>删除</span>
                       </div>
                     )}
                   </div>

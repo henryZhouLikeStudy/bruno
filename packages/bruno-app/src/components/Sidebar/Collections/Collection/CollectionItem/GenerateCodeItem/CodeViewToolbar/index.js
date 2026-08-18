@@ -96,7 +96,7 @@ const CodeViewToolbar = () => {
               checked={generateCodePrefs.shouldInterpolate}
               onChange={handleInterpolateChange}
             />
-            <span>Interpolate Variables</span>
+            <span>插值变量</span>
           </label>
         </div>
       </div>

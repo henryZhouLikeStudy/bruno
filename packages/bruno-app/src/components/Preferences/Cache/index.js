@@ -35,7 +35,7 @@ const Cache = () => {
 
   const persist = (next) => {
     dispatch(savePreferences({ ...preferences, cache: next })).catch(() => {
-      toast.error('Failed to update cache preferences');
+      toast.error('更新缓存偏好设置失败');
     });
   };
 
@@ -63,26 +63,26 @@ const Cache = () => {
       .invoke('renderer:clear-file-cache')
       .then((size) => {
         setFileCacheSize(size);
-        toast.success('File cache cleared');
+        toast.success('文件缓存已清除');
       })
-      .catch(() => toast.error('Failed to clear file cache'));
+      .catch(() => toast.error('清除文件缓存失败'));
   };
 
   const handleClearSslSession = () => {
     dispatch(clearHttpHttpsAgentCache())
-      .then(() => toast.success('SSL session cache cleared'))
-      .catch(() => toast.error('Failed to clear SSL session cache'));
+      .then(() => toast.success('SSL 会话缓存已清除'))
+      .catch(() => toast.error('清除 SSL 会话缓存失败'));
   };
 
   return (
     <StyledWrapper className="w-full">
-      <div className="cache-section-title">Cache</div>
+      <div className="cache-section-title">缓存</div>
 
       <div className="cache-item">
         <div className="cache-item-header">
           <div className="cache-item-title-group">
-            <span className="cache-item-title">File cache</span>
-            <span className="beta-badge">Beta</span>
+            <span className="cache-item-title">文件缓存</span>
+            <span className="beta-badge">测试版</span>
           </div>
           <ToggleSwitch
             data-testid="cache.file.enabled"
@@ -95,15 +95,14 @@ const Cache = () => {
         <div className="cache-item-body">
           <div className="cache-item-body-text">
             <p className="cache-item-description">
-              Loads your workspace faster by caching opened collections. Bruno refreshes the cache when your collection
-              changes. Clearing it won't affect your original files.
+              通过缓存已打开的集合来加快工作区加载速度。集合变更时 Bruno 会自动刷新缓存。清除缓存不会影响你的原始文件。
             </p>
             <p className="cache-item-size">
-              Cache size <strong>{fileCacheSize == null ? '—' : formatSize(fileCacheSize)}</strong>
+              缓存大小 <strong>{fileCacheSize == null ? '—' : formatSize(fileCacheSize)}</strong>
             </p>
           </div>
           <ActionIcon
-            label="Clear cache"
+            label="清除缓存"
             onClick={handleClearFileCache}
             disabled={!fileCacheSize}
             colorOnHover={theme.colors.text.danger}
@@ -116,7 +115,7 @@ const Cache = () => {
       <div className="cache-item">
         <div className="cache-item-header">
           <div className="cache-item-title-group">
-            <span className="cache-item-title">SSL session cache</span>
+            <span className="cache-item-title">SSL 会话缓存</span>
           </div>
           <ToggleSwitch
             data-testid="sslSession.enabled"
@@ -129,12 +128,11 @@ const Cache = () => {
         <div className="cache-item-body">
           <div className="cache-item-body-text">
             <p className="cache-item-description">
-              Reuses TLS sessions and connections across requests for faster handshakes. Disable to create a fresh
-              connection for every request.
+              在请求之间复用 TLS 会话和连接以加快握手速度。禁用时每个请求都会建立全新连接。
             </p>
           </div>
           <ActionIcon
-            label="Clear cache"
+            label="清除缓存"
             onClick={handleClearSslSession}
             colorOnHover={theme.colors.text.danger}
           >

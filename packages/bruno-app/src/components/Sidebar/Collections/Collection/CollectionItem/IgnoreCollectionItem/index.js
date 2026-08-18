@@ -16,11 +16,11 @@ const IgnoreCollectionItem = ({ onClose, item, collectionUid }) => {
       .then(() => {
         const tabUids = [...recursivelyGetAllItemUids(item.items), item.uid];
         dispatch(closeTabs({ tabUids }));
-        toast.success('Folder ignored');
+        toast.success('文件夹已忽略');
       })
       .catch((error) => {
         console.error('Error ignoring folder', error);
-        toast.error(error?.message || 'Error ignoring folder');
+        toast.error(error?.message || '忽略文件夹时出错');
       });
     onClose();
   };
@@ -28,30 +28,32 @@ const IgnoreCollectionItem = ({ onClose, item, collectionUid }) => {
   return (
     <Modal
       size="md"
-      title="Ignore Folder"
-      confirmText="Ignore"
+      title="忽略文件夹"
+      confirmText="忽略"
       handleConfirm={onConfirm}
       handleCancel={onClose}
     >
-      Ignoring <span className="font-medium">{item.name}</span> will hide it from this
+      忽略 <span className="font-medium">{item.name}</span> 会将其从此
       {' '}
       {isYamlCollection ? 'opencollection (YAML)' : 'Bruno (JSON)'}
       {' '}
-      collection by adding it to the
+      集合中隐藏，方法是将其添加到
+      {' '}
+      <span className="font-medium">{configFileName}</span>
+      {' '}
+      中的
       {' '}
       <span className="font-medium">ignore</span>
       {' '}
-      list in
+      列表。文件夹及其文件不会被删除。若要稍后恢复，请从
       {' '}
       <span className="font-medium">{configFileName}</span>
-      . The folder and its files are not deleted. To restore it later, remove the entry from the
+      {' '}
+      中的
       {' '}
       <span className="font-medium">ignore</span>
       {' '}
-      list in
-      {' '}
-      <span className="font-medium">{configFileName}</span>
-      .
+      列表中删除对应条目。
     </Modal>
   );
 };

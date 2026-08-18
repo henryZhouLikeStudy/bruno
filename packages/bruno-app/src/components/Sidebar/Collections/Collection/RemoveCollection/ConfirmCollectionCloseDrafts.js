@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import filter from 'lodash/filter';
 import { useDispatch, useSelector } from 'react-redux';
 import { flattenItems, isItemARequest, hasRequestChanges, findCollectionByUid } from 'utils/collections';
-import { pluralizeWord } from 'utils/common';
 import { saveRequest, saveMultipleRequests } from 'providers/ReduxStore/slices/collections/actions';
 import { deleteRequestDraft } from 'providers/ReduxStore/slices/collections';
 import { removeCollection } from 'providers/ReduxStore/slices/collections/actions';
@@ -54,7 +53,7 @@ const ConfirmCollectionCloseDrafts = ({ onClose, collection, collectionUid }) =>
   const handleSaveAll = () => {
     // If there are transient drafts, we can't proceed with batch save
     if (currentTransientDrafts.length > 0) {
-      toast.error('Please save or discard transient requests first');
+      toast.error('请先保存或丢弃临时请求');
       return;
     }
     // Save only non-transient drafts
@@ -63,22 +62,22 @@ const ConfirmCollectionCloseDrafts = ({ onClose, collection, collectionUid }) =>
         .then(() => {
           dispatch(removeCollection(collectionUid))
             .then(() => {
-              toast.success('Collection removed from workspace');
+              toast.success('集合已从工作区移除');
               onClose();
             })
-            .catch(() => toast.error('An error occurred while removing the collection'));
+            .catch(() => toast.error('移除集合时发生错误'));
         })
         .catch(() => {
-          toast.error('Failed to save requests!');
+          toast.error('保存请求失败！');
         });
     } else {
       // No non-transient drafts, just remove the collection
       dispatch(removeCollection(collectionUid))
         .then(() => {
-          toast.success('Collection removed from workspace');
+          toast.success('集合已从工作区移除');
           onClose();
         })
-        .catch(() => toast.error('An error occurred while removing the collection'));
+        .catch(() => toast.error('移除集合时发生错误'));
     }
   };
 
@@ -112,9 +111,9 @@ const ConfirmCollectionCloseDrafts = ({ onClose, collection, collectionUid }) =>
     <StyledWrapper>
       <Modal
         size="md"
-        title="Remove Collection"
-        confirmText="Save and Remove"
-        cancelText="Remove without saving"
+        title="移除集合"
+        confirmText="保存并移除"
+        cancelText="不保存直接移除"
         handleCancel={onClose}
         disableEscapeKey={true}
         disableCloseOnOutsideClick={true}
@@ -123,18 +122,17 @@ const ConfirmCollectionCloseDrafts = ({ onClose, collection, collectionUid }) =>
       >
         <div className="flex items-center">
           <IconAlertTriangle size={32} strokeWidth={1.5} className="warning-text" />
-          <h1 className="ml-2 text-lg font-medium">Hold on..</h1>
+          <h1 className="ml-2 text-lg font-medium">请稍候…</h1>
         </div>
         <p className="mt-4">
-          You have unsaved changes in <span className="font-medium">{allDrafts.length}</span>{' '}
-          {pluralizeWord('request', allDrafts.length)}.
+          你有 <span className="font-medium">{allDrafts.length}</span> 个请求存在未保存的更改。
         </p>
 
         {/* Regular (saved) requests with changes */}
         {currentDrafts.length > 0 && (
           <div className="mt-4">
             <p className="text-sm font-medium mb-2">
-              Saved {pluralizeWord('Request', currentDrafts.length)} ({currentDrafts.length})
+              已保存的请求（{currentDrafts.length}）
             </p>
             <ul className="ml-2">
               {currentDrafts.slice(0, MAX_UNSAVED_REQUESTS_TO_SHOW).map((item) => {
@@ -147,8 +145,7 @@ const ConfirmCollectionCloseDrafts = ({ onClose, collection, collectionUid }) =>
             </ul>
             {currentDrafts.length > MAX_UNSAVED_REQUESTS_TO_SHOW && (
               <p className="ml-2 mt-1 text-xs draft-list-item">
-                ...{currentDrafts.length - MAX_UNSAVED_REQUESTS_TO_SHOW} additional{' '}
-                {pluralizeWord('request', currentDrafts.length - MAX_UNSAVED_REQUESTS_TO_SHOW)} not shown
+                ...还有 {currentDrafts.length - MAX_UNSAVED_REQUESTS_TO_SHOW} 个请求未显示
               </p>
             )}
           </div>
@@ -158,10 +155,10 @@ const ConfirmCollectionCloseDrafts = ({ onClose, collection, collectionUid }) =>
         {currentTransientDrafts.length > 0 && (
           <div className="mt-4">
             <p className="text-sm font-medium mb-2">
-              Transient {pluralizeWord('Request', currentTransientDrafts.length)} ({currentTransientDrafts.length})
+              临时请求（{currentTransientDrafts.length}）
             </p>
             <p className="text-xs transient-hint mb-3">
-              These requests need to be saved individually before closing the collection.
+              在关闭集合之前，需要逐个保存这些请求。
             </p>
             <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
               {currentTransientDrafts.map((item) => {
@@ -178,7 +175,7 @@ const ConfirmCollectionCloseDrafts = ({ onClose, collection, collectionUid }) =>
                       onClick={() => handleSaveTransient(item)}
                       icon={<IconDeviceFloppy size={14} strokeWidth={1.5} />}
                     >
-                      Save
+                      保存
                     </Button>
                   </div>
                 );
@@ -190,19 +187,19 @@ const ConfirmCollectionCloseDrafts = ({ onClose, collection, collectionUid }) =>
         <div className="flex justify-between mt-6">
           <div>
             <Button color="danger" onClick={handleDiscardAll}>
-              Discard All and Remove
+              全部丢弃并移除
             </Button>
           </div>
           <div>
             <Button className="mr-2" color="secondary" variant="ghost" onClick={onClose}>
-              Cancel
+              取消
             </Button>
             <Button
               onClick={handleSaveAll}
               disabled={currentTransientDrafts.length > 0}
-              title={currentTransientDrafts.length > 0 ? 'Please save or discard transient requests first' : ''}
+              title={currentTransientDrafts.length > 0 ? '请先保存或丢弃临时请求' : ''}
             >
-              {currentDrafts.length > 1 ? 'Save All and Remove' : 'Save and Remove'}
+              {currentDrafts.length > 1 ? '全部保存并移除' : '保存并移除'}
             </Button>
           </div>
         </div>

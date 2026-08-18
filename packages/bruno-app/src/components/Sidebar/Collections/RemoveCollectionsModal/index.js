@@ -115,11 +115,11 @@ const RemoveCollectionsModal = ({ collectionUids, onClose }) => {
 
     Promise.all(removalPromises)
       .then(() => {
-        toast.success('Closed all collections');
+        toast.success('已关闭所有集合');
       })
       .catch((error) => {
         console.error('Error closing collections:', error);
-        toast.error('An error occurred while closing collections');
+        toast.error('关闭集合时发生错误');
       })
       .finally(() => {
         onClose();
@@ -157,7 +157,7 @@ const RemoveCollectionsModal = ({ collectionUids, onClose }) => {
       handleCloseAllCollections();
     } catch (error) {
       console.error('Error saving drafts:', error);
-      toast.error('An error occurred while saving changes');
+      toast.error('保存更改时发生错误');
       handleCancel();
     }
   };
@@ -182,7 +182,7 @@ const RemoveCollectionsModal = ({ collectionUids, onClose }) => {
       onClick={() => setShowAllCollections(!showAllCollections)}
     >
       <span className="text-link">
-        {showAllCollections ? 'Show less' : `Show ${hiddenCollectionsCount} more`}
+        {showAllCollections ? '收起' : `显示另外 ${hiddenCollectionsCount} 个`}
       </span>
     </span>
   ) : null;
@@ -191,7 +191,7 @@ const RemoveCollectionsModal = ({ collectionUids, onClose }) => {
     <Portal>
       <Modal
         size="md"
-        title="Close all collections"
+        title="关闭所有集合"
         disableEscapeKey={hasUnsavedChanges}
         disableCloseOnOutsideClick={hasUnsavedChanges}
         handleCancel={handleCancel}
@@ -202,14 +202,13 @@ const RemoveCollectionsModal = ({ collectionUids, onClose }) => {
             <>
               <div className="flex items-center font-normal">
                 <IconAlertTriangle size={32} strokeWidth={1.5} className="text-yellow-600" />
-                <h1 className="ml-2 text-lg font-medium">Hold on..</h1>
+                <h1 className="ml-2 text-lg font-medium">请稍候…</h1>
               </div>
               <div className="font-normal mt-4">
-                Do you want to save changes you made to the following{' '}
-                {collectionsWithUnsavedChanges.length === 1 ? 'collection' : 'collections'}?
+                是否要保存对以下集合所做的更改？
               </div>
               <div className="mt-2 text-xs text-gray-500">
-                Collections will be removed from the current workspace but will still be available in the file system and can be re-opened later.
+                集合将从当前工作区移除，但仍可在文件系统中找到，稍后也可以重新打开。
               </div>
 
               <div className="mt-4">
@@ -228,15 +227,15 @@ const RemoveCollectionsModal = ({ collectionUids, onClose }) => {
               <div className="flex justify-between mt-6">
                 <div>
                   <Button color="danger" onClick={handleDiscard}>
-                    Discard and Close
+                    丢弃并关闭
                   </Button>
                 </div>
                 <div>
                   <Button className="mr-2" color="secondary" variant="ghost" onClick={handleCancel}>
-                    Cancel
+                    取消
                   </Button>
                   <Button onClick={handleSave}>
-                    Save and Close
+                    保存并关闭
                   </Button>
                 </div>
               </div>
@@ -245,22 +244,22 @@ const RemoveCollectionsModal = ({ collectionUids, onClose }) => {
             <>
               <div className="mt-4">
                 {hasMultipleCollections ? (
-                  `Are you sure you want to close all ${collectionUids.length} collections in this workspace?`
+                  `确定要关闭此工作区中的所有 ${collectionUids.length} 个集合吗？`
                 ) : (
                   <>
-                    Are you sure you want to close the collection <strong>{singleCollectionName}</strong> from this workspace?
+                    确定要从此工作区关闭集合 <strong>{singleCollectionName}</strong> 吗？
                   </>
                 )}
               </div>
               <div className="mt-4 text-xs text-gray-500">
-                Collections will be removed from the current workspace but will still be available in the file system and can be re-opened later.
+                集合将从当前工作区移除，但仍可在文件系统中找到，稍后也可以重新打开。
               </div>
               <div className="flex justify-end mt-6">
                 <Button className="mr-2" color="secondary" variant="ghost" onClick={handleCancel} data-testid="modal-close-button">
-                  Cancel
+                  取消
                 </Button>
                 <Button color="warning" onClick={handleCloseAllCollections}>
-                  {hasMultipleCollections ? 'Close All' : 'Close'}
+                  {hasMultipleCollections ? '全部关闭' : '关闭'}
                 </Button>
               </div>
             </>

@@ -76,13 +76,13 @@ const ChipListEditor = ({ list, placeholder, onChange, addTestId, inputTestId, r
           data-testid={addTestId}
         >
           <IconPlus size={13} strokeWidth={1.75} />
-          Add
+          添加
         </button>
       </div>
 
       {atCapacity && (
         <span className="security-sub text-[10.5px]">
-          Reached the {CHIP_MAX_COUNT}-entry limit. Remove one to add another.
+          已达到 {CHIP_MAX_COUNT} 条上限。请移除一条后再添加。
         </span>
       )}
 
@@ -95,7 +95,7 @@ const ChipListEditor = ({ list, placeholder, onChange, addTestId, inputTestId, r
                 type="button"
                 className="security-chip-remove"
                 onClick={() => handleRemove(name)}
-                aria-label={`Remove ${name}`}
+                aria-label={`移除 ${name}`}
                 data-testid={removeTestIdPrefix ? `${removeTestIdPrefix}-${name}` : undefined}
               >
                 <IconTrash size={11} strokeWidth={1.75} />
@@ -127,7 +127,7 @@ const SecurityPane = ({
     return (
       <div className="security-tab flex flex-col gap-3">
         <div className="ai-empty-notice px-3.5 py-3 text-xs">
-          Turn on AI in the Configuration tab to configure redaction.
+          在配置选项卡中开启 AI 以配置脱敏。
         </div>
       </div>
     );
@@ -136,15 +136,15 @@ const SecurityPane = ({
   return (
     <div className="security-tab flex flex-col gap-3">
       <div className="ai-empty-notice px-3.5 py-3 text-xs">
-        Sensitive data is automatically redacted before context is sent to AI providers. Turn off protections if needed, or add custom headers and variables to redact.
+        敏感数据会在上下文发送给 AI 提供者之前自动脱敏。如有需要可关闭保护，或添加要脱敏的自定义请求头和变量。
       </div>
 
       <div className="security-card">
         <div className="security-row flex items-center justify-between gap-3 px-3.5 py-3">
           <div className="flex flex-col gap-0.5 min-w-0">
-            <span className="text-[12.5px] font-semibold">Redact sensitive header values</span>
+            <span className="text-[12.5px] font-semibold">对敏感请求头值脱敏</span>
             <span className="security-sub text-[11px]">
-              Masks Authorization, cookies, API keys and other credential-bearing headers in the request context.
+              在请求上下文中对 Authorization、cookie、API 密钥等包含凭据的请求头进行掩码处理。
             </span>
           </div>
           <ToggleSwitch
@@ -157,9 +157,9 @@ const SecurityPane = ({
 
         <div className="security-row flex items-center justify-between gap-3 px-3.5 py-3">
           <div className="flex flex-col gap-0.5 min-w-0">
-            <span className="text-[12.5px] font-semibold">Redact sensitive body keys</span>
+            <span className="text-[12.5px] font-semibold">对敏感请求体键脱敏</span>
             <span className="security-sub text-[11px]">
-              Masks values under keys like <code>password</code>, <code>*_token</code>, <code>secret</code> in JSON and GraphQL variables. Structure and non-sensitive fields still pass through.
+              对 JSON 和 GraphQL 变量中 <code>password</code>、<code>*_token</code>、<code>secret</code> 等键下的值进行掩码。结构和非敏感字段仍会保留。
             </span>
           </div>
           <ToggleSwitch
@@ -172,9 +172,9 @@ const SecurityPane = ({
 
         <div className="security-row flex items-center justify-between gap-3 px-3.5 py-3">
           <div className="flex flex-col gap-0.5 min-w-0">
-            <span className="text-[12.5px] font-semibold">Redact response values</span>
+            <span className="text-[12.5px] font-semibold">对响应值脱敏</span>
             <span className="security-sub text-[11px]">
-              Sends the response as a shape only — real values replaced with type placeholders (<code>&lt;string&gt;</code>, <code>&lt;number&gt;</code>). Turn off to send the actual response body.
+              仅发送响应结构——真实值替换为类型占位符（<code>&lt;string&gt;</code>、<code>&lt;number&gt;</code>）。关闭此选项以发送实际响应体。
             </span>
           </div>
           <ToggleSwitch
@@ -187,9 +187,9 @@ const SecurityPane = ({
 
         <div className="security-row flex items-center justify-between gap-3 px-3.5 py-3">
           <div className="flex flex-col gap-0.5 min-w-0">
-            <span className="text-[12.5px] font-semibold">Redact secret variable values</span>
+            <span className="text-[12.5px] font-semibold">对机密变量值脱敏</span>
             <span className="security-sub text-[11px]">
-              Masks values whose names look like secrets. Variables explicitly marked <em>secret</em> are always redacted regardless of this switch.
+              对名称像机密的变量值进行掩码。明确标记为 <em>secret</em> 的变量始终会脱敏，不受此开关影响。
             </span>
           </div>
           <ToggleSwitch
@@ -204,9 +204,9 @@ const SecurityPane = ({
       <div className="security-card">
         <div className="security-row flex flex-col gap-2 px-3.5 py-3">
           <div className="flex flex-col gap-0.5">
-            <span className="text-[12.5px] font-semibold">Custom redacted headers</span>
+            <span className="text-[12.5px] font-semibold">自定义脱敏请求头</span>
             <span className="security-sub text-[11px]">
-              Exact, case-insensitive header names to always mask on top of the built-in list.
+              在默认列表之外始终进行掩码的精确、不区分大小写的请求头名称。
             </span>
           </div>
           <ChipListEditor
@@ -221,9 +221,9 @@ const SecurityPane = ({
 
         <div className="security-row flex flex-col gap-2 px-3.5 py-3">
           <div className="flex flex-col gap-0.5">
-            <span className="text-[12.5px] font-semibold">Custom redacted variables</span>
+            <span className="text-[12.5px] font-semibold">自定义脱敏变量</span>
             <span className="security-sub text-[11px]">
-              Variable names whose values should always be masked when Bruno lists them for the model — for anything you want redacted besides values already flagged as <em>secret</em>.
+              Bruno 将变量列出给模型时，这些变量名对应的值始终会被掩码——用于你希望脱敏但尚未标记为 <em>secret</em> 的内容。
             </span>
           </div>
           <ChipListEditor
@@ -237,13 +237,13 @@ const SecurityPane = ({
         </div>
 
         <div className="security-row flex flex-col gap-1 px-3.5 py-3">
-          <span className="text-[11px] font-medium security-sub">Already covered by default</span>
+          <span className="text-[11px] font-medium security-sub">默认已覆盖</span>
           <div className="security-builtin flex flex-wrap gap-1.5">
             {BUILT_IN_HEADER_EXAMPLES.map((name) => (
               <span key={name} className="security-builtin-chip">{name}</span>
             ))}
             <span className="security-builtin-more text-[10.5px]">
-              plus any name matching <code>token</code>, <code>secret</code>, <code>password</code> or <code>api_key</code>.
+              以及任何匹配 <code>token</code>、<code>secret</code>、<code>password</code> 或 <code>api_key</code> 的名称。
             </span>
           </div>
         </div>

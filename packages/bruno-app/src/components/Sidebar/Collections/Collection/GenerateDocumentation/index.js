@@ -21,9 +21,9 @@ import { escapeHtml } from 'utils/response';
 const CDN_BASE_URL = 'https://cdn.usebruno.com';
 
 const FEATURES = [
-  'Standalone HTML file - no server required',
-  'Interactive API playground',
-  'Host on any static file server'
+  '独立 HTML 文件 - 无需服务器',
+  '交互式 API Playground',
+  '可托管在任何静态文件服务器上'
 ];
 
 const buildHtmlDocument = (collectionName, escapedYamlContent) => `<!DOCTYPE html>
@@ -31,7 +31,7 @@ const buildHtmlDocument = (collectionName, escapedYamlContent) => `<!DOCTYPE htm
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${collectionName} - API Documentation</title>
+    <title>${collectionName} - API 文档</title>
     <style>
         body { margin: 0; padding: 0; }
         #opencollection-container { width: 100vw; height: 100vh; }
@@ -54,11 +54,11 @@ const buildHtmlDocument = (collectionName, escapedYamlContent) => `<!DOCTYPE htm
 
 const CollectionNotFound = ({ onClose }) => (
   <Portal>
-    <Modal size="md" title="Generate Documentation" confirmText="Close" handleConfirm={onClose} hideCancel>
+    <Modal size="md" title="生成文档" confirmText="关闭" handleConfirm={onClose} hideCancel>
       <StyledWrapper className="w-[500px]">
         <div className="flex items-center gap-2 text-warning">
           <IconAlertTriangle size={16} className="shrink-0" />
-          <span>Collection not found. It may have been deleted or is no longer available.</span>
+          <span>未找到集合。它可能已被删除或不再可用。</span>
         </div>
       </StyledWrapper>
     </Modal>
@@ -164,11 +164,11 @@ const GenerateDocumentation = ({ onClose, collectionUid }) => {
       const fileName = `${sanitizeName(collection.name)}-documentation.html`;
       FileSaver.saveAs(new Blob([htmlContent], { type: 'text/html' }), fileName);
 
-      toast.success('Documentation generated successfully');
+      toast.success('文档生成成功');
       onClose();
     } catch (error) {
       console.error('Error generating documentation:', error);
-      toast.error('Failed to generate documentation');
+      toast.error('生成文档失败');
     }
   }, [collection, version, onClose, currentVersion, selectedEnvUids]);
 
@@ -180,9 +180,9 @@ const GenerateDocumentation = ({ onClose, collectionUid }) => {
     <Portal>
       <Modal
         size="md"
-        title="Generate Documentation"
-        confirmText={isLoading ? 'Loading...' : 'Generate'}
-        cancelText="Cancel"
+        title="生成文档"
+        confirmText={isLoading ? '加载中...' : '生成'}
+        cancelText="取消"
         handleConfirm={isLoading ? undefined : handleGenerate}
         handleCancel={onClose}
         confirmDisabled={isLoading}
@@ -191,16 +191,16 @@ const GenerateDocumentation = ({ onClose, collectionUid }) => {
           {isLoading ? (
             <div className="flex items-center justify-center gap-3 py-8">
               <IconLoader2 size={20} className="animate-spin" />
-              <span>Loading collection...</span>
+              <span>正在加载集合...</span>
             </div>
           ) : (
             <div className="content">
               <h3 className="title flex items-center gap-2 mt-2 font-medium">
                 <IconBook size={18} />
-                <span>Interactive API Documentation</span>
+                <span>交互式 API 文档</span>
               </h3>
               <p className="description mb-4">
-                Generate a standalone HTML file that can be hosted anywhere or shared with your team.
+                生成一个可托管在任何地方或与团队共享的独立 HTML 文件。
               </p>
 
               <ul className="features flex flex-col list-none gap-2 p-0 mb-4">
@@ -219,7 +219,7 @@ const GenerateDocumentation = ({ onClose, collectionUid }) => {
                     <div className="card-divider" />
                     <div className="env-section">
                       <EnvironmentSelectionList
-                        title="Environments to include"
+                        title="要包含的环境"
                         environments={environments}
                         selectedUids={selectedEnvUids}
                         onToggle={toggleEnv}
@@ -231,7 +231,7 @@ const GenerateDocumentation = ({ onClose, collectionUid }) => {
               </div>
 
               <p className="note m-0">
-                The generated file loads Bruno's JavaScript and CSS files from a CDN, which requires an internet connection.
+                生成的文件会从 CDN 加载 Bruno 的 JavaScript 和 CSS 文件，因此需要互联网连接。
               </p>
             </div>
           )}

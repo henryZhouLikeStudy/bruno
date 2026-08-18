@@ -23,20 +23,20 @@ const RemoveCollection = ({ onClose, collectionUid }) => {
 
   const onConfirm = () => {
     if (!collection) {
-      toast.error('Collection not found');
+      toast.error('未找到集合');
       onClose();
       return;
     }
     dispatch(removeCollection(collection.uid))
       .then(() => {
-        toast.success('Collection removed from workspace');
+        toast.success('集合已从工作区移除');
         onClose();
       })
-      .catch(() => toast.error('An error occurred while removing the collection'));
+      .catch(() => toast.error('移除集合时发生错误'));
   };
 
   if (!collection) {
-    return <div>Collection not found</div>;
+    return <div>未找到集合</div>;
   }
 
   // If there are drafts, show the draft confirmation modal
@@ -50,19 +50,19 @@ const RemoveCollection = ({ onClose, collectionUid }) => {
       <Portal>
         <Modal
           size="sm"
-          title="Remove Collection"
-          confirmText="Remove"
+          title="移除集合"
+          confirmText="移除"
           confirmButtonColor="danger"
           handleConfirm={onConfirm}
           handleCancel={onClose}
         >
-          <p className="mb-4">Are you sure you want to close following collection in Bruno?</p>
+          <p className="mb-4">确定要在 Bruno 中关闭以下集合吗？</p>
           <div className="collection-info-card">
             <div className="collection-name">{collection.name}</div>
             <div className="collection-path">{collection.pathname}</div>
           </div>
           <p className="mt-4 text-muted text-sm">
-            It will still be available in the filesystem at the above location and can be re-opened later.
+            它仍可在上述文件系统位置找到，稍后也可以重新打开。
           </p>
         </Modal>
       </Portal>

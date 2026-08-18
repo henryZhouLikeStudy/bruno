@@ -33,19 +33,19 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
     validationSchema: Yup.object({
       folderName: Yup.string()
         .trim()
-        .min(1, 'must be at least 1 character')
-        .required('name is required'),
+        .min(1, '至少需要 1 个字符')
+        .required('名称为必填项'),
       directoryName: Yup.string()
         .trim()
-        .min(1, 'must be at least 1 character')
-        .required('foldername is required')
+        .min(1, '至少需要 1 个字符')
+        .required('文件夹名称为必填项')
         .test('is-valid-folder-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
         .test({
           name: 'folderName',
-          message: 'The folder name "environments" at the root of the collection is reserved in bruno',
+          message: '集合根目录下的文件夹名称 "environments" 在 bruno 中已保留',
           test: (value) => {
             if (item?.uid) return true;
             return value && !value.trim().toLowerCase().includes('environments');
@@ -55,10 +55,10 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
     onSubmit: (values) => {
       dispatch(newFolder(values.folderName, values.directoryName, collectionUid, item ? item.uid : null))
         .then(() => {
-          toast.success('New folder created!');
+          toast.success('新建文件夹成功！');
           onClose();
         })
-        .catch((err) => toast.error(err ? err.message : 'An error occurred while adding the folder'));
+        .catch((err) => toast.error(err ? err.message : '添加文件夹时发生错误'));
     }
   });
 
@@ -75,7 +75,7 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
           className="btn-advanced"
           type="button"
         >
-          Options
+          选项
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -85,10 +85,10 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
   return (
     <Portal>
       <StyledWrapper>
-        <Modal size="md" title="New Folder" hideFooter={true} handleCancel={onClose}>
+        <Modal size="md" title="新建文件夹" hideFooter={true} handleCancel={onClose}>
           <form className="bruno-form" onSubmit={formik.handleSubmit}>
             <label htmlFor="folderName" className="block font-medium">
-              Folder Name
+              文件夹名称
             </label>
             <input
               id="folder-name"
@@ -115,10 +115,10 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
               <div className="mt-4">
                 <div className="flex items-center justify-between">
                   <label htmlFor="directoryName" className="flex items-center font-medium">
-                    Folder Name <small className="font-normal text-muted ml-1">(on filesystem)</small>
+                    文件夹名称 <small className="font-normal text-muted ml-1">（文件系统上）</small>
                     <Help width="300">
                       <p>
-                        You can choose to save the folder as a different name on your file system versus what is displayed in the app.
+                        你可以选择在文件系统中使用与应用中显示不同的名称来保存该文件夹。
                       </p>
                     </Help>
                   </label>
@@ -144,7 +144,7 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
                       id="file-name"
                       type="text"
                       name="directoryName"
-                      placeholder="Folder Name"
+                      placeholder="文件夹名称"
                       className="block textbox mt-2 w-full"
                       autoComplete="off"
                       autoCorrect="off"
@@ -178,16 +178,16 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
                       toggleShowFilesystemName(!showFilesystemName);
                     }}
                   >
-                    {showFilesystemName ? 'Hide Filesystem Name' : 'Show Filesystem Name'}
+                    {showFilesystemName ? '隐藏文件系统名称' : '显示文件系统名称'}
                   </div>
                 </Dropdown>
               </div>
               <div className="flex justify-end">
                 <Button type="button" color="secondary" variant="ghost" onClick={onClose} className="mr-2">
-                  Cancel
+                  取消
                 </Button>
                 <Button type="submit">
-                  Create
+                  创建
                 </Button>
               </div>
             </div>

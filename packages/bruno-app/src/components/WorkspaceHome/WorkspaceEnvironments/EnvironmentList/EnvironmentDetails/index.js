@@ -44,15 +44,15 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
 
   const validateEnvironmentName = (name) => {
     if (!name || name.trim() === '') {
-      return 'Name is required';
+      return '名称为必填项';
     }
 
     if (name.length < 1) {
-      return 'Must be at least 1 character';
+      return '至少需要 1 个字符';
     }
 
     if (name.length > 255) {
-      return 'Must be 255 characters or less';
+      return '最多 255 个字符';
     }
 
     if (!validateName(name)) {
@@ -63,7 +63,7 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
     const isDuplicate = (globalEnvs || []).some((env) =>
       env?.uid !== environment.uid && env?.name?.toLowerCase().trim() === trimmedName);
     if (isDuplicate) {
-      return 'Environment already exists';
+      return '环境已存在';
     }
 
     return null;
@@ -88,13 +88,13 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
 
     dispatch(renameGlobalEnvironment({ name: newName, environmentUid: environment.uid }))
       .then(() => {
-        toast.success('Environment renamed!');
+        toast.success('环境重命名成功！');
         setIsRenaming(false);
         setNewName('');
         setNameError('');
       })
       .catch(() => {
-        toast.error('An error occurred while renaming the environment');
+        toast.error('重命名环境时出错');
       });
   };
 
@@ -191,7 +191,7 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
                   className="inline-action-btn save"
                   onClick={handleSaveRename}
                   onMouseDown={(e) => e.preventDefault()}
-                  title="Save"
+                  title="保存"
                 >
                   <IconCheck size={14} strokeWidth={2} />
                 </button>
@@ -199,7 +199,7 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
                   className="inline-action-btn cancel"
                   onClick={handleCancelRename}
                   onMouseDown={(e) => e.preventDefault()}
-                  title="Cancel"
+                  title="取消"
                 >
                   <IconX size={14} strokeWidth={2} />
                 </button>
@@ -214,16 +214,16 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
         </div>
         {nameError && isRenaming && <div className="title-error">{nameError}</div>}
         <div className="actions">
-          <ActionIcon label="Save All" onClick={handleSaveAll} data-testid="save-all-env">
+          <ActionIcon label="保存全部" onClick={handleSaveAll} data-testid="save-all-env">
             <IconDeviceFloppy size={15} strokeWidth={1.5} />
           </ActionIcon>
-          <ActionIcon label="Rename" onClick={handleRenameClick} data-testid="env-rename-action">
+          <ActionIcon label="重命名" onClick={handleRenameClick} data-testid="env-rename-action">
             <IconEdit size={15} strokeWidth={1.5} />
           </ActionIcon>
-          <ActionIcon label="Copy" onClick={() => setOpenCopyModal(true)} data-testid="env-copy-action">
+          <ActionIcon label="复制" onClick={() => setOpenCopyModal(true)} data-testid="env-copy-action">
             <IconCopy size={15} strokeWidth={1.5} />
           </ActionIcon>
-          <ActionIcon label="Delete" onClick={() => setOpenDeleteModal(true)} colorOnHover="danger" data-testid="env-delete-action">
+          <ActionIcon label="删除" onClick={() => setOpenDeleteModal(true)} colorOnHover="danger" data-testid="env-delete-action">
             <IconTrash size={15} strokeWidth={1.5} />
           </ActionIcon>
         </div>
@@ -242,7 +242,7 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
                   <input
                     ref={searchInputRef}
                     type="text"
-                    placeholder={activeTab === 'secrets' ? 'Search secrets...' : 'Search variables...'}
+                    placeholder={activeTab === 'secrets' ? '搜索密钥…' : '搜索变量…'}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onBlur={handleSearchBlur}
@@ -258,7 +258,7 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
                       className="clear-search"
                       onClick={handleClearSearch}
                       onMouseDown={(e) => e.preventDefault()}
-                      title="Clear search"
+                      title="清除搜索"
                       data-testid="env-clear-search"
                     >
                       <IconX size={14} strokeWidth={1.5} />
@@ -266,7 +266,7 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
                   )}
                 </div>
               ) : (
-                <ActionIcon label="Search" onClick={handleSearchIconClick} data-testid="env-search-action">
+                <ActionIcon label="搜索" onClick={handleSearchIconClick} data-testid="env-search-action">
                   <IconSearch size={15} strokeWidth={1.5} />
                 </ActionIcon>
               )}

@@ -10,7 +10,7 @@ const GitHubTab = ({
 
   const handleGitRepositoryImport = (url) => {
     if (!isGitRepositoryUrl(url)) {
-      setErrorMessage('Please enter a valid git repository URL');
+      setErrorMessage('请输入有效的 Git 仓库 URL');
       return;
     }
     handleSubmit({ repositoryUrl: url, type: 'git-repository' });
@@ -33,7 +33,7 @@ const GitHubTab = ({
           value={urlInput}
           autoFocus
           onChange={(e) => setUrlInput(e.target.value)}
-          placeholder="Enter Git repository URL"
+          placeholder="输入 Git 仓库 URL"
           className="flex-1 px-3 py-1 textbox"
         />
         <Button
@@ -44,7 +44,7 @@ const GitHubTab = ({
           color="primary"
           style={{ height: '100%' }}
         >
-          Clone
+          克隆
         </Button>
       </div>
     </form>

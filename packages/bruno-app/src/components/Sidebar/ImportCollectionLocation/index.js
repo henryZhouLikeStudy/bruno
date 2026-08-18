@@ -24,13 +24,13 @@ import { DEFAULT_COLLECTION_FORMAT } from 'utils/common/constants';
 
 // Extract collection name from raw data
 const getCollectionName = (format, rawData) => {
-  if (!rawData) return 'Collection';
+  if (!rawData) return '集合';
 
   switch (format) {
     case 'openapi':
-      return rawData.info?.title || 'OpenAPI Collection';
+      return rawData.info?.title || 'OpenAPI 集合';
     case 'postman':
-      return rawData.info?.name || rawData.collection?.info?.name || 'Postman Collection';
+      return rawData.info?.name || rawData.collection?.info?.name || 'Postman 集合';
     case 'insomnia':
       // For Insomnia v4 format, name is in the workspace resource
       if (rawData.resources && Array.isArray(rawData.resources)) {
@@ -40,17 +40,17 @@ const getCollectionName = (format, rawData) => {
         }
       }
       // Fallback to root name property
-      return rawData.name || 'Insomnia Collection';
+      return rawData.name || 'Insomnia 集合';
     case 'bruno':
-      return rawData.name || 'Bruno Collection';
+      return rawData.name || 'Bruno 集合';
     case 'opencollection':
-      return rawData.info?.name || 'OpenCollection';
+      return rawData.info?.name || 'OpenCollection 集合';
     case 'wsdl':
-      return 'WSDL Collection';
+      return 'WSDL 集合';
     case 'bruno-zip':
-      return rawData.collectionName || 'Bruno Collection';
+      return rawData.collectionName || 'Bruno 集合';
     default:
-      return 'Collection';
+      return '集合';
   }
 };
 
@@ -88,20 +88,20 @@ const convertCollection = async (format, rawData, { groupingType, collectionForm
         collection = rawData;
         break;
       default:
-        throw new Error('Unknown collection format');
+        throw new Error('未知的集合格式');
     }
 
     return { collection, issues };
   } catch (err) {
     console.error('Conversion error:', err);
-    toastError(err, 'Failed to convert collection');
+    toastError(err, '转换集合失败');
     throw err;
   }
 };
 
 const groupingOptions = [
-  { value: 'tags', label: 'Tags', description: 'Group requests by OpenAPI/Swagger tags', testId: 'grouping-option-tags' },
-  { value: 'path', label: 'Paths', description: 'Group requests by URL path structure', testId: 'grouping-option-path' }
+  { value: 'tags', label: '标签', description: '按 OpenAPI/Swagger tags 对请求分组', testId: 'grouping-option-tags' },
+  { value: 'path', label: '路径', description: '按 URL path 结构对请求分组', testId: 'grouping-option-path' }
 ];
 
 const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sourceUrl, filePath, rawContent }) => {
@@ -140,9 +140,9 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
     },
     validationSchema: Yup.object({
       collectionLocation: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(500, 'must be 500 characters or less')
-        .required('Location is required')
+        .min(1, '至少需要 1 个字符')
+        .max(500, '最多 500 个字符')
+        .required('位置为必填项')
     }),
     onSubmit: async (values) => {
       const { collection: convertedCollection, issues } = await convertCollection(format, rawData, { groupingType, collectionFormat, preserveScripts });
@@ -152,7 +152,7 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
         const syncSourceUrl = sourceUrl || filePath; // URL or absolute path (backend converts to relative)
         const baseBrunoConfig = {
           version: convertedCollection.version || '1',
-          name: convertedCollection.name || 'Untitled Collection',
+          name: convertedCollection.name || '未命名集合',
           type: 'collection',
           ignore: ['node_modules', '.git']
         };
@@ -183,10 +183,10 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
         const skipped = issues.filter((i) => i.severity === 'error').length;
         const warnings = issues.filter((i) => i.severity === 'warning').length;
         const parts = [];
-        if (skipped > 0) parts.push(`skipped ${skipped} item(s)`);
-        if (warnings > 0) parts.push(`${warnings} warning(s)`);
+        if (skipped > 0) parts.push(`跳过 ${skipped} 项`);
+        if (warnings > 0) parts.push(`${warnings} 条警告`);
         const timestamp = new Date().toISOString();
-        dispatch(addLog({ type: 'warn', args: [`Import: ${collectionName} — ${parts.join(', ')}`], timestamp }));
+        dispatch(addLog({ type: 'warn', args: [`导入：${collectionName} — ${parts.join(', ')}`], timestamp }));
         issues.forEach((issue) => {
           const logType = issue.severity === 'error' ? 'error' : 'warn';
           const logArgs = [`[${issue.path}] ${issue.message}`];
@@ -209,7 +209,7 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
     return (
       <div ref={ref} className="flex items-center text-link cursor-pointer">
         <button className="btn-advanced" type="button">
-          Options
+          选项
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -265,8 +265,8 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
       <StyledWrapper>
         <Modal
           size="md"
-          title="Import Collection"
-          confirmText="Import"
+          title="导入集合"
+          confirmText="导入"
           handleConfirm={onSubmit}
           handleCancel={onClose}
           dataTestId="import-collection-location-modal"
@@ -282,7 +282,7 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
                       setShowAdvancedOptions(!showAdvancedOptions);
                     }}
                   >
-                    {showAdvancedOptions ? 'Hide Advanced Options' : 'Show Advanced Options'}
+                    {showAdvancedOptions ? '隐藏高级选项' : '显示高级选项'}
                   </div>
                 </Dropdown>
               </div>
@@ -292,16 +292,16 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
           <form className="bruno-form" onSubmit={(e) => e.preventDefault()}>
             <div>
               <label htmlFor="collectionName" className="block font-medium">
-                Name
+                名称
               </label>
               <div className="mt-2">{collectionName}</div>
 
               <>
                 <label htmlFor="collectionLocation" className="font-medium mt-4 flex items-center">
-                  Location
+                  位置
                   <Help>
-                    <p>Bruno stores your collections on your computer's filesystem.</p>
-                    <p className="mt-2">Choose the location where you want to store this collection.</p>
+                    <p>Bruno 将集合存储在你计算机的文件系统中。</p>
+                    <p className="mt-2">选择要存储此集合的位置。</p>
                   </Help>
                 </label>
                 <input
@@ -330,21 +330,21 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
                   className="text-link cursor-pointer hover:underline"
                   onClick={browse}
                 >
-                  Browse
+                  浏览
                 </span>
               </div>
 
               {showAdvancedOptions && !isZipImport && (
                 <div className="mt-4">
                   <label htmlFor="format" className="flex items-center font-medium">
-                    File Format
+                    文件格式
                     <Help width="300">
-                      <p>Choose the file format for storing requests in this collection.</p>
+                      <p>选择用于存储此集合请求的文件格式。</p>
                       <p className="mt-2">
-                        <strong>OpenCollection (YAML):</strong> Industry-standard YAML format (.yml files)
+                        <strong>OpenCollection (YAML):</strong> 行业标准 YAML 格式（.yml 文件）
                       </p>
                       <p className="mt-1">
-                        <strong>BRU:</strong> Bruno's native file format (.bru files)
+                        <strong>BRU:</strong> Bruno 原生文件格式（.bru 文件）
                       </p>
                     </Help>
                   </label>
@@ -356,7 +356,7 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
                     onChange={(e) => setCollectionFormat(e.target.value)}
                   >
                     <option value="yml">OpenCollection (YAML)</option>
-                    <option value="bru">BRU Format (.bru)</option>
+                    <option value="bru">BRU 格式（.bru）</option>
                   </select>
                 </div>
               )}
@@ -371,9 +371,9 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
                     data-testid="preserve-scripts-toggle"
                   />
                   <div>
-                    <span className="checkbox-option-label">Preserve scripts</span>
+                    <span className="checkbox-option-label">保留脚本</span>
                     <p className="checkbox-option-description">
-                      Import Postman scripts without translating them.
+                      导入不经过转换的 Postman 脚本。
                     </p>
                   </div>
                 </label>
@@ -384,10 +384,10 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
               <div className="mt-4 flex gap-4 items-center justify-between">
                 <div>
                   <label htmlFor="groupingType" className="block font-medium">
-                    Folder arrangement
+                    文件夹排列
                   </label>
                   <p className="text-muted text-xs mt-1 mb-2">
-                    Select whether to create folders according to the spec's paths or tags.
+                    选择根据规范的 paths 还是 tags 创建文件夹。
                   </p>
                 </div>
                 <div className="relative">
@@ -419,11 +419,11 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
                   className={`checkbox mt-0.5 ${isSwagger2 ? '' : 'cursor-pointer'}`}
                 />
                 <div>
-                  <span className="checkbox-option-label">Check for Spec Updates</span>
+                  <span className="checkbox-option-label">检查规范更新</span>
                   <p className="checkbox-option-description">
                     {isSwagger2
-                      ? 'OpenAPI Sync is not supported for Swagger 2.0 specs.'
-                      : 'Stay notified of spec changes and sync your collection with the spec.'}
+                      ? 'Swagger 2.0 规范不支持 OpenAPI 同步。'
+                      : '及时了解规范变更，并将集合与规范同步。'}
                   </p>
                 </div>
               </label>

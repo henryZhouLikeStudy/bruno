@@ -84,7 +84,7 @@ const CollectionsSection = () => {
       }
     };
     dispatch(savePreferences(updatedPreferences)).catch(() => {
-      toast.error('Failed to save preferences');
+      toast.error('保存偏好设置失败');
     });
   };
 
@@ -167,11 +167,11 @@ const CollectionsSection = () => {
   const getSortLabel = () => {
     switch (collectionSortOrder) {
       case 'alphabetical':
-        return 'Sort Z-A';
+        return '按 Z-A 排序';
       case 'reverseAlphabetical':
-        return 'Clear sort';
+        return '清除排序';
       default:
-        return 'Sort A-Z';
+        return '按 A-Z 排序';
     }
   };
 
@@ -190,13 +190,13 @@ const CollectionsSection = () => {
   const handleStartRequest = () => {
     const scratchCollectionUid = activeWorkspace?.scratchCollectionUid;
     if (!scratchCollectionUid) {
-      toast.error('Unable to create request');
+      toast.error('无法创建请求');
       return;
     }
 
     const scratchCollection = collections.find((c) => c.uid === scratchCollectionUid);
     if (!scratchCollection) {
-      toast.error('Unable to create request');
+      toast.error('无法创建请求');
       return;
     }
 
@@ -227,7 +227,7 @@ const CollectionsSection = () => {
         isTransient: true
       })
     ).catch((err) => {
-      toast.error('An error occurred while creating the request');
+      toast.error('创建请求时发生错误');
     });
   };
 
@@ -241,7 +241,7 @@ const CollectionsSection = () => {
     {
       id: 'create',
       leftSection: IconPlus,
-      label: 'Create collection',
+      label: '创建集合',
       onClick: () => {
         dispatch(setIsCreatingCollection(true));
       }
@@ -249,7 +249,7 @@ const CollectionsSection = () => {
     {
       id: 'open',
       leftSection: IconFolder,
-      label: 'Open collection',
+      label: '打开集合',
       onClick: () => {
         handleOpenCollection();
       }
@@ -257,7 +257,7 @@ const CollectionsSection = () => {
     {
       id: 'import',
       leftSection: IconDownload,
-      label: 'Import collection',
+      label: '导入集合',
       onClick: () => {
         setImportCollectionModalOpen(true);
       }
@@ -276,7 +276,7 @@ const CollectionsSection = () => {
     {
       id: 'close-all',
       leftSection: IconSquareX,
-      label: 'Close all',
+      label: '全部关闭',
       onClick: () => {
         selectAllCollectionsToClose();
       }
@@ -284,7 +284,7 @@ const CollectionsSection = () => {
     {
       id: 'open-in-terminal',
       leftSection: IconTerminal2,
-      label: 'Open in Terminal',
+      label: '在终端中打开',
       onClick: () => {
         openDevtoolsAndSwitchToTerminal(dispatch, activeWorkspace?.pathname);
       }
@@ -295,7 +295,7 @@ const CollectionsSection = () => {
     <>
       <ActionIcon
         onClick={handleToggleSearch}
-        label="Search requests"
+        label="搜索请求"
       >
         <IconSearch size={14} stroke={1.5} aria-hidden="true" />
       </ActionIcon>
@@ -306,7 +306,7 @@ const CollectionsSection = () => {
         placement="bottom-end"
       >
         <ActionIcon
-          label="Add new collection"
+          label="新建集合"
         >
           <IconPlus size={14} stroke={1.5} aria-hidden="true" />
         </ActionIcon>
@@ -318,7 +318,7 @@ const CollectionsSection = () => {
         placement="bottom-end"
       >
         <ActionIcon
-          label="More actions"
+          label="更多操作"
         >
           <IconDotsVertical size={14} stroke={1.5} aria-hidden="true" />
         </ActionIcon>
@@ -403,7 +403,7 @@ const CollectionsSection = () => {
       )}
       <SidebarSection
         id="collections"
-        title="Collections"
+        title="集合"
         icon={IconBox}
         actions={sectionActions}
       >

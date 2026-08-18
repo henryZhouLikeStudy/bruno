@@ -51,7 +51,7 @@ const WelcomeModal = ({ onDismiss, onImportCollection, onCreateCollection, onOpe
         }
       };
       return dispatch(savePreferences(updatedPreferences)).catch(() => {
-        toast.error('Failed to save preferences');
+        toast.error('保存偏好设置失败');
       });
     }
     return Promise.resolve();
@@ -107,11 +107,11 @@ const WelcomeModal = ({ onDismiss, onImportCollection, onCreateCollection, onOpe
             <Bruno width={48} />
           </div>
           <h1 className="welcome-heading">
-            {step === 1 ? 'Welcome to Bruno' : step === 4 ? 'Ready to go!' : 'Set up Bruno'}
+            {step === 1 ? '欢迎使用 Bruno' : step === 4 ? '准备就绪！' : '设置 Bruno'}
           </h1>
           {step === 1 && (
             <p className="welcome-tagline">
-              A fast, Git-friendly, and open-source API client.
+              快速、支持 Git、开源的 API 客户端。
             </p>
           )}
         </div>
@@ -126,7 +126,7 @@ const WelcomeModal = ({ onDismiss, onImportCollection, onCreateCollection, onOpe
                 key={i}
                 className={`dot ${i + 1 === step ? 'active' : ''} ${i + 1 < step ? 'completed' : ''}`}
                 onClick={() => goTo(i + 1)}
-                aria-label={`Go to step ${i + 1}`}
+                aria-label={`前往第 ${i + 1} 步`}
                 aria-current={i + 1 === step ? 'step' : undefined}
               />
             ))}
@@ -134,21 +134,21 @@ const WelcomeModal = ({ onDismiss, onImportCollection, onCreateCollection, onOpe
 
           <div className="footer-buttons">
             <Button type="button" color="secondary" variant="ghost" onClick={handleSaveAndDismiss}>
-              Skip
+              跳过
             </Button>
             {step > 1 && (
               <Button type="button" color="secondary" variant="ghost" onClick={() => goTo(step - 1)}>
-                Back
+                返回
               </Button>
             )}
             {!isLastStep && (
               <Button type="button" onClick={() => goTo(step + 1)}>
-                {step === 1 ? 'Get Started' : 'Next'}
+                {step === 1 ? '开始使用' : '下一步'}
               </Button>
             )}
             {isLastStep && (
               <Button type="button" color="secondary" onClick={handleSaveAndDismiss}>
-                I'll explore on my own
+                我自己探索
               </Button>
             )}
           </div>

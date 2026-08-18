@@ -12,7 +12,7 @@ const UrlTab = ({
   const handleUrlImport = async (event) => {
     event.preventDefault();
     if (!urlInput.trim() || !isValidUrl(urlInput.trim())) {
-      setErrorMessage('Please enter a valid URL');
+      setErrorMessage('请输入有效的 URL');
       return;
     }
     setIsLoading(true);
@@ -22,7 +22,7 @@ const UrlTab = ({
       handleSubmit({ rawData: data, type: specType, sourceUrl: urlInput.trim(), rawContent });
     } catch (err) {
       console.error(err);
-      setErrorMessage('URL import failed. Please check the URL and try again.');
+      setErrorMessage('URL 导入失败。请检查 URL 后重试。');
     } finally {
       setIsLoading(false);
     }
@@ -41,7 +41,7 @@ const UrlTab = ({
             setUrlInput(e.target.value);
             setErrorMessage('');
           }}
-          placeholder="Enter URL (OpenAPI/Swagger, Postman, or Insomnia specification)"
+          placeholder="输入 URL（OpenAPI/Swagger、Postman 或 Insomnia 规范）"
           className="flex-1 px-3 py-1 textbox"
         />
         <Button
@@ -52,7 +52,7 @@ const UrlTab = ({
           color="primary"
           style={{ height: '100%' }}
         >
-          Import
+          导入
         </Button>
       </div>
     </form>

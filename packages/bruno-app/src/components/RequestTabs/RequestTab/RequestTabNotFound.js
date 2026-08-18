@@ -24,7 +24,7 @@ const RequestTabNotFound = ({ handleCloseClick }) => {
         {showErrorMessage ? (
           <>
             <IconAlertTriangle size={18} strokeWidth={1.5} className="text-yellow-600" />
-            <span className="ml-1">Not Found</span>
+            <span className="ml-1">未找到</span>
           </>
         ) : null}
       </div>

@@ -11,10 +11,10 @@ const DeleteEnvironment = ({ onClose, environment }) => {
   const onConfirm = () => {
     dispatch(deleteGlobalEnvironment({ environmentUid: environment.uid }))
       .then(() => {
-        toast.success('Environment deleted successfully');
+        toast.success('环境删除成功');
         onClose();
       })
-      .catch(() => toast.error('An error occurred while deleting the environment'));
+      .catch(() => toast.error('删除环境时出错'));
   };
 
   return (
@@ -22,12 +22,12 @@ const DeleteEnvironment = ({ onClose, environment }) => {
       <StyledWrapper>
         <Modal
           size="md"
-          title="Delete Environment"
-          confirmText="Delete"
+          title="删除环境"
+          confirmText="删除"
           handleConfirm={onConfirm}
           handleCancel={onClose}
         >
-          Are you sure you want to delete <span className="font-semibold">{environment.name}</span>?
+          确定要删除 <span className="font-semibold">{environment.name}</span> 吗？
         </Modal>
       </StyledWrapper>
     </Portal>

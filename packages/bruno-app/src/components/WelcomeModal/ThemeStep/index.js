@@ -5,9 +5,9 @@ import themes, { getLightThemes, getDarkThemes } from 'themes/index';
 import StyledWrapper from './StyledWrapper';
 
 const themeModes = [
-  { key: 'light', label: 'Light', icon: IconBrightnessUp },
-  { key: 'dark', label: 'Dark', icon: IconMoon },
-  { key: 'system', label: 'System', icon: IconDeviceDesktop }
+  { key: 'light', label: '浅色', icon: IconBrightnessUp },
+  { key: 'dark', label: '深色', icon: IconMoon },
+  { key: 'system', label: '跟随系统', icon: IconDeviceDesktop }
 ];
 
 const ThemePreviewBox = ({ themeId, isDark }) => {
@@ -37,10 +37,10 @@ const ThemeStep = ({ storedTheme, setStoredTheme, themeVariantLight, setThemeVar
 
   return (
     <StyledWrapper className="step-body">
-      <div className="step-label">Appearance</div>
-      <div className="step-title">Choose your theme</div>
+      <div className="step-label">外观</div>
+      <div className="step-title">选择主题</div>
       <div className="step-description">
-        Pick a look that feels right. You can always change this later in Preferences.
+        选择你喜欢的外观。稍后在偏好设置中也可以随时更改。
       </div>
 
       <div className="theme-mode-buttons">

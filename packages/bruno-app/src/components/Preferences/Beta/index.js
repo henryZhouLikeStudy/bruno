@@ -41,30 +41,30 @@ import { getDocsUrlWithVersion } from 'utils/url';
 const BETA_FEATURES = [
   {
     id: BETA_FEATURE_IDS.AI_ASSISTANT,
-    label: 'AI Assistant',
+    label: 'AI 助手',
     description:
-      'Generate scripts, tests, and documentation directly from the request tab. Includes contextual chat, scripting autocomplete, and support for OpenAI, Anthropic, and OpenAI-compatible providers using your own API key.',
-    action: { label: 'Go to AI settings', tab: 'ai' },
+      '直接从请求选项卡生成脚本、测试和文档。包含上下文聊天、脚本自动补全，并支持使用你自己的 API 密钥连接 OpenAI、Anthropic 和 OpenAI 兼容提供者。',
+    action: { label: '前往 AI 设置', tab: 'ai' },
     docsUrl: 'https://link.usebruno.com/docs/ai'
   },
   {
     id: BETA_FEATURE_IDS.FILE_CACHE,
-    label: 'File cache',
+    label: '文件缓存',
     description:
-      'Speeds up how quickly your collections open by keeping a local cache on disk. Turn it on or clear it anytime from the Cache settings.',
-    action: { label: 'Go to Cache settings', tab: 'cache' }
+      '通过在本地磁盘保留缓存，加快集合打开速度。可随时在缓存设置中开启或清除。',
+    action: { label: '前往缓存设置', tab: 'cache' }
   },
   {
     id: BETA_FEATURE_IDS.AKAMAI_EDGEGRID,
     label: 'Akamai EdgeGrid',
     description:
-      'Sign requests with the Akamai EdgeGrid authentication scheme. Select it from the Auth type dropdown on any request, folder, or collection.',
+      '使用 Akamai EdgeGrid 认证方案对请求签名。可在任意请求、文件夹或集合的认证类型下拉框中选择。',
     docsUrl: 'https://link.usebruno.com/docs/auth'
   },
   {
     id: BETA_FEATURE_IDS.MOCK_SERVER,
-    label: 'Mock Server',
-    description: 'Run a local mock server using response examples defined in your collection. Serve mock API responses for frontend development without a real backend.',
+    label: 'Mock 服务器',
+    description: '使用集合中定义的响应示例运行本地 Mock 服务器。为前端开发提供 Mock API 响应，无需真实后端。',
     toggle: true
   }
 ];
@@ -118,7 +118,7 @@ const Beta = ({ close }) => {
         }
       })
     )
-      .catch((err) => console.log(err) && toast.error('Failed to update beta preferences'));
+      .catch((err) => console.log(err) && toast.error('更新测试版偏好设置失败'));
   }, [dispatch, preferences]);
 
   const handleSaveRef = useRef(handleSave);
@@ -154,11 +154,11 @@ const Beta = ({ close }) => {
 
   return (
     <StyledWrapper>
-      <div className="section-header">Beta Features</div>
+      <div className="section-header">测试版功能</div>
       <form onSubmit={formik.handleSubmit}>
         <div className="mb-6">
           <p className="text-gray-500 dark:text-gray-400 mb-4 text-wrap">
-            Beta features are experimental previews that may change before full release. Try them and share feedback.
+            测试版功能是正式发布前可能会变化的实验性预览。欢迎试用并反馈。
           </p>
         </div>
 
@@ -202,7 +202,7 @@ const Beta = ({ close }) => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <span>View docs</span>
+                      <span>查看文档</span>
                       <IconExternalLink size={14} strokeWidth={1.5} />
                     </a>
                   )}
@@ -214,7 +214,7 @@ const Beta = ({ close }) => {
 
         {!hasAnyBetaFeatures && (
           <div className="no-features-message">
-            <p>No beta features are currently available</p>
+            <p>当前没有可用的测试版功能</p>
           </div>
         )}
       </form>

@@ -39,7 +39,7 @@ const ImportCollection = ({ onClose, handleSubmit }) => {
 
   return (
     <Portal>
-      <Modal size="md" title="Import Collection" hideFooter={true} handleCancel={onClose} dataTestId="import-collection-modal">
+      <Modal size="md" title="导入集合" hideFooter={true} handleCancel={onClose} dataTestId="import-collection-modal">
         <StyledWrapper className="flex flex-col h-full">
           <div className="flex w-full mb-6">
             <div className="flex justify-start w-full tabs">
@@ -49,7 +49,7 @@ const ImportCollection = ({ onClose, handleSubmit }) => {
                 data-testid="file-tab"
               >
                 <IconFileImport size={18} strokeWidth={1.5} className="mr-2" />
-                File
+                文件
               </div>
               <div
                 className={getTabClassname(IMPORT_TABS.GITHUB)}
@@ -57,7 +57,7 @@ const ImportCollection = ({ onClose, handleSubmit }) => {
                 data-testid="github-tab"
               >
                 <IconBrandGit size={18} strokeWidth={1.5} className="mr-2" />
-                Git Repository
+                Git 仓库
               </div>
               <div
                 className={getTabClassname(IMPORT_TABS.URL)}

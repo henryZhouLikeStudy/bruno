@@ -4,10 +4,10 @@ import StyledWrapper from './StyledWrapper';
 
 const GetStartedStep = ({ onCreateCollection, onImportCollection, onOpenCollection, onStartRequest }) => (
   <StyledWrapper className="step-body">
-    <div className="step-label">Your first collection</div>
-    <div className="step-title">You're all set! What's next?</div>
+    <div className="step-label">你的第一个集合</div>
+    <div className="step-title">一切就绪！接下来做什么？</div>
     <div className="step-description">
-      Create a new collection to start building requests, or import one you already have.
+      创建新集合以开始构建请求，或导入已有集合。
     </div>
 
     <div className="primary-actions">
@@ -15,16 +15,16 @@ const GetStartedStep = ({ onCreateCollection, onImportCollection, onOpenCollecti
         <div className="card-icon">
           <IconPlus size={20} stroke={1.5} />
         </div>
-        <div className="card-title">Create Collection</div>
-        <div className="card-desc">Start fresh with a new API collection</div>
+        <div className="card-title">创建集合</div>
+        <div className="card-desc">从全新的 API 集合开始</div>
       </button>
 
       <button className="primary-action-card" onClick={onImportCollection}>
         <div className="card-icon">
           <IconDownload size={20} stroke={1.5} />
         </div>
-        <div className="card-title">Import Collection</div>
-        <div className="card-desc">Bring in Postman, OpenAPI/Swagger, or Insomnia</div>
+        <div className="card-title">导入集合</div>
+        <div className="card-desc">导入 Postman、OpenAPI/Swagger 或 Insomnia</div>
       </button>
     </div>
 
@@ -34,8 +34,8 @@ const GetStartedStep = ({ onCreateCollection, onImportCollection, onOpenCollecti
           <IconFileImport size={16} stroke={1.5} />
         </span>
         <div>
-          <div className="secondary-label">Open existing collection</div>
-          <div className="secondary-desc">Open a Bruno collection from your filesystem</div>
+          <div className="secondary-label">打开已有集合</div>
+          <div className="secondary-desc">从文件系统打开 Bruno 集合</div>
         </div>
       </button>
       <button className="secondary-action" onClick={onStartRequest}>
@@ -43,8 +43,8 @@ const GetStartedStep = ({ onCreateCollection, onImportCollection, onOpenCollecti
           <IconSend size={16} stroke={1.5} />
         </span>
         <div>
-          <div className="secondary-label">Get started with a request</div>
-          <div className="secondary-desc">Jump right in with a new HTTP request</div>
+          <div className="secondary-label">从请求开始</div>
+          <div className="secondary-desc">直接创建新的 HTTP 请求</div>
         </div>
       </button>
     </div>

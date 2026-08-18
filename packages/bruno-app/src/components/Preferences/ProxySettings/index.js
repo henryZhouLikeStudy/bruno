@@ -21,7 +21,7 @@ const ProxySettings = ({ close }) => {
     pac: Yup.object({
       source: Yup.string()
         .optional()
-        .test('pac-url', 'Specify a valid PAC URL', (value) => {
+        .test('pac-url', '请输入有效的 PAC URL', (value) => {
           if (!value) return true;
           try {
             const u = new URL(value);
@@ -39,7 +39,7 @@ const ProxySettings = ({ close }) => {
       port: Yup.number()
         .min(1)
         .max(65535)
-        .typeError('Specify port between 1 and 65535')
+        .typeError('端口必须在 1 到 65535 之间')
         .nullable()
         .transform((_, val) => (val ? Number(val) : null)),
       auth: Yup.object({
@@ -86,7 +86,7 @@ const ProxySettings = ({ close }) => {
             proxy: validatedProxy
           })
         ).catch(() => {
-          toast.error('Failed to save preferences');
+          toast.error('保存偏好设置失败');
         });
       })
       .catch((error) => {
@@ -105,8 +105,8 @@ const ProxySettings = ({ close }) => {
 
   const handleRefreshPac = () => {
     dispatch(refreshPacCache())
-      .then(() => toast.success('PAC cache refreshed'))
-      .catch(() => toast.error('Failed to refresh PAC cache'));
+      .then(() => toast.success('PAC 缓存已刷新'))
+      .catch(() => toast.error('刷新 PAC 缓存失败'));
   };
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -133,11 +133,11 @@ const ProxySettings = ({ close }) => {
 
   return (
     <StyledWrapper>
-      <div className="section-header">Proxy Settings</div>
+      <div className="section-header">代理设置</div>
       <form className="bruno-form" onSubmit={formik.handleSubmit}>
         <div className="mb-3 flex items-center mt-2">
           <label className="settings-label" htmlFor="protocol">
-            Mode
+            模式
           </label>
           <div className="flex items-center">
             <label className="flex items-center cursor-pointer" data-testid="off-proxy-mode">
@@ -152,7 +152,7 @@ const ProxySettings = ({ close }) => {
                 }}
                 className="mr-1 cursor-pointer"
               />
-              Off
+              关闭
             </label>
             <label className="flex items-center ml-4 cursor-pointer" data-testid="manual-proxy-mode">
               <input
@@ -167,7 +167,7 @@ const ProxySettings = ({ close }) => {
                 }}
                 className="mr-1 cursor-pointer"
               />
-              On
+              开启
             </label>
             <label className="flex items-center ml-4 cursor-pointer" data-testid="system-proxy-mode">
               <input
@@ -182,7 +182,7 @@ const ProxySettings = ({ close }) => {
                 }}
                 className="mr-1 cursor-pointer"
               />
-              System Proxy
+              系统代理
             </label>
             <label className="flex items-center ml-4 cursor-pointer" data-testid="pac-proxy-mode">
               <input
@@ -210,7 +210,7 @@ const ProxySettings = ({ close }) => {
           <>
             <div className="mb-3 flex items-center">
               <label className="settings-label" htmlFor="protocol">
-                Protocol
+                协议
               </label>
               <div className="flex items-center">
                 <label className="flex items-center">
@@ -261,7 +261,7 @@ const ProxySettings = ({ close }) => {
             </div>
             <div className="mb-3 flex items-center">
               <label className="settings-label" htmlFor="config.hostname">
-                Hostname
+                主机名
               </label>
               <input
                 id="config.hostname"
@@ -281,7 +281,7 @@ const ProxySettings = ({ close }) => {
             </div>
             <div className="mb-3 flex items-center">
               <label className="settings-label" htmlFor="config.port">
-                Port
+                端口
               </label>
               <input
                 id="config.port"
@@ -301,7 +301,7 @@ const ProxySettings = ({ close }) => {
             </div>
             <div className="mb-3 flex items-center">
               <label className="settings-label" htmlFor="config.auth.disabled">
-                Auth
+                认证
               </label>
               <input
                 id="config.auth.disabled"
@@ -317,7 +317,7 @@ const ProxySettings = ({ close }) => {
             <div>
               <div className="mb-3 flex items-center">
                 <label className="settings-label" htmlFor="config.auth.username">
-                  Username
+                  用户名
                 </label>
                 <input
                   id="config.auth.username"
@@ -337,7 +337,7 @@ const ProxySettings = ({ close }) => {
               </div>
               <div className="mb-3 flex items-center">
                 <label className="settings-label" htmlFor="config.auth.password">
-                  Password
+                  密码
                 </label>
                 <div className="textbox flex flex-row items-center w-[13.2rem] h-[2.25rem] relative">
                   <input
@@ -367,7 +367,7 @@ const ProxySettings = ({ close }) => {
             </div>
             <div className="mb-3 flex items-center">
               <label className="settings-label" htmlFor="config.bypassProxy">
-                Proxy Bypass
+                代理绕过
               </label>
               <input
                 id="config.bypassProxy"
@@ -411,7 +411,7 @@ const ProxySettings = ({ close }) => {
                       formik.setFieldValue('pac.source', '');
                     }}
                   >
-                    File
+                    文件
                   </button>
                 </div>
                 {pacInputMode === 'url' ? (
@@ -440,12 +440,12 @@ const ProxySettings = ({ close }) => {
                             formik.setFieldValue('pac.source', fileUrl);
                           }
                         })
-                        .catch(() => toast.error('Failed to open file picker'));
+                        .catch(() => toast.error('打开文件选择器失败'));
                     }}
                   >
                     {formik.values.pac.source
                       ? decodeURIComponent(formik.values.pac.source.split('/').pop())
-                      : 'Select File'}
+                      : '选择文件'}
                   </button>
                 )}
                 {formik.touched.pac?.source && formik.errors.pac?.source ? (
@@ -454,8 +454,8 @@ const ProxySettings = ({ close }) => {
               </div>
               <p className="pac-hint">
                 {pacInputMode === 'url'
-                  ? 'Enter the URL to your PAC file'
-                  : 'Supports .pac files for automatic proxy configuration'}
+                  ? '输入 PAC 文件的 URL'
+                  : '支持用于自动代理配置的 .pac 文件'}
               </p>
               {formik.values.pac.source ? (
                 <span
@@ -463,7 +463,7 @@ const ProxySettings = ({ close }) => {
                   onClick={handleRefreshPac}
                 >
                   <IconRefresh size={14} strokeWidth={1.5} className="mr-1" />
-                  Refetch
+                  重新获取
                 </span>
               ) : null}
             </div>

@@ -46,19 +46,19 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
     validationSchema: Yup.object({
       collectionName: Yup.string()
         .trim()
-        .min(1, 'Collection name can\'t be empty')
-        .max(255, 'Must be 255 characters or less')
-        .required('Collection name is required'),
+        .min(1, '集合名称不能为空')
+        .max(255, '最多 255 个字符')
+        .required('集合名称为必填项'),
       collectionFolderName: Yup.string()
-        .min(1, 'Must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, '至少需要 1 个字符')
+        .max(255, '最多 255 个字符')
         .test('is-valid-collection-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('Folder name is required'),
-      collectionLocation: Yup.string().min(1, 'Location is required').required('Location is required'),
-      format: Yup.string().oneOf(['bru', 'yml'], 'invalid format').required('Format is required')
+        .required('文件夹名称为必填项'),
+      collectionLocation: Yup.string().min(1, '位置不能为空').required('位置为必填项'),
+      format: Yup.string().oneOf(['bru', 'yml'], '格式无效').required('格式为必填项')
     }),
     onSubmit: async (values) => {
       try {
@@ -67,10 +67,10 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
           values.collectionLocation,
           { format: values.format }));
 
-        toast.success('Collection created!');
+        toast.success('集合已创建！');
         onClose();
       } catch (e) {
-        toast.error(multiLineMsg('An error occurred while creating the collection', formatIpcError(e)));
+        toast.error(multiLineMsg('创建集合时发生错误', formatIpcError(e)));
       }
     }
   });
@@ -104,7 +104,7 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
           className="btn-advanced"
           type="button"
         >
-          Options
+          选项
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -114,11 +114,11 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
   return (
     <Portal>
       <StyledWrapper>
-        <Modal size="md" title="Create Collection" hideFooter={true} handleCancel={onClose}>
+        <Modal size="md" title="创建集合" hideFooter={true} handleCancel={onClose}>
           <form className="bruno-form" onSubmit={formik.handleSubmit}>
             <div>
               <label htmlFor="collection-name" className="flex items-center font-medium">
-                Name
+                名称
               </label>
               <input
                 id="collection-name"
@@ -150,13 +150,13 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
               ) : null}
 
               <label htmlFor="collection-location" className="font-medium mt-3 flex items-center">
-                Location
+                位置
                 <Help>
                   <p>
-                    Bruno stores your collections on your computer's filesystem.
+                    Bruno 将集合存储在你计算机的文件系统中。
                   </p>
                   <p className="mt-2">
-                    Choose the location where you want to store this collection.
+                    选择要存储此集合的位置。
                   </p>
                 </Help>
               </label>
@@ -184,20 +184,20 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
                   className="text-link cursor-pointer hover:underline"
                   onClick={browse}
                 >
-                  Browse
+                  浏览
                 </span>
               </div>
               {formik.values.collectionName?.trim()?.length > 0 && (
                 <div className="mt-4">
                   <div className="flex items-center justify-between">
                     <label htmlFor="filename" className="flex items-center font-medium">
-                      Folder Name
+                      文件夹名称
                       <Help width="300">
                         <p>
-                          The name of the folder used to store the collection.
+                          用于存储集合的文件夹名称。
                         </p>
                         <p className="mt-2">
-                          You can choose a folder name different from your collection's name or one compatible with filesystem rules.
+                          你可以选择与集合名称不同的文件夹名称，或选择与文件系统规则兼容的名称。
                         </p>
                       </Help>
                     </label>
@@ -246,16 +246,16 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
               {showAdvancedOptions && (
                 <div className="mt-4">
                   <label htmlFor="format" className="flex items-center font-medium">
-                    File Format
+                    文件格式
                     <Help width="300">
                       <p>
-                        Choose the file format for storing requests in this collection.
+                        选择用于存储此集合请求的文件格式。
                       </p>
                       <p className="mt-2">
-                        <strong>OpenCollection (YAML):</strong> Industry-standard YAML format (.yml files)
+                        <strong>OpenCollection (YAML):</strong> 行业标准 YAML 格式（.yml 文件）
                       </p>
                       <p className="mt-1">
-                        <strong>BRU:</strong> Bruno's native file format (.bru files)
+                        <strong>BRU:</strong> Bruno 原生文件格式（.bru 文件）
                       </p>
                     </Help>
                   </label>
@@ -267,7 +267,7 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
                     onChange={formik.handleChange}
                   >
                     <option value="yml">OpenCollection (YAML)</option>
-                    <option value="bru">BRU Format (.bru)</option>
+                    <option value="bru">BRU 格式（.bru）</option>
                   </select>
                   {formik.touched.format && formik.errors.format ? (
                     <div className="text-red-500">{formik.errors.format}</div>
@@ -287,16 +287,16 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
                       setShowAdvancedOptions(!showAdvancedOptions);
                     }}
                   >
-                    {showAdvancedOptions ? 'Hide Advanced Options' : 'Show Advanced Options'}
+                    {showAdvancedOptions ? '隐藏高级选项' : '显示高级选项'}
                   </div>
                 </Dropdown>
               </div>
               <div className="flex justify-end">
                 <Button type="button" color="secondary" variant="ghost" onClick={onClose} className="mr-2">
-                  Cancel
+                  取消
                 </Button>
                 <Button type="submit">
-                  Create
+                  创建
                 </Button>
               </div>
             </div>

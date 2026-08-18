@@ -27,14 +27,14 @@ const RenameEnvironment = ({ onClose, environment }) => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, '至少需要 1 个字符')
+        .max(255, '最多 255 个字符')
         .test('is-valid-filename', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('name is required')
-        .test('duplicate-name', 'Environment already exists', validateEnvironmentName)
+        .required('名称为必填项')
+        .test('duplicate-name', '环境已存在', validateEnvironmentName)
     }),
     onSubmit: (values) => {
       if (values.name === environment.name) {
@@ -42,11 +42,11 @@ const RenameEnvironment = ({ onClose, environment }) => {
       }
       dispatch(renameGlobalEnvironment({ name: values.name, environmentUid: environment.uid }))
         .then(() => {
-          toast.success('Environment renamed successfully');
+          toast.success('环境重命名成功');
           onClose();
         })
         .catch((error) => {
-          toast.error('An error occurred while renaming the environment');
+          toast.error('重命名环境时出错');
           console.error(error);
         });
     }
@@ -66,15 +66,15 @@ const RenameEnvironment = ({ onClose, environment }) => {
     <Portal>
       <Modal
         size="sm"
-        title="Rename Environment"
-        confirmText="Rename"
+        title="重命名环境"
+        confirmText="重命名"
         handleConfirm={onSubmit}
         handleCancel={onClose}
       >
         <form className="bruno-form" onSubmit={(e) => e.preventDefault()}>
           <div>
             <label htmlFor="environment-name" className="block font-semibold">
-              Environment Name
+              环境名称
             </label>
             <input
               id="environment-name"

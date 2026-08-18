@@ -25,26 +25,26 @@ const CreateEnvironment = ({ onClose, onEnvironmentCreated }) => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(1, 'Must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, '至少需要 1 个字符')
+        .max(255, '最多 255 个字符')
         .test('is-valid-filename', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('Name is required')
-        .test('duplicate-name', 'Global environment already exists', validateEnvironmentName)
+        .required('名称为必填项')
+        .test('duplicate-name', '全局环境已存在', validateEnvironmentName)
     }),
     onSubmit: (values) => {
       dispatch(addGlobalEnvironment({ name: values.name }))
         .then(() => {
-          toast.success('Global environment created!');
+          toast.success('全局环境创建成功！');
           onClose();
           // Call the callback if provided
           if (onEnvironmentCreated) {
             onEnvironmentCreated();
           }
         })
-        .catch(() => toast.error('An error occurred while creating the environment'));
+        .catch(() => toast.error('创建环境时出错'));
     }
   });
 
@@ -62,15 +62,15 @@ const CreateEnvironment = ({ onClose, onEnvironmentCreated }) => {
     <Portal>
       <Modal
         size="md"
-        title="Create Global Environment"
-        confirmText="Create"
+        title="创建全局环境"
+        confirmText="创建"
         handleConfirm={onSubmit}
         handleCancel={onClose}
       >
         <form className="bruno-form" onSubmit={(e) => e.preventDefault()}>
           <div>
             <label htmlFor="environment-name" className="block font-semibold">
-              Environment Name
+              环境名称
             </label>
             <div className="flex items-center mt-2">
               <input

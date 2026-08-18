@@ -32,32 +32,32 @@ const CloneCollectionItem = ({ collectionUid, item, onClose }) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: `${itemName} copy`,
-      filename: `${sanitizeName(itemName)} copy`
+      name: `${itemName} 副本`,
+      filename: `${sanitizeName(itemName)} 副本`
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
-        .required('name is required'),
+        .min(1, '至少需要 1 个字符')
+        .max(255, '最多 255 个字符')
+        .required('名称为必填项'),
       filename: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
-        .required('name is required')
+        .min(1, '至少需要 1 个字符')
+        .max(255, '最多 255 个字符')
+        .required('名称为必填项')
         .test('is-valid-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .test('not-reserved', `The file names "collection" and "folder" are reserved in bruno`, (value) => !['collection', 'folder'].includes(value))
+        .test('not-reserved', `文件名 "collection" 和 "folder" 在 bruno 中为保留名称`, (value) => !['collection', 'folder'].includes(value))
     }),
     onSubmit: (values) => {
       dispatch(cloneItem(values.name, values.filename, item.uid, collectionUid))
         .then(() => {
-          toast.success('Request cloned!');
+          toast.success('请求已克隆！');
           onClose();
         })
         .catch((err) => {
-          toast.error(err ? err.message : 'An error occurred while cloning the request');
+          toast.error(err ? err.message : '克隆请求时发生错误');
         });
     }
   });
@@ -75,7 +75,7 @@ const CloneCollectionItem = ({ collectionUid, item, onClose }) => {
           className="btn-advanced"
           type="button"
         >
-          Options
+          选项
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -87,20 +87,20 @@ const CloneCollectionItem = ({ collectionUid, item, onClose }) => {
       <StyledWrapper>
         <Modal
           size="md"
-          title={`Clone ${isFolder ? 'Folder' : 'Request'}`}
+          title={`克隆${isFolder ? '文件夹' : '请求'}`}
           handleCancel={onClose}
           hideFooter
         >
           <form className="bruno-form" onSubmit={formik.handleSubmit}>
             <div>
               <label htmlFor="name" className="block font-medium">
-                {isFolder ? 'Folder' : 'Request'} Name
+                {isFolder ? '文件夹' : '请求'}名称
               </label>
               <input
                 id="collection-item-name"
                 type="text"
                 name="name"
-                placeholder="Enter Item name"
+                placeholder="输入项目名称"
                 ref={inputRef}
                 className="block textbox mt-2 w-full"
                 autoComplete="off"
@@ -120,20 +120,20 @@ const CloneCollectionItem = ({ collectionUid, item, onClose }) => {
               <div className="mt-4">
                 <div className="flex items-center justify-between">
                   <label htmlFor="filename" className="flex items-center font-medium">
-                    {isFolder ? 'Folder' : 'File'} Name <small className="font-normal text-muted ml-1">(on filesystem)</small>
+                    {isFolder ? '文件夹' : '文件'}名称 <small className="font-normal text-muted ml-1">（文件系统中）</small>
                     { isFolder ? (
                       <Help width="300">
                         <p>
-                          You can choose to save the folder as a different name on your file system versus what is displayed in the app.
+                          你可以选择在文件系统中使用与应用中显示不同的文件夹名称进行保存。
                         </p>
                       </Help>
                     ) : (
                       <Help width="300">
                         <p>
-                          Bruno saves each request as a file in your collection's folder.
+                          Bruno 将每个请求保存为集合文件夹中的一个文件。
                         </p>
                         <p className="mt-2">
-                          You can choose a file name different from your request's name or one compatible with filesystem rules.
+                          你可以选择与请求名称不同的文件名称，或选择与文件系统规则兼容的名称。
                         </p>
                       </Help>
                     )}
@@ -160,7 +160,7 @@ const CloneCollectionItem = ({ collectionUid, item, onClose }) => {
                       id="file-name"
                       type="text"
                       name="filename"
-                      placeholder={isFolder ? 'Folder Name' : 'File Name'}
+                      placeholder={isFolder ? '文件夹名称' : '文件名称'}
                       className="!pr-10 block textbox mt-2 w-full"
                       autoComplete="off"
                       autoCorrect="off"
@@ -195,16 +195,16 @@ const CloneCollectionItem = ({ collectionUid, item, onClose }) => {
                       toggleShowFilesystemName(!showFilesystemName);
                     }}
                   >
-                    {showFilesystemName ? 'Hide Filesystem Name' : 'Show Filesystem Name'}
+                    {showFilesystemName ? '隐藏文件系统名称' : '显示文件系统名称'}
                   </div>
                 </Dropdown>
               </div>
               <div className="flex justify-end">
                 <Button type="button" color="secondary" variant="ghost" onClick={onClose} className="mr-2">
-                  Cancel
+                  取消
                 </Button>
                 <Button type="submit" data-testid="clone-item-button">
-                  Clone
+                  克隆
                 </Button>
               </div>
             </div>

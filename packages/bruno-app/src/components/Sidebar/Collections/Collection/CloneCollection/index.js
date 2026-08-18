@@ -34,24 +34,24 @@ const CloneCollection = ({ onClose, collectionUid }) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      collectionName: `${name} copy`,
-      collectionFolderName: `${sanitizeName(name)} copy`,
+      collectionName: `${name} 副本`,
+      collectionFolderName: `${sanitizeName(name)} 副本`,
       collectionLocation: defaultLocation
     },
     validationSchema: Yup.object({
       collectionName: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
-        .required('collection name is required'),
+        .min(1, '至少需要 1 个字符')
+        .max(255, '最多 255 个字符')
+        .required('集合名称为必填项'),
       collectionFolderName: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
+        .min(1, '至少需要 1 个字符')
+        .max(255, '最多 255 个字符')
         .test('is-valid-collection-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('folder name is required'),
-      collectionLocation: Yup.string().min(1, 'location is required').required('location is required')
+        .required('文件夹名称为必填项'),
+      collectionLocation: Yup.string().min(1, '位置不能为空').required('位置为必填项')
     }),
     onSubmit: (values) => {
       dispatch(
@@ -63,10 +63,10 @@ const CloneCollection = ({ onClose, collectionUid }) => {
         )
       )
         .then(() => {
-          toast.success('Collection created!');
+          toast.success('集合已创建！');
           onClose();
         })
-        .catch((e) => toast.error('An error occurred while creating the collection - ' + e));
+        .catch((e) => toast.error('创建集合时发生错误 - ' + e));
     }
   });
 
@@ -93,11 +93,11 @@ const CloneCollection = ({ onClose, collectionUid }) => {
   const onSubmit = () => formik.handleSubmit();
 
   return (
-    <Modal size="md" title="Clone Collection" confirmText="Create" handleConfirm={onSubmit} handleCancel={onClose}>
+    <Modal size="md" title="克隆集合" confirmText="创建" handleConfirm={onSubmit} handleCancel={onClose}>
       <form className="bruno-form" onSubmit={(e) => e.preventDefault()}>
         <div>
           <label htmlFor="collection-name" className="flex items-center font-medium">
-            Name
+            名称
           </label>
           <input
             id="collection-name"
@@ -120,7 +120,7 @@ const CloneCollection = ({ onClose, collectionUid }) => {
           ) : null}
 
           <label htmlFor="collection-location" className="block font-medium mt-3">
-            Location
+            位置
           </label>
           <input
             id="collection-location"
@@ -143,20 +143,20 @@ const CloneCollection = ({ onClose, collectionUid }) => {
               className="text-link cursor-pointer hover:underline"
               onClick={browse}
             >
-              Browse
+              浏览
             </span>
           </div>
 
           <div className="mt-4">
             <div className="flex items-center justify-between">
               <label htmlFor="filename" className="flex items-center font-medium">
-                Folder Name
+                文件夹名称
                 <Help width="300">
                   <p>
-                    The name of the folder used to store the collection.
+                    用于存储集合的文件夹名称。
                   </p>
                   <p className="mt-2">
-                    You can choose a folder name different from your collection's name or one compatible with filesystem rules.
+                    你可以选择与集合名称不同的文件夹名称，或选择与文件系统规则兼容的名称。
                   </p>
                 </Help>
               </label>

@@ -22,10 +22,10 @@ const NewApp = ({ collectionUid, item, onClose }) => {
     validationSchema: Yup.object({
       appName: Yup.string()
         .trim()
-        .min(1, 'App name is required')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, 'App 名称为必填项')
+        .max(255, '不得超过 255 个字符')
         .test('valid-name', validateNameError, (value) => validateName(value || ''))
-        .required('App name is required')
+        .required('App 名称为必填项')
     }),
     onSubmit: (values) => {
       const name = values.appName.trim();
@@ -38,10 +38,10 @@ const NewApp = ({ collectionUid, item, onClose }) => {
         })
       )
         .then(() => {
-          toast.success('App created');
+          toast.success('App 已创建');
           onClose();
         })
-        .catch((err) => toast.error(err?.message || 'Failed to create app'))
+        .catch((err) => toast.error(err?.message || '创建 App 失败'))
         .finally(() => { submitLockRef.current = false; });
     }
   });
@@ -57,8 +57,8 @@ const NewApp = ({ collectionUid, item, onClose }) => {
     <Portal>
       <Modal
         size="md"
-        title="New App"
-        confirmText="Create"
+        title="新建 App"
+        confirmText="创建"
         handleConfirm={onSubmit}
         handleCancel={onClose}
         disableEscapeKey={false}
@@ -71,7 +71,7 @@ const NewApp = ({ collectionUid, item, onClose }) => {
           data-testid="new-app-form"
         >
           <label htmlFor="appName" className="block font-semibold">
-            Name
+            名称
           </label>
           <input
             id="appName"
@@ -89,7 +89,7 @@ const NewApp = ({ collectionUid, item, onClose }) => {
             <div className="text-red-500 text-xs mt-2">{formik.errors.appName}</div>
           ) : (
             <div className="text-xs mt-2 opacity-70">
-              Creates a standalone app file in {item ? 'this folder' : `collection "${collection?.name || ''}"`}.
+              在{item ? '当前文件夹' : `集合 "${collection?.name || ''}"`}中创建一个独立的 app 文件。
             </div>
           )}
         </form>

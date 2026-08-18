@@ -42,7 +42,7 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
     };
 
     if (defaultLocation) {
-      window.ipcRenderer?.invoke('renderer:find-unique-folder-name', 'Untitled Collection', defaultLocation)
+      window.ipcRenderer?.invoke('renderer:find-unique-folder-name', '未命名集合', defaultLocation)
         ?.then((name) => focusAndSelect(name))
         ?.catch(() => focusAndSelect());
     } else {
@@ -66,7 +66,7 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
       if (fromOutside) {
         onCancel();
       } else {
-        toast.error('Collection name is required');
+        toast.error('集合名称为必填项');
       }
       return;
     }
@@ -80,7 +80,7 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
     }
 
     if (!defaultLocation) {
-      toast.error('Please set a default location in Preferences > General');
+      toast.error('请在偏好设置 > 常规中设置默认位置');
       onCancel();
       return;
     }
@@ -89,10 +89,10 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
     try {
       const folderName = sanitizeName(name);
       await dispatch(createCollection(name, folderName, defaultLocation, { format: DEFAULT_COLLECTION_FORMAT }));
-      toast.success('Collection created!');
+      toast.success('集合已创建！');
       onComplete();
     } catch (e) {
-      toast.error(multiLineMsg('An error occurred while creating the collection', formatIpcError(e)));
+      toast.error(multiLineMsg('创建集合时发生错误', formatIpcError(e)));
       setIsCreating(false);
     }
   }, [isCreating, defaultLocation, dispatch, onCancel, onComplete]);
@@ -127,7 +127,7 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
             ref={inputRef}
             type="text"
             className="inline-collection-input"
-            defaultValue="Untitled Collection"
+            defaultValue="未命名集合"
             onKeyDown={handleKeyDown}
             autoComplete="off"
             autoCorrect="off"
@@ -142,7 +142,7 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
               openingAdvancedRef.current = true;
               onOpenAdvanced(inputRef.current?.value?.trim());
             }}
-            title="Advanced options"
+            title="高级选项"
             disabled={isCreating}
           >
             <IconSettings size={13} strokeWidth={1.5} />
@@ -153,7 +153,7 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
             className="inline-action-btn save"
             onClick={handleCreate}
             onMouseDown={(e) => e.preventDefault()}
-            title="Create"
+            title="创建"
             disabled={isCreating}
           >
             <IconCheck size={14} strokeWidth={2} />
@@ -162,7 +162,7 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
             className="inline-action-btn cancel"
             onClick={handleCancel}
             onMouseDown={(e) => e.preventDefault()}
-            title="Cancel"
+            title="取消"
             disabled={isCreating}
           >
             <IconX size={14} strokeWidth={2} />

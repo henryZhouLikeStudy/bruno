@@ -54,7 +54,7 @@ const CodeView = ({ language, item }) => {
       <CopyToClipboard
         text={snippet}
         options={{ format: 'text/plain' }}
-        onCopy={() => toast.success('Copied to clipboard!')}
+        onCopy={() => toast.success('已复制到剪贴板！')}
       >
         <button className="copy-to-clipboard">
           <IconCopy size={20} strokeWidth={1.5} />

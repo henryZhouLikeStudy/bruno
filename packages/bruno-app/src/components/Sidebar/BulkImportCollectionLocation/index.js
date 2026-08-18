@@ -36,8 +36,8 @@ const IMPORT_TYPE = {
 };
 
 const groupingOptions = [
-  { value: 'tags', label: 'Tags', description: 'Group requests by OpenAPI/Swagger tags', testId: 'grouping-option-tags' },
-  { value: 'path', label: 'Paths', description: 'Group requests by URL path structure', testId: 'grouping-option-path' }
+  { value: 'tags', label: '标签', description: '按 OpenAPI/Swagger tags 对请求分组', testId: 'grouping-option-tags' },
+  { value: 'path', label: '路径', description: '按 URL path 结构对请求分组', testId: 'grouping-option-path' }
 ];
 
 // Extract collection name from raw data
@@ -46,9 +46,9 @@ const getCollectionName = (format, rawData) => {
 
   switch (format) {
     case 'openapi':
-      return rawData.info?.title || 'OpenAPI Collection';
+      return rawData.info?.title || 'OpenAPI 集合';
     case 'postman':
-      return rawData.info?.name || rawData.collection?.info?.name || 'Postman Collection';
+      return rawData.info?.name || rawData.collection?.info?.name || 'Postman 集合';
     case 'insomnia':
       // For Insomnia v4 format, name is in the workspace resource
       if (rawData.resources && Array.isArray(rawData.resources)) {
@@ -58,13 +58,13 @@ const getCollectionName = (format, rawData) => {
         }
       }
       // Fallback to root name property
-      return rawData.name || 'Insomnia Collection';
+      return rawData.name || 'Insomnia 集合';
     case 'bruno':
-      return rawData.name || 'Bruno Collection';
+      return rawData.name || 'Bruno 集合';
     case 'wsdl':
-      return 'WSDL Collection';
+      return 'WSDL 集合';
     default:
-      return 'Collection';
+      return '集合';
   }
 };
 
@@ -94,7 +94,7 @@ const convertCollection = async (format, rawData, groupingType) => {
       collection = await processBrunoCollection(rawData);
       break;
     default:
-      throw new Error('Unknown collection format');
+      throw new Error('未知的集合格式');
   }
 
   return { collection, issues };
@@ -120,11 +120,11 @@ export function generateUniqueName(baseName, checkExists) {
   }
 
   let counter = 1;
-  let uniqueName = `${baseName} copy`;
+  let uniqueName = `${baseName} 副本`;
 
   while (checkExists(normalizeName(uniqueName))) {
     counter++;
-    uniqueName = `${baseName} copy ${counter}`;
+    uniqueName = `${baseName} 副本 ${counter}`;
   }
 
   return uniqueName;
@@ -295,9 +295,9 @@ export const BulkImportCollectionLocation = ({
     },
     validationSchema: Yup.object({
       collectionLocation: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(500, 'must be 500 characters or less')
-        .required('Location is required')
+        .min(1, '至少需要 1 个字符')
+        .max(500, '最多 500 个字符')
+        .required('位置为必填项')
     }),
     onSubmit: async (values) => {
       let filteredCollections = [];
@@ -333,11 +333,11 @@ export const BulkImportCollectionLocation = ({
             const skipped = issues.filter((i) => i.severity === 'error').length;
             const warnings = issues.filter((i) => i.severity === 'warning').length;
             const parts = [];
-            if (skipped > 0) parts.push(`skipped ${skipped} item(s)`);
-            if (warnings > 0) parts.push(`${warnings} warning(s)`);
+            if (skipped > 0) parts.push(`跳过 ${skipped} 项`);
+            if (warnings > 0) parts.push(`${warnings} 条警告`);
 
             // Per-collection summary header
-            dispatch(addLog({ type: 'warn', args: [`Import: ${name} — ${parts.join(', ')}`], timestamp }));
+            dispatch(addLog({ type: 'warn', args: [`导入：${name} — ${parts.join(', ')}`], timestamp }));
 
             // Individual issues for this collection
             issues.forEach((issue) => {
@@ -468,7 +468,7 @@ export const BulkImportCollectionLocation = ({
             .then(() => setEnvironmentStatus((prev) => ({ ...prev, [originalUid]: STATUS.SUCCESS })))
             .catch((error) => {
               setEnvironmentStatus((prev) => ({ ...prev, [originalUid]: STATUS.ERROR }));
-              setErrorMessages((prev) => ({ ...prev, [originalUid]: error.message || 'Failed to add environment' }));
+              setErrorMessages((prev) => ({ ...prev, [originalUid]: error.message || '添加环境失败' }));
             });
         });
       }
@@ -481,7 +481,7 @@ export const BulkImportCollectionLocation = ({
             console.error('Failed to import collections', err);
             filteredCollections.forEach((collection) => {
               setStatus((prev) => ({ ...prev, [collection.uid]: STATUS.ERROR }));
-              setErrorMessages((prev) => ({ ...prev, [collection.uid]: err.message || 'Failed to import collection' }));
+              setErrorMessages((prev) => ({ ...prev, [collection.uid]: err.message || '导入集合失败' }));
             });
           });
       } else {
@@ -568,7 +568,7 @@ export const BulkImportCollectionLocation = ({
   const ErrorModal = ({ error, onClose }) => (
     <Modal
       size="sm"
-      title="Error Details"
+      title="错误详情"
       handleConfirm={onClose}
       handleCancel={onClose}
       showCancelButton={false}
@@ -585,9 +585,9 @@ export const BulkImportCollectionLocation = ({
     <StyledWrapper>
       <Modal
         size="md"
-        title="Bulk Import"
+        title="批量导入"
         dataTestId="bulk-import-collection-location-modal"
-        confirmText={importStarted ? 'Close' : 'Import'}
+        confirmText={importStarted ? '关闭' : '导入'}
         confirmDisabled={Boolean(!selectedCollections?.length)}
         handleConfirm={onSubmit}
         handleCancel={onClose}
@@ -602,20 +602,20 @@ export const BulkImportCollectionLocation = ({
               <>
                 <div className="mb-6">
                   <div className="flex items-center justify-between relative mb-5 w-full">
-                    <div className="font-semibold">Location</div>
+                    <div className="font-semibold">位置</div>
                     <div className="text-sm border border-slate-600 rounded px-3 py-1.5 ml-4 flex-1">
                       {formik.values.collectionLocation
-                        || 'No location selected'}
+                        || '未选择位置'}
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between mb-2">
                     <div className="font-semibold">
-                      Importing Collections ({importStatus.totalSelected})
+                      正在导入集合 ({importStatus.totalSelected})
                     </div>
                     {importStatus.failedCount > 0 && importStatus.totalSelected > 0 && (
                       <div className="text-sm text-red-500">
-                        ({importStatus.failedCount}/{importStatus.totalSelected} failed)
+                        ({importStatus.failedCount}/{importStatus.totalSelected} 失败)
                       </div>
                     )}
                   </div>
@@ -664,13 +664,13 @@ export const BulkImportCollectionLocation = ({
                                 )}
                               className="text-red-500 text-sm hover:underline"
                             >
-                              See error
+                              查看错误
                             </button>
                           )}
                           {status[collection.uid] === STATUS.SUCCESS && importIssues[collection.uid] && (
                             <div className="flex items-center gap-2">
                               <span className="text-yellow-600 text-xs">
-                                {importIssues[collection.uid].filter((i) => i.severity === 'error').length} item(s) skipped
+                                {importIssues[collection.uid].filter((i) => i.severity === 'error').length} 项已跳过
                               </span>
                               <button
                                 onClick={async () => {
@@ -686,7 +686,7 @@ export const BulkImportCollectionLocation = ({
                                 }}
                                 className="text-yellow-600 text-xs hover:underline"
                               >
-                                Copy
+                                复制
                               </button>
                             </div>
                           )}
@@ -698,7 +698,7 @@ export const BulkImportCollectionLocation = ({
                 {selectedEnvironments.length > 0 && (
                   <div className="mb-6">
                     <div className="font-semibold mb-2">
-                      Importing Environments ({selectedEnvironments.length})
+                      正在导入环境 ({selectedEnvironments.length})
                     </div>
                     <div className="max-h-[180px] overflow-y-scroll border border-slate-600 rounded-md py-2 scrollbar-visible">
                       {sortedEnvironments
@@ -741,7 +741,7 @@ export const BulkImportCollectionLocation = ({
                                   )}
                                 className="text-red-500 text-sm hover:underline"
                               >
-                                See error
+                                查看错误
                               </button>
                             )}
                           </div>
@@ -755,8 +755,8 @@ export const BulkImportCollectionLocation = ({
                 <div className="w-full mb-6">
                   <SelectionList
                     dataTestId="selection-section-collections"
-                    title="Collections"
-                    searchPlaceholder="Search Collections"
+                    title="集合"
+                    searchPlaceholder="搜索集合"
                     items={sortedCollections}
                     selectedItems={selectedCollections}
                     onSelectAll={handleSelectAllCollections}
@@ -767,7 +767,7 @@ export const BulkImportCollectionLocation = ({
                     visibleRows={5}
                     rowHeight={isMultipleImport ? 60 : 30}
                     rowGap={4}
-                    emptyMessage="No collections found"
+                    emptyMessage="未找到集合"
                     showSelectedCount={true}
                   />
                 </div>
@@ -777,8 +777,8 @@ export const BulkImportCollectionLocation = ({
                     <div className="w-full mb-6">
                       <SelectionList
                         dataTestId="selection-section-environments"
-                        title="Environments"
-                        searchPlaceholder="Search Environments"
+                        title="环境"
+                        searchPlaceholder="搜索环境"
                         items={sortedEnvironments}
                         selectedItems={selectedEnvironments}
                         onSelectAll={handleSelectAllEnvironments}
@@ -788,14 +788,14 @@ export const BulkImportCollectionLocation = ({
                         visibleRows={4}
                         rowHeight={30}
                         rowGap={4}
-                        emptyMessage="No environments found"
+                        emptyMessage="未找到环境"
                         showSelectedCount={true}
                       />
                     </div>
 
                     <div className="mb-6">
                       <div className="font-semibold mb-2">
-                        Environment Assignment
+                        环境分配
                       </div>
                       <div className="flex gap-8 mt-2 ml-2">
                         <label className="flex items-center">
@@ -806,9 +806,9 @@ export const BulkImportCollectionLocation = ({
                             className="mr-2"
                           />
                           <span className="ml-2">
-                            Global Environment
+                            全局环境
                             <InfoTip
-                              content="Environments will be imported and stored as global, accessible across collections."
+                              content="环境将作为全局环境导入并存储，可在所有集合中访问。"
                               infotipId="apply-to-global-infotip"
                             />
                           </span>
@@ -822,9 +822,9 @@ export const BulkImportCollectionLocation = ({
                             className="mr-2"
                           />
                           <span className="ml-2">
-                            Duplicate Across Collections
+                            为每个集合复制
                             <InfoTip
-                              content="Each imported collection will receive its own copy of the environments."
+                              content="每个导入的集合都会获得一份独立的环境副本。"
                               infotipId="apply-to-each-infotip"
                             />
                           </span>
@@ -835,12 +835,12 @@ export const BulkImportCollectionLocation = ({
                 )}
 
                 <div className="flex items-start flex-col relative">
-                  <div className="font-semibold mb-2">Location</div>
+                  <div className="font-semibold mb-2">位置</div>
                   <input
                     id="collection-location"
                     data-testid="bulk-import-collection-location-input"
                     type="text"
-                    placeholder="Select a location to save the collection"
+                    placeholder="选择保存集合的位置"
                     name="collectionLocation"
                     className="block textbox w-full cursor-pointer"
                     autoComplete="off"
@@ -860,21 +860,21 @@ export const BulkImportCollectionLocation = ({
                   ) : null}
                   <div className="mt-1">
                     <span className="text-link cursor-pointer hover:underline" onClick={browse}>
-                      Browse
+                      浏览
                     </span>
                   </div>
                 </div>
 
                 <div className="mt-4">
                   <label htmlFor="format" className="flex items-center font-semibold">
-                    File Format
+                    文件格式
                     <Help width="300">
-                      <p>Choose the file format for storing requests in this collection.</p>
+                      <p>选择用于存储此集合请求的文件格式。</p>
                       <p className="mt-2">
-                        <strong>OpenCollection (YAML):</strong> Industry-standard YAML format (.yml files)
+                        <strong>OpenCollection (YAML):</strong> 行业标准 YAML 格式（.yml 文件）
                       </p>
                       <p className="mt-1">
-                        <strong>BRU:</strong> Bruno's native file format (.bru files)
+                        <strong>BRU:</strong> Bruno 原生文件格式（.bru 文件）
                       </p>
                     </Help>
                   </label>
@@ -887,7 +887,7 @@ export const BulkImportCollectionLocation = ({
                     onChange={(e) => setCollectionFormat(e.target.value)}
                   >
                     <option value="yml">OpenCollection (YAML)</option>
-                    <option value="bru">BRU Format (.bru)</option>
+                    <option value="bru">BRU 格式（.bru）</option>
                   </select>
                 </div>
 
@@ -896,10 +896,10 @@ export const BulkImportCollectionLocation = ({
                     <div className="flex gap-4 items-center mt-4">
                       <div>
                         <label htmlFor="groupingType" className="block font-semibold">
-                          Folder arrangement
+                          文件夹排列
                         </label>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 mb-2">
-                          Select whether to create folders according to the spec's paths or tags.
+                          选择根据规范的 paths 还是 tags 创建文件夹。
                         </p>
                       </div>
                       <div className="relative">

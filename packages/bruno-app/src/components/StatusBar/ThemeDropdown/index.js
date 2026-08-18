@@ -9,9 +9,9 @@ import StyledWrapper from './StyledWrapper';
 // Constants
 const MODES = ['light', 'dark', 'system'];
 const MODE_BUTTONS = [
-  { mode: 'light', icon: IconSun, title: 'Light' },
-  { mode: 'dark', icon: IconMoon, title: 'Dark' },
-  { mode: 'system', icon: IconDeviceDesktop, title: 'System' }
+  { mode: 'light', icon: IconSun, title: '浅色' },
+  { mode: 'dark', icon: IconMoon, title: '深色' },
+  { mode: 'system', icon: IconDeviceDesktop, title: '系统' }
 ];
 
 const ThemeDropdown = ({ children }) => {
@@ -216,7 +216,7 @@ const ThemeDropdown = ({ children }) => {
       <div className="theme-list" role="listbox" aria-label={label}>
         <div className="theme-list-label">
           {label}
-          {isActiveSystemTheme && <span className="active-badge">Active</span>}
+          {isActiveSystemTheme && <span className="active-badge">当前活跃</span>}
         </div>
         {themes.map((theme, index) => {
           const isActive = currentVariant === theme.id;
@@ -272,25 +272,25 @@ const ThemeDropdown = ({ children }) => {
         ref={menuRef}
         className={`theme-menu ${isSystemMode ? 'two-columns' : ''}`}
         role="dialog"
-        aria-label="Theme selector"
+        aria-label="主题选择器"
       >
         <div className="mode-section">
-          <div className="mode-label" id="mode-label">Appearance</div>
+          <div className="mode-label" id="mode-label">外观</div>
           {renderModeButtons()}
         </div>
 
         <div className={`theme-lists ${isSystemMode ? 'two-columns' : ''}`}>
           {(storedTheme === 'light' || isSystemMode)
-            && renderThemeList(lightThemes, true, themeVariantLight, 'Light theme')}
+            && renderThemeList(lightThemes, true, themeVariantLight, '浅色主题')}
           {(storedTheme === 'dark' || isSystemMode)
-            && renderThemeList(darkThemes, false, themeVariantDark, 'Dark theme')}
+            && renderThemeList(darkThemes, false, themeVariantDark, '深色主题')}
         </div>
       </div>
     </StyledWrapper>
   );
 
   return (
-    <ToolHint text="Theme" toolhintId="ThemeDropdown" place="top" offset={10} hidden={!tooltipEnabled}>
+    <ToolHint text="主题" toolhintId="ThemeDropdown" place="top" offset={10} hidden={!tooltipEnabled}>
       <Tippy
         content={menuContent}
         placement="top-start"

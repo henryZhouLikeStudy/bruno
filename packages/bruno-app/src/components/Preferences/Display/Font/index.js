@@ -34,7 +34,7 @@ const Font = () => {
         }
       })
     ).catch(() => {
-      toast.error('Failed to save preferences');
+      toast.error('保存偏好设置失败');
     });
   }, [dispatch, preferences]);
 
@@ -63,7 +63,7 @@ const Font = () => {
     <StyledWrapper>
       <div className="flex flex-row gap-2 w-full">
         <div className="w-4/5">
-          <label className="block">Code Editor Font</label>
+          <label className="block">代码编辑器字体</label>
           <input
             type="text"
             className="block textbox mt-2 w-full"
@@ -76,7 +76,7 @@ const Font = () => {
           />
         </div>
         <div className="w-1/5">
-          <label className="block">Font Size</label>
+          <label className="block">字体大小</label>
           <input
             type="number"
             className="block textbox mt-2 w-full"

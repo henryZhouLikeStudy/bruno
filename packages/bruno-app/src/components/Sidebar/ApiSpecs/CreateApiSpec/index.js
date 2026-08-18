@@ -59,17 +59,17 @@ const CreateApiSpec = ({ onClose }) => {
     },
     validationSchema: Yup.object({
       importFrom: Yup.string().oneOf(['blank', 'collection']),
-      collectionLocation: Yup.string().min(1, 'location is required'),
+      collectionLocation: Yup.string().min(1, '位置不能为空'),
       environment: Yup.string(),
       apiSpecName: Yup.string()
-        .min(1, 'Must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, '至少需要 1 个字符')
+        .max(255, '最多 255 个字符')
         .test('is-valid-filename', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('Name is required'),
-      apiSpecLocation: Yup.string().min(1, 'location is required').required('location is required')
+        .required('名称为必填项'),
+      apiSpecLocation: Yup.string().min(1, '位置不能为空').required('位置为必填项')
     }),
     onSubmit: async (values) => {
       let yamlContent = '';
@@ -102,7 +102,7 @@ const CreateApiSpec = ({ onClose }) => {
           setTimeout(() => {
             dispatch(showApiSpecPage());
           }, 200);
-          toast.success('ApiSpec created');
+          toast.success('API 规范已创建');
           onClose();
         })
         .catch((err) => toast.error(err?.message));
@@ -162,7 +162,7 @@ const CreateApiSpec = ({ onClose }) => {
         })
         .catch((err) => {
           console.error('Error loading collection:', err);
-          toast.error('Failed to load collection');
+          toast.error('加载集合失败');
         });
     }
   }, [formik.values.collectionLocation]);
@@ -171,11 +171,11 @@ const CreateApiSpec = ({ onClose }) => {
 
   return (
     <StyledWrapper>
-      <Modal size="md" title="Create API Spec" confirmText="Create" handleConfirm={onSubmit} handleCancel={onClose}>
+      <Modal size="md" title="创建 API 规范" confirmText="创建" handleConfirm={onSubmit} handleCancel={onClose}>
         <form className="bruno-form" onSubmit={(e) => e.preventDefault()}>
           <div>
             <label htmlFor="api-spec-location" className="block font-semibold mb-2">
-              Template
+              模板
             </label>
             <div className="flex items-center">
               <input
@@ -188,7 +188,7 @@ const CreateApiSpec = ({ onClose }) => {
                 checked={formik.values.importFrom === 'blank'}
               />
               <label htmlFor="blank" className="ml-1 cursor-pointer select-none">
-                Blank spec
+                空白规范
               </label>
               <input
                 id="collection"
@@ -200,7 +200,7 @@ const CreateApiSpec = ({ onClose }) => {
                 checked={formik.values.importFrom === 'collection'}
               />
               <label htmlFor="collection" className="ml-1 cursor-pointer select-none">
-                From Bruno Collection
+                从 Bruno 集合
               </label>
             </div>
             {formik.touched.importFrom && formik.errors.importFrom ? (
@@ -209,7 +209,7 @@ const CreateApiSpec = ({ onClose }) => {
             {formik.values.importFrom === 'collection' ? (
               <>
                 <label htmlFor="collection-location" className="block font-semibold mt-3">
-                  Collection Location
+                  集合位置
                 </label>
                 <input
                   id="collection-location"
@@ -230,13 +230,13 @@ const CreateApiSpec = ({ onClose }) => {
                 ) : null}
                 <div className="mt-1">
                   <span className="text-link cursor-pointer hover:underline" onClick={browseCollection}>
-                    Browse
+                    浏览
                   </span>
                 </div>
                 {environments && Object.keys(environments || {})?.length > 0 ? (
                   <>
                     <label htmlFor="api-spec-name" className="flex items-center font-semibold mt-3">
-                      Environment
+                      环境
                     </label>
                     <div className="relative">
                       <select
@@ -265,7 +265,7 @@ const CreateApiSpec = ({ onClose }) => {
               <div className="text-red-500">{formik.errors.environment}</div>
             ) : null}
             <label htmlFor="api-spec-name" className="flex items-center font-semibold mt-3">
-              Spec Name
+              规范名称
             </label>
             <div className="relative">
               <input
@@ -292,7 +292,7 @@ const CreateApiSpec = ({ onClose }) => {
             ) : null}
 
             <label htmlFor="api-spec-location" className="block font-semibold mt-3">
-              Spec Location
+              规范位置
             </label>
             <input
               id="api-spec-location"
@@ -313,11 +313,11 @@ const CreateApiSpec = ({ onClose }) => {
             ) : null}
             <div className="mt-1">
               <span className="text-link cursor-pointer hover:underline" onClick={browse}>
-                Browse
+                浏览
               </span>
               {!isDefaultWorkspace && (
                 <span className="text-xs opacity-60 ml-2">
-                  (defaults to workspace's apispec folder)
+                  (默认使用工作区的 apispec 文件夹)
                 </span>
               )}
             </div>

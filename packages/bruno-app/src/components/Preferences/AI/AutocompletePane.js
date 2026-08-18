@@ -15,18 +15,18 @@ import { getPlatformModifierKey } from 'utils/common/platform';
 const TRIGGER_MODES = [
   {
     value: 'aggressive',
-    label: 'Aggressive',
-    description: 'Suggest after every keystroke'
+    label: '积极',
+    description: '每次按键后都建议'
   },
   {
     value: 'debounced',
-    label: 'Debounced',
-    description: 'Suggest after you pause typing (default)'
+    label: '防抖',
+    description: '暂停输入后建议（默认）'
   },
   {
     value: 'manual',
-    label: 'Manual',
-    description: `Only on ${getPlatformModifierKey()}+\\`
+    label: '手动',
+    description: `仅在 ${getPlatformModifierKey()}+\\ 时`
   }
 ];
 
@@ -45,7 +45,7 @@ const AutocompletePane = ({
     return (
       <div className="autocomplete-tab flex flex-col gap-3">
         <div className="ai-empty-notice px-3.5 py-3 text-xs">
-          Turn on AI in the Configuration tab to use autocomplete.
+          在配置选项卡中开启 AI 才能使用自动补全。
         </div>
       </div>
     );
@@ -59,9 +59,9 @@ const AutocompletePane = ({
   // get suggestions yet.
   let blockerMessage = null;
   if (!hasConfiguredProvider) {
-    blockerMessage = 'Add a provider API key in the Configuration tab to enable autocomplete.';
+    blockerMessage = '在配置选项卡中添加一个提供者的 API 密钥以启用自动补全。';
   } else if (!hasUsableModel) {
-    blockerMessage = 'No models are available. Enable a model on its provider card in Configuration.';
+    blockerMessage = '没有可用模型。请在配置中的提供者卡片上启用一个模型。';
   }
 
   return (
@@ -69,9 +69,9 @@ const AutocompletePane = ({
       <div className="autocomplete-card">
         <div className="autocomplete-header flex items-center justify-between gap-3 px-3.5 py-3">
           <div className="flex flex-col gap-0.5 min-w-0">
-            <span className="text-[12.5px] font-semibold">Inline Autocomplete</span>
+            <span className="text-[12.5px] font-semibold">行内自动补全</span>
             <span className="autocomplete-sub text-[11px]">
-              Ghost-text suggestions in Pre-Request, Post-Response, and Tests scripts
+              在请求前、请求后和测试脚本中显示幽灵文本建议
             </span>
           </div>
           <ToggleSwitch
@@ -92,11 +92,11 @@ const AutocompletePane = ({
 
         <div className="autocomplete-row flex items-center justify-between gap-3 px-3.5 py-3">
           <div className="flex flex-col gap-0.5 min-w-0">
-            <span className="text-[11.5px] font-medium">Model</span>
+            <span className="text-[11.5px] font-medium">模型</span>
             <span className="autocomplete-sub text-[10.5px]">
               {hasUsableModel
-                ? 'Lightweight models are recommended for speed'
-                : 'No model available yet'}
+                ? '建议使用轻量模型以获得更快的速度'
+                : '暂无可用的模型'}
             </span>
           </div>
           <div className="model-select-wrap relative inline-flex items-center">
@@ -105,10 +105,10 @@ const AutocompletePane = ({
               value={model || ''}
               disabled={!isInteractive}
               onChange={(e) => onChangeModel(e.target.value)}
-              aria-label="Autocomplete model"
+              aria-label="自动补全模型"
               data-testid="ai-autocomplete-model-select"
             >
-              <option value="">Auto (fastest available)</option>
+              <option value="">自动（最快可用）</option>
               {availableModels.map((m) => (
                 <option key={m.id} value={m.id}>{m.label}</option>
               ))}
@@ -119,12 +119,12 @@ const AutocompletePane = ({
 
         <div className="autocomplete-row flex items-center justify-between gap-3 px-3.5 py-3">
           <div className="flex flex-col gap-0.5 min-w-0">
-            <span className="text-[11.5px] font-medium">Trigger</span>
+            <span className="text-[11.5px] font-medium">触发方式</span>
             <span className="autocomplete-sub text-[10.5px]">
               {activeTrigger?.description}
             </span>
           </div>
-          <div className="trigger-pills inline-flex" role="radiogroup" aria-label="Trigger mode">
+          <div className="trigger-pills inline-flex" role="radiogroup" aria-label="触发模式">
             {TRIGGER_MODES.map((m) => {
               const isSelected = (triggerMode || 'debounced') === m.value;
               return (
@@ -147,9 +147,9 @@ const AutocompletePane = ({
 
         <div className="autocomplete-row px-3.5 py-3">
           <div className="flex flex-col gap-1">
-            <span className="text-[11.5px] font-medium">Keymap</span>
+            <span className="text-[11.5px] font-medium">按键映射</span>
             <div className="autocomplete-keymap text-[10.5px]">
-              <kbd>Tab</kbd> accept · <kbd>{getPlatformModifierKey()}</kbd>+<kbd>→</kbd> accept word · <kbd>Esc</kbd> dismiss · <kbd>{getPlatformModifierKey()}</kbd>+<kbd>\</kbd> trigger
+              <kbd>Tab</kbd> 接受 · <kbd>{getPlatformModifierKey()}</kbd>+<kbd>→</kbd> 接受单词 · <kbd>Esc</kbd> 取消 · <kbd>{getPlatformModifierKey()}</kbd>+<kbd>\</kbd> 触发
             </div>
           </div>
         </div>

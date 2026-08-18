@@ -230,8 +230,8 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
 
   // Display name and icon based on context
   const displayName = isScratchCollection
-    ? (currentWorkspace?.name || 'Untitled Workspace')
-    : (collection.name || 'Untitled Collection');
+    ? (currentWorkspace?.name || '未命名工作区')
+    : (collection.name || '未命名集合');
 
   const DisplayIcon = isScratchCollection ? IconCategory : IconBox;
 
@@ -323,19 +323,19 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
 
   // Build overflow menu items for the "..." dropdown
   const overflowMenuItems = [
-    { id: 'variables', label: 'Variables', leftSection: IconEye, onClick: viewVariables },
+    { id: 'variables', label: '变量', leftSection: IconEye, onClick: viewVariables },
     // File mode is exposed via the Request/App/File view-mode toggle when the active
     // request has apps enabled; keep it in the overflow as a fallback everywhere else.
     ...(!appAvailable
-      ? [{ id: 'file-mode', label: collection.fileMode ? 'Switch to Code Mode' : 'Switch to File Mode', leftSection: collection.fileMode ? IconFileOff : IconFileCode, onClick: handleFileModeClick }]
+      ? [{ id: 'file-mode', label: collection.fileMode ? '切换到代码模式' : '切换到文件模式', leftSection: collection.fileMode ? IconFileOff : IconFileCode, onClick: handleFileModeClick }]
       : []),
     ...(!hasOpenApiSyncConfigured
       ? [{ id: 'openapi-sync', label: 'OpenAPI', leftSection: OpenAPISyncIcon, onClick: viewOpenApiSync }]
       : []),
     ...(isMockServerEnabled
-      ? [{ id: 'mock-server', label: 'Mock Server', leftSection: IconServer2, onClick: viewMockServer }]
+      ? [{ id: 'mock-server', label: '模拟服务器', leftSection: IconServer2, onClick: viewMockServer }]
       : []),
-    { id: 'collection-settings', label: 'Collection Settings', leftSection: IconSettings, onClick: viewCollectionSettings }
+    { id: 'collection-settings', label: '集合设置', leftSection: IconSettings, onClick: viewCollectionSettings }
   ];
 
   // Workspace action handlers (only used when isScratchCollection is true)
@@ -349,7 +349,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
   const handleCloseWorkspaceClick = () => {
     workspaceActionsRef.current?.hide();
     if (currentWorkspace?.type === 'default') {
-      toast.error('Cannot close the default workspace');
+      toast.error('无法关闭默认工作区');
       return;
     }
     setCloseWorkspaceModalOpen(true);
@@ -360,7 +360,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
     const pathname = currentWorkspace?.pathname;
     if (pathname) {
       dispatch(showInFolder(pathname)).catch(() => {
-        toast.error('Error opening the folder');
+        toast.error('打开文件夹时出错');
       });
     }
   };
@@ -373,21 +373,21 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
     dispatch(exportWorkspaceAction(uid))
       .then((result) => {
         if (!result?.canceled) {
-          toast.success('Workspace exported successfully');
+          toast.success('工作区导出成功');
         }
       })
       .catch((error) => {
-        toast.error(error?.message || 'Error exporting workspace');
+        toast.error(error?.message || '导出工作区时出错');
       });
   };
 
   const validateWorkspaceName = (name) => {
     const trimmed = name?.trim();
     if (!trimmed) {
-      return 'Name is required';
+      return '名称为必填项';
     }
     if (trimmed.length > 255) {
-      return 'Must be 255 characters or less';
+      return '不能超过 255 个字符';
     }
     return null;
   };
@@ -405,7 +405,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
         dispatch(cancelWorkspaceCreation(currentWorkspace.uid));
         return;
       }
-      setWorkspaceNameError('Name is required');
+      setWorkspaceNameError('名称为必填项');
       return;
     }
 
@@ -429,10 +429,10 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
           setIsRenamingWorkspace(false);
           setWorkspaceNameInput('');
           setWorkspaceNameError('');
-          toast.success('Workspace created!');
+          toast.success('工作区创建成功！');
         })
         .catch((err) => {
-          toast.error(err?.message || 'An error occurred while creating the workspace');
+          toast.error(err?.message || '创建工作区时出错');
         })
         .finally(() => {
           isSavingRef.current = false;
@@ -440,14 +440,14 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
     } else {
       dispatch(renameWorkspaceAction(uid, workspaceNameInput))
         .then(() => {
-          toast.success('Workspace renamed!');
+          toast.success('工作区重命名成功！');
           setIsRenamingWorkspace(false);
           setWorkspaceNameInput('');
           setWorkspaceNameError('');
         })
         .catch((err) => {
-          toast.error(err?.message || 'An error occurred while renaming the workspace');
-          setWorkspaceNameError(err?.message || 'Failed to rename workspace');
+          toast.error(err?.message || '重命名工作区时出错');
+          setWorkspaceNameError(err?.message || '重命名工作区失败');
         })
         .finally(() => {
           isSavingRef.current = false;
@@ -556,7 +556,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                     className="cog-btn"
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={handleOpenAdvancedCreate}
-                    title="Advanced options"
+                    title="高级选项"
                   >
                     <IconSettings size={13} strokeWidth={1.5} />
                   </button>
@@ -567,7 +567,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                   className="inline-action-btn save"
                   onClick={handleSaveWorkspaceRename}
                   onMouseDown={(e) => e.preventDefault()}
-                  title={currentWorkspace?.isCreating ? 'Create' : 'Save'}
+                  title={currentWorkspace?.isCreating ? '创建' : '保存'}
                 >
                   <IconCheck size={14} strokeWidth={2} />
                 </button>
@@ -575,7 +575,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                   className="inline-action-btn cancel"
                   onClick={handleCancelWorkspaceRename}
                   onMouseDown={(e) => e.preventDefault()}
-                  title="Cancel"
+                  title="取消"
                 >
                   <IconX size={14} strokeWidth={2} />
                 </button>
@@ -601,7 +601,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                 <div className="max-w-124 overflow-hidden">
                   {currentWorkspace && (
                     <>
-                      <div className="label-item">Workspace</div>
+                      <div className="label-item">工作区</div>
                       <div
                         className={classNames('dropdown-item', {
                           'dropdown-item-active': isScratchCollection
@@ -612,7 +612,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                           <IconCategory size={16} strokeWidth={1.5} />
                         </div>
                         <span className="dropdown-label collection-header-dropdown-label">
-                          {currentWorkspace.name || 'Untitled Workspace'}
+                          {currentWorkspace.name || '未命名工作区'}
                         </span>
                         {workspaceTabCount > 0 && (
                           <span className="dropdown-tab-count">{workspaceTabCount}</span>
@@ -624,7 +624,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                   {mountedCollections.length > 0 && (
                     <>
                       <div className="dropdown-separator" />
-                      <div className="label-item">Collections</div>
+                      <div className="label-item">集合</div>
                       {mountedCollections.map((col) => {
                         const colTabCount = getTabCount(col.uid);
                         return (
@@ -638,7 +638,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                             <div className="dropdown-icon">
                               <IconBox size={16} strokeWidth={1.5} />
                             </div>
-                            <span className="dropdown-label collection-header-dropdown-label">{col.name || 'Untitled Collection'}</span>
+                            <span className="dropdown-label collection-header-dropdown-label">{col.name || '未命名集合'}</span>
                             {colTabCount > 0 && (
                               <span className="dropdown-tab-count">{colTabCount}</span>
                             )}
@@ -664,7 +664,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                 <div className="dropdown-icon">
                   <IconEdit size={16} strokeWidth={1.5} />
                 </div>
-                <span>Rename</span>
+                <span>重命名</span>
               </div>
               <div className="dropdown-item" onClick={handleShowInFolder}>
                 <div className="dropdown-icon">
@@ -676,13 +676,13 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                 <div className="dropdown-icon">
                   <IconUpload size={16} strokeWidth={1.5} />
                 </div>
-                <span>Export</span>
+                <span>导出</span>
               </div>
               <div className="dropdown-item" onClick={handleCloseWorkspaceClick}>
                 <div className="dropdown-icon">
                   <IconX size={16} strokeWidth={1.5} />
                 </div>
-                <span>Close</span>
+                <span>关闭</span>
               </div>
             </Dropdown>
           )}
@@ -697,7 +697,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                     <button
                       type="button"
                       data-testid="view-mode-request"
-                      aria-label="Request view"
+                      aria-label="请求视图"
                       className={`mode-btn ${!appEnabled && !collection.fileMode ? 'active' : ''}`}
                       onClick={() => {
                         if (collection.fileMode) handleFileModeClick();
@@ -711,7 +711,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                     <button
                       type="button"
                       data-testid="view-mode-app"
-                      aria-label="App view"
+                      aria-label="应用视图"
                       className={`mode-btn ${appEnabled && !collection.fileMode ? 'active' : ''}`}
                       onClick={() => {
                         if (collection.fileMode) handleFileModeClick();
@@ -725,7 +725,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                     <button
                       type="button"
                       data-testid="view-mode-file"
-                      aria-label="File view"
+                      aria-label="文件视图"
                       className={`mode-btn ${collection.fileMode ? 'active' : ''}`}
                       onClick={() => {
                         if (appEnabled) handleToggleAppMode(false);
@@ -741,7 +741,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                 <ToolHint text="AI Assistant" toolhintId="AiAssistantToolhintId" place="bottom">
                   <ActionIcon
                     onClick={() => dispatch(toggleAiSidebar())}
-                    aria-label="AI Assistant"
+                    aria-label="AI 助手"
                     size="sm"
                     data-testid="ai-assistant"
                     className={isAiSidebarOpen ? 'active' : ''}
@@ -754,7 +754,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                 <div
                   className="migrate-yml-pill"
                   data-testid="migrate-yml-pill"
-                  title="Migrate this collection to YML"
+                  title="迁移此集合到 YML"
                 >
                   <button
                     type="button"
@@ -762,13 +762,13 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                     onClick={openMigrateToYmlModal}
                   >
                     <IconTransform size={13} strokeWidth={1.5} />
-                    <span className="pill-label">Migrate to YML</span>
+                    <span className="pill-label">迁移到 YML</span>
                   </button>
                   <button
                     type="button"
                     className="pill-dismiss"
                     onClick={dismissMigratePill}
-                    aria-label="Dismiss"
+                    aria-label="关闭"
                     data-testid="migrate-yml-pill-dismiss"
                   >
                     <IconX size={12} strokeWidth={2} />
@@ -782,7 +782,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                   toolhintId="OpenApiSyncToolhintId"
                   place="bottom"
                 >
-                  <ActionIcon onClick={viewOpenApiSync} aria-label="OpenAPI" size="sm" className="relative">
+                  <ActionIcon onClick={viewOpenApiSync} aria-label="OpenAPI 同步" size="sm" className="relative">
                     <OpenAPISyncIcon size={15} />
                     {(hasOpenApiUpdates || hasOpenApiError) && (
                       <span className="absolute top-0 right-0 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: hasOpenApiError ? theme.status.danger.text : theme.status.warning.text }} />
@@ -792,7 +792,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
               )}
               {/* Runner - always visible */}
               <ToolHint text="Runner" toolhintId="RunnerToolhintId" place="bottom">
-                <ActionIcon onClick={handleRun} aria-label="Runner" size="sm" data-testid="runner">
+                <ActionIcon onClick={handleRun} aria-label="运行器" size="sm" data-testid="runner">
                   <IconRun size={16} strokeWidth={1.5} />
                 </ActionIcon>
               </ToolHint>
@@ -800,7 +800,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
               <JsSandboxMode collection={collection} />
               {/* Overflow menu */}
               <MenuDropdown items={overflowMenuItems} placement="bottom-end" data-testid="more-actions">
-                <ActionIcon label="More actions" size="sm" style={{ border: `1px solid ${theme.border.border1}`, borderRadius: theme.border.radius.base, width: 24, marginRight: 4, marginLeft: 4 }}>
+                <ActionIcon label="更多操作" size="sm" style={{ border: `1px solid ${theme.border.border1}`, borderRadius: theme.border.radius.base, width: 24, marginRight: 4, marginLeft: 4 }}>
                   <IconDots size={16} strokeWidth={1.5} />
                 </ActionIcon>
               </MenuDropdown>

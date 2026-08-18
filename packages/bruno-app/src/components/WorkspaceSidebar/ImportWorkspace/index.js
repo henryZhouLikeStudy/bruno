@@ -29,7 +29,7 @@ const ImportWorkspace = ({ onClose }) => {
       workspaceLocation: defaultLocation
     },
     validationSchema: Yup.object({
-      workspaceLocation: Yup.string().min(1, 'location is required').required('location is required')
+      workspaceLocation: Yup.string().min(1, '位置是必填项').required('位置是必填项')
     }),
     onSubmit: async (values) => {
       if (isSubmitting || !selectedFile) return;
@@ -37,10 +37,10 @@ const ImportWorkspace = ({ onClose }) => {
       try {
         setIsSubmitting(true);
         await dispatch(importWorkspaceAction(selectedFile.path, values.workspaceLocation));
-        toast.success('Workspace imported successfully!');
+        toast.success('工作区导入成功！');
         onClose();
       } catch (error) {
-        toast.error(multiLineMsg('Failed to import workspace', formatIpcError(error)));
+        toast.error(multiLineMsg('导入工作区失败', formatIpcError(error)));
       } finally {
         setIsSubmitting(false);
       }
@@ -67,13 +67,13 @@ const ImportWorkspace = ({ onClose }) => {
 
     const isZip = file.name.endsWith('.zip') || file.type === 'application/zip' || file.type === 'application/x-zip-compressed';
     if (!isZip) {
-      toast.error('Please select a valid zip file');
+      toast.error('请选择有效的 zip 文件');
       return null;
     }
 
     const filePath = window?.ipcRenderer?.getFilePath(file);
     if (!filePath) {
-      toast.error('Could not get file path');
+      toast.error('无法获取文件路径');
       return null;
     }
 
@@ -137,15 +137,15 @@ const ImportWorkspace = ({ onClose }) => {
   return (
     <Modal
       size="md"
-      title="Import Workspace"
-      confirmText={isSubmitting ? 'Importing...' : 'Import'}
+      title="导入工作区"
+      confirmText={isSubmitting ? '导入中...' : '导入'}
       handleConfirm={formik.handleSubmit}
       handleCancel={onClose}
       confirmDisabled={!canSubmit}
     >
       <div className="flex flex-col">
         <div className="mb-4">
-          <h3 className="font-semibold mb-2">Workspace File</h3>
+          <h3 className="font-semibold mb-2">工作区文件</h3>
           {selectedFile ? (
             <div className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800">
               <div className="flex items-center gap-2">
@@ -157,7 +157,7 @@ const ImportWorkspace = ({ onClose }) => {
                 className="text-gray-500 hover:text-red-500 text-sm"
                 onClick={handleClearFile}
               >
-                Remove
+                移除
               </button>
             </div>
           ) : (
@@ -185,17 +185,17 @@ const ImportWorkspace = ({ onClose }) => {
                   accept=".zip,application/zip,application/x-zip-compressed"
                 />
                 <p className="text-gray-600 dark:text-gray-300 mb-2">
-                  Drop workspace zip file here or{' '}
+                  将工作区 zip 文件拖放到此处，或{' '}
                   <button
                     type="button"
                     className="text-blue-500 underline cursor-pointer"
                     onClick={handleBrowseFiles}
                   >
-                    choose a file
+                    选择一个文件
                   </button>
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Supports exported Bruno workspace zip files
+                  支持导出的 Bruno 工作区 zip 文件
                 </p>
               </div>
             </div>
@@ -204,13 +204,13 @@ const ImportWorkspace = ({ onClose }) => {
 
         <div className="mb-4">
           <label htmlFor="workspace-location" className="font-semibold mb-2 flex items-center">
-            Extract Location
+            解压位置
             <Help>
               <p>
-                Choose the location where you want to extract this workspace.
+                选择你要解压该工作区的位置。
               </p>
               <p className="mt-2">
-                The workspace folder will be created at this location.
+                工作区文件夹将创建在该位置。
               </p>
             </Help>
           </label>
@@ -236,7 +236,7 @@ const ImportWorkspace = ({ onClose }) => {
               className="text-link cursor-pointer hover:underline"
               onClick={browse}
             >
-              Browse
+              浏览
             </span>
           </div>
         </div>

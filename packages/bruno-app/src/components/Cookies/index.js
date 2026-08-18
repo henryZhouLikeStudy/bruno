@@ -12,24 +12,24 @@ import { Tooltip } from 'react-tooltip';
 import Button from 'ui/Button';
 
 const ClearDomainCookiesModal = ({ onClose, domain, onClear }) => (
-  <Modal onClose={onClose} handleCancel={onClose} title="Clear Domain Cookies" hideFooter={true}>
+  <Modal onClose={onClose} handleCancel={onClose} title="清除域的 Cookie" hideFooter={true}>
     <div className="flex items-center font-normal">
       <IconAlertTriangle size={32} strokeWidth={1.5} className="warning-icon" />
-      <h1 className="ml-2 text-lg font-medium">Hold on..</h1>
+      <h1 className="ml-2 text-lg font-medium">请稍候…</h1>
     </div>
     <div className="font-normal mt-4">
-      Are you sure you want to clear all cookies for the domain {domain}?
+      确定要清除域 {domain} 的所有 Cookie 吗？
     </div>
 
     <div className="flex justify-between mt-6">
       <div>
         <Button color="secondary" variant="ghost" onClick={onClose}>
-          Close
+          关闭
         </Button>
       </div>
       <div>
         <Button color="danger" onClick={onClear}>
-          Clear All
+          全部清除
         </Button>
       </div>
     </div>
@@ -37,24 +37,24 @@ const ClearDomainCookiesModal = ({ onClose, domain, onClear }) => (
 );
 
 const DeleteCookieModal = ({ onClose, cookieName, onDelete }) => (
-  <Modal onClose={onClose} handleCancel={onClose} title="Delete Cookie" hideFooter={true}>
+  <Modal onClose={onClose} handleCancel={onClose} title="删除 Cookie" hideFooter={true}>
     <div className="flex items-center font-normal">
       <IconAlertTriangle size={32} strokeWidth={1.5} className="warning-icon" />
-      <h1 className="ml-2 text-lg font-medium">Hold on..</h1>
+      <h1 className="ml-2 text-lg font-medium">请稍候…</h1>
     </div>
     <div className="font-normal mt-4">
-      Are you sure you want to delete the cookie {cookieName}?
+      确定要删除 Cookie {cookieName} 吗？
     </div>
 
     <div className="flex justify-between mt-6">
       <div>
         <Button color="secondary" variant="ghost" onClick={onClose}>
-          Close
+          关闭
         </Button>
       </div>
       <div>
         <Button color="danger" onClick={onDelete}>
-          Delete
+          删除
         </Button>
       </div>
     </div>
@@ -90,9 +90,9 @@ const CollectionProperties = ({ onClose }) => {
   const clearDomainCookiesAction = () => {
     dispatch(deleteCookiesForDomain(domainToClear))
       .then(() => {
-        toast.success('Domain cookies cleared successfully');
+        toast.success('域的 Cookie 已成功清除');
       })
-      .catch((err) => console.log(err) && toast.error('Failed to clear domain cookies'));
+      .catch((err) => console.log(err) && toast.error('清除域的 Cookie 失败'));
     setDomainToClear(null);
   };
 
@@ -105,9 +105,9 @@ const CollectionProperties = ({ onClose }) => {
       const { domain, path, key } = cookieToDelete;
       dispatch(deleteCookie(domain, path, key))
         .then(() => {
-          toast.success('Cookie deleted successfully');
+          toast.success('Cookie 已成功删除');
         })
-        .catch((err) => console.log(err) && toast.error('Failed to delete cookie'));
+        .catch((err) => console.log(err) && toast.error('删除 Cookie 失败'));
     }
     setCookieToDelete(null);
   };
@@ -126,15 +126,15 @@ const CollectionProperties = ({ onClose }) => {
     <>
       <Modal
         size="xl"
-        title="Cookies"
+        title="Cookie"
         hideFooter={true}
         handleCancel={onClose}
         customHeader={shouldShowHeader ? (
           <StyledWrapper className="header flex items-center justify-between w-full">
-            <h2 className="text-xs font-medium">Cookies</h2>
+            <h2 className="text-xs font-medium">Cookie</h2>
             <input
               type="search"
-              placeholder="Search by domain"
+              placeholder="按域名搜索"
               value={searchText || ''}
               onChange={(e) => setSearchText(e.target.value)}
               className="block textbox non-passphrase-input ml-auto font-normal"
@@ -150,7 +150,7 @@ const CollectionProperties = ({ onClose }) => {
                 handleAddCookie();
               }}
             >
-              <span>Add Cookie</span>
+              <span>添加 Cookie</span>
             </Button>
           </StyledWrapper>
         ) : null}
@@ -160,8 +160,8 @@ const CollectionProperties = ({ onClose }) => {
             // No cookies found
             <div className="flex items-center justify-center flex-col">
               <IconCookieOff size={48} strokeWidth={1.5} className="empty-icon" />
-              <h2 className="text-lg font-medium mt-4">No cookies found</h2>
-              <p className="empty-text mt-2">Add cookies to get started</p>
+              <h2 className="text-lg font-medium mt-4">未找到 Cookie</h2>
+              <p className="empty-text mt-2">添加 Cookie 以开始使用</p>
               <Button
                 type="submit"
                 size="sm"
@@ -172,15 +172,15 @@ const CollectionProperties = ({ onClose }) => {
                   handleAddCookie();
                 }}
               >
-                Add Cookie
+                添加 Cookie
               </Button>
             </div>
           ) : cookies.length && !filteredCookies.length ? (
             // No search results
             <div className="flex items-center justify-center flex-col">
               <IconSearch size={48} />
-              <h2 className="text-lg font-medium mt-4">No search results</h2>
-              <p className="empty-text mt-2">Try a different search term</p>
+              <h2 className="text-lg font-medium mt-4">没有搜索结果</h2>
+              <p className="empty-text mt-2">请尝试其他搜索关键词</p>
             </div>
           ) : (
             // Show cookies list

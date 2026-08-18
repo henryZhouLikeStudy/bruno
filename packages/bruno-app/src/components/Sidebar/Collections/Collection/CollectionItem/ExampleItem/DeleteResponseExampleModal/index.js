@@ -26,13 +26,13 @@ const DeleteResponseExampleModal = ({ onClose, example, item, collection }) => {
     <Portal>
       <Modal
         size="sm"
-        title="Delete Example"
-        confirmText="Delete"
+        title="删除示例"
+        confirmText="删除"
         handleConfirm={onConfirm}
         handleCancel={onClose}
         confirmButtonColor="danger"
       >
-        Are you sure you want to delete the example <span className="font-medium">{example.name}</span>?
+        确定要删除示例 <span className="font-medium">{example.name}</span> 吗？
       </Modal>
     </Portal>
   );

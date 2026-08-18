@@ -1,79 +1,79 @@
 export const KEY_BINDING_SECTIONS = [
   {
-    heading: 'Tabs',
+    heading: '标签页',
     bindings: {
-      closeTab: { mac: 'command+bind+w', windows: 'ctrl+bind+w', name: 'Close Tab' }, // D
-      closeAllTabs: { mac: 'command+bind+shift+bind+w', windows: 'ctrl+bind+shift+bind+w', name: 'Close All Tabs' }, // D
-      save: { mac: 'command+bind+s', windows: 'ctrl+bind+s', name: 'Save' }, // D
-      saveAllTabs: { mac: 'command+bind+shift+bind+s', windows: 'ctrl+bind+shift+bind+s', name: 'Save All Tabs' }, // D
-      reopenLastClosedTab: { mac: 'command+bind+shift+bind+t', windows: 'ctrl+bind+shift+bind+t', name: 'Reopen Last Closed Tab' }, // D
-      switchToTabAtPosition: { mac: 'command+bind+1+bind+command+bind+8', windows: 'ctrl+bind+1+bind+ctrl+bind+8', name: 'Switch to Tab at Position', readOnly: true, displayValue: { mac: 'command+bind+1 - command+bind+8', windows: 'ctrl+bind+1 - ctrl+bind+8' } }, // D
-      switchToLastTab: { mac: 'command+bind+9', windows: 'ctrl+bind+9', name: 'Switch to Last Tab' }, // D
-      switchToPreviousTab: { mac: 'shift+bind+command+bind+[', windows: 'shift+bind+ctrl+bind+[', name: 'Switch to Previous Tab' }, // D
-      switchToNextTab: { mac: 'shift+bind+command+bind+]', windows: 'shift+bind+ctrl+bind+]', name: 'Switch to Next Tab' },
-      moveTabLeft: { mac: 'command+bind+[', windows: 'ctrl+bind+[', name: 'Move Tab Left' }, // D
-      moveTabRight: { mac: 'command+bind+]', windows: 'ctrl+bind+]', name: 'Move Tab Right' }, // D
-      switchToTab1: { mac: 'command+bind+1', windows: 'ctrl+bind+1', name: 'Switch to Tab at Position', readOnly: true, hidden: true },
-      switchToTab2: { mac: 'command+bind+2', windows: 'ctrl+bind+2', name: 'Switch to Tab at Position', readOnly: true, hidden: true },
-      switchToTab3: { mac: 'command+bind+3', windows: 'ctrl+bind+3', name: 'Switch to Tab at Position', readOnly: true, hidden: true },
-      switchToTab4: { mac: 'command+bind+4', windows: 'ctrl+bind+4', name: 'Switch to Tab at Position', readOnly: true, hidden: true },
-      switchToTab5: { mac: 'command+bind+5', windows: 'ctrl+bind+5', name: 'Switch to Tab at Position', readOnly: true, hidden: true },
-      switchToTab6: { mac: 'command+bind+6', windows: 'ctrl+bind+6', name: 'Switch to Tab at Position', readOnly: true, hidden: true },
-      switchToTab7: { mac: 'command+bind+7', windows: 'ctrl+bind+7', name: 'Switch to Tab at Position', readOnly: true, hidden: true },
-      switchToTab8: { mac: 'command+bind+8', windows: 'ctrl+bind+8', name: 'Switch to Tab at Position', readOnly: true, hidden: true }
+      closeTab: { mac: 'command+bind+w', windows: 'ctrl+bind+w', name: '关闭标签页' }, // D
+      closeAllTabs: { mac: 'command+bind+shift+bind+w', windows: 'ctrl+bind+shift+bind+w', name: '关闭所有标签页' }, // D
+      save: { mac: 'command+bind+s', windows: 'ctrl+bind+s', name: '保存' }, // D
+      saveAllTabs: { mac: 'command+bind+shift+bind+s', windows: 'ctrl+bind+shift+bind+s', name: '保存所有标签页' }, // D
+      reopenLastClosedTab: { mac: 'command+bind+shift+bind+t', windows: 'ctrl+bind+shift+bind+t', name: '重新打开上次关闭的标签页' }, // D
+      switchToTabAtPosition: { mac: 'command+bind+1+bind+command+bind+8', windows: 'ctrl+bind+1+bind+ctrl+bind+8', name: '切换到指定位置标签页', readOnly: true, displayValue: { mac: 'command+bind+1 - command+bind+8', windows: 'ctrl+bind+1 - ctrl+bind+8' } }, // D
+      switchToLastTab: { mac: 'command+bind+9', windows: 'ctrl+bind+9', name: '切换到最后一个标签页' }, // D
+      switchToPreviousTab: { mac: 'shift+bind+command+bind+[', windows: 'shift+bind+ctrl+bind+[', name: '切换到上一个标签页' }, // D
+      switchToNextTab: { mac: 'shift+bind+command+bind+]', windows: 'shift+bind+ctrl+bind+]', name: '切换到下一个标签页' },
+      moveTabLeft: { mac: 'command+bind+[', windows: 'ctrl+bind+[', name: '向左移动标签页' }, // D
+      moveTabRight: { mac: 'command+bind+]', windows: 'ctrl+bind+]', name: '向右移动标签页' }, // D
+      switchToTab1: { mac: 'command+bind+1', windows: 'ctrl+bind+1', name: '切换到指定位置标签页', readOnly: true, hidden: true },
+      switchToTab2: { mac: 'command+bind+2', windows: 'ctrl+bind+2', name: '切换到指定位置标签页', readOnly: true, hidden: true },
+      switchToTab3: { mac: 'command+bind+3', windows: 'ctrl+bind+3', name: '切换到指定位置标签页', readOnly: true, hidden: true },
+      switchToTab4: { mac: 'command+bind+4', windows: 'ctrl+bind+4', name: '切换到指定位置标签页', readOnly: true, hidden: true },
+      switchToTab5: { mac: 'command+bind+5', windows: 'ctrl+bind+5', name: '切换到指定位置标签页', readOnly: true, hidden: true },
+      switchToTab6: { mac: 'command+bind+6', windows: 'ctrl+bind+6', name: '切换到指定位置标签页', readOnly: true, hidden: true },
+      switchToTab7: { mac: 'command+bind+7', windows: 'ctrl+bind+7', name: '切换到指定位置标签页', readOnly: true, hidden: true },
+      switchToTab8: { mac: 'command+bind+8', windows: 'ctrl+bind+8', name: '切换到指定位置标签页', readOnly: true, hidden: true }
     }
   },
   {
-    heading: 'Sidebar',
+    heading: '侧边栏',
     bindings: {
-      sidebarSearch: { mac: 'command+bind+f', windows: 'ctrl+bind+f', name: 'Search Sidebar' }, // D
-      copyItem: { mac: 'command+bind+c', windows: 'ctrl+bind+c', name: 'Copy Item' }, // D
-      pasteItem: { mac: 'command+bind+v', windows: 'ctrl+bind+v', name: 'Paste Item' }, // D
-      cloneItem: { mac: 'command+bind+d', windows: 'ctrl+bind+d', name: 'Clone Item' }, // D
-      renameItem: { mac: 'command+bind+r', windows: 'ctrl+bind+r', name: 'Rename Item' }, // D
-      collapseSidebar: { mac: 'command+bind+\\', windows: 'ctrl+bind+\\', name: 'Collapse Sidebar' } // D
+      sidebarSearch: { mac: 'command+bind+f', windows: 'ctrl+bind+f', name: '在侧边栏中搜索' }, // D
+      copyItem: { mac: 'command+bind+c', windows: 'ctrl+bind+c', name: '复制项目' }, // D
+      pasteItem: { mac: 'command+bind+v', windows: 'ctrl+bind+v', name: '粘贴项目' }, // D
+      cloneItem: { mac: 'command+bind+d', windows: 'ctrl+bind+d', name: '克隆项目' }, // D
+      renameItem: { mac: 'command+bind+r', windows: 'ctrl+bind+r', name: '重命名项目' }, // D
+      collapseSidebar: { mac: 'command+bind+\\', windows: 'ctrl+bind+\\', name: '折叠侧边栏' } // D
     }
   },
   {
-    heading: 'Requests',
+    heading: '请求',
     bindings: {
-      sendRequest: { mac: 'command+bind+enter', windows: 'ctrl+bind+enter', name: 'Send Request' }, // D
-      changeLayout: { mac: 'command+bind+j', windows: 'ctrl+bind+j', name: 'Change Orientation' } // D
+      sendRequest: { mac: 'command+bind+enter', windows: 'ctrl+bind+enter', name: '发送请求' }, // D
+      changeLayout: { mac: 'command+bind+j', windows: 'ctrl+bind+j', name: '切换布局方向' } // D
     }
   },
   {
-    heading: 'Collections & Environment',
+    heading: '集合与环境',
     bindings: {
-      importCollection: { mac: 'command+bind+o', windows: 'ctrl+bind+o', name: 'Import Collection' }, // D
-      editEnvironment: { mac: 'command+bind+e', windows: 'ctrl+bind+e', name: 'Edit Environment' }, // D
-      newRequest: { mac: 'command+bind+n', windows: 'ctrl+bind+n', name: 'New Request' } // D
+      importCollection: { mac: 'command+bind+o', windows: 'ctrl+bind+o', name: '导入集合' }, // D
+      editEnvironment: { mac: 'command+bind+e', windows: 'ctrl+bind+e', name: '编辑环境' }, // D
+      newRequest: { mac: 'command+bind+n', windows: 'ctrl+bind+n', name: '新建请求' } // D
     }
   },
   {
-    heading: 'Search',
+    heading: '搜索',
     bindings: {
-      globalSearch: { mac: 'command+bind+k', windows: 'ctrl+bind+k', name: 'Global Search' } // D
+      globalSearch: { mac: 'command+bind+k', windows: 'ctrl+bind+k', name: '全局搜索' } // D
     }
   },
   {
-    heading: 'View',
+    heading: '视图',
     bindings: {
-      zoomIn: { mac: 'command+bind+=', windows: 'ctrl+bind+=', name: 'Zoom In' },
-      zoomOut: { mac: 'command+bind+-', windows: 'ctrl+bind+-', name: 'Zoom Out' },
-      resetZoom: { mac: 'command+bind+0', windows: 'ctrl+bind+0', name: 'Reset Zoom' }
+      zoomIn: { mac: 'command+bind+=', windows: 'ctrl+bind+=', name: '放大' },
+      zoomOut: { mac: 'command+bind+-', windows: 'ctrl+bind+-', name: '缩小' },
+      resetZoom: { mac: 'command+bind+0', windows: 'ctrl+bind+0', name: '重置缩放' }
     }
   },
   {
-    heading: 'Developer Tool',
+    heading: '开发者工具',
     bindings: {
-      openTerminal: { mac: 'command+bind+t', windows: 'ctrl+bind+t', name: 'Open in Terminal' } // D
+      openTerminal: { mac: 'command+bind+t', windows: 'ctrl+bind+t', name: '在终端中打开' } // D
     }
   },
   {
-    heading: 'Others',
+    heading: '其他',
     bindings: {
-      openPreferences: { mac: 'command+bind+,', windows: 'ctrl+bind+,', name: 'Open Preferences' }, // D
-      closeBruno: { mac: 'command+bind+q', windows: 'ctrl+bind+shift+bind+q', name: 'Close Bruno' } // D
+      openPreferences: { mac: 'command+bind+,', windows: 'ctrl+bind+,', name: '打开偏好设置' }, // D
+      closeBruno: { mac: 'command+bind+q', windows: 'ctrl+bind+shift+bind+q', name: '关闭 Bruno' } // D
     }
   }
 ];

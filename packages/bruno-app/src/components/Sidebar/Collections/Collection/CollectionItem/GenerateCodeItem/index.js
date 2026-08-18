@@ -122,7 +122,7 @@ const GenerateCodeItem = ({ collectionUid, item, onClose, isExample = false, exa
   };
 
   // Update modal title based on mode
-  const modalTitle = isExample ? `Generate Code - ${get(item, 'draft.examples', []).find((e) => e.uid === exampleUid)?.name || 'Example'}` : 'Generate Code';
+  const modalTitle = isExample ? `生成代码 - ${get(item, 'draft.examples', []).find((e) => e.uid === exampleUid)?.name || '示例'}` : '生成代码';
 
   return (
     <Modal size="lg" title={modalTitle} handleCancel={onClose} hideFooter={true}>
@@ -138,8 +138,8 @@ const GenerateCodeItem = ({ collectionUid, item, onClose, isExample = false, exa
               />
             ) : (
               <div className="error-message">
-                <h1>Invalid URL: {validationUrl}</h1>
-                <p>Please check the URL and try again</p>
+                <h1>URL 无效：{validationUrl}</h1>
+                <p>请检查 URL 后重试</p>
               </div>
             )}
           </div>

@@ -3,10 +3,10 @@ import StyledWrapper from './StyledWrapper';
 
 const StorageStep = ({ collectionLocation, onBrowse }) => (
   <StyledWrapper className="step-body">
-    <div className="step-label">Storage</div>
-    <div className="step-title">Where should we store your collections?</div>
+    <div className="step-label">存储</div>
+    <div className="step-title">要将集合存储在哪里？</div>
     <div className="step-description">
-      Bruno saves collections as plain files on your filesystem, perfect for version control with Git.
+      Bruno 将集合作为普通文件保存在文件系统中，非常适合使用 Git 进行版本控制。
     </div>
 
     <div className="location-input-group">
@@ -25,13 +25,13 @@ const StorageStep = ({ collectionLocation, onBrowse }) => (
         {collectionLocation ? (
           <span className="path-text">{collectionLocation}</span>
         ) : (
-          <span className="path-text path-placeholder">Click to choose a folder...</span>
+          <span className="path-text path-placeholder">点击选择文件夹...</span>
         )}
-        <span className="browse-label">Browse</span>
+        <span className="browse-label">浏览</span>
       </div>
     </div>
     <div className="location-hint">
-      Each collection and workspace gets its own folder inside this directory. You can change this later.
+      每个集合和工作区都会在该目录下拥有自己的文件夹。你可以稍后更改此设置。
     </div>
   </StyledWrapper>
 );
