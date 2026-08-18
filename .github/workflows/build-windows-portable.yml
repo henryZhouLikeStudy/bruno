@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build schema-types
+        run: npm run build:schema-types
+
       - name: Build bruno-common
         run: npm run build:bruno-common
 
@@ -44,9 +47,6 @@ jobs:
 
       - name: Build graphql-docs
         run: npm run build:graphql-docs
-
-      - name: Build schema-types
-        run: npm run build:schema-types
 
       - name: Build web
         run: npm run build:web
