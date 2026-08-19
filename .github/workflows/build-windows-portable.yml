@@ -130,12 +130,116 @@ jobs:
           New-Item -ItemType Directory -Force -Path "artifacts/portable" | Out-Null
           Copy-Item -Force $exeFiles[0].FullName "artifacts/portable/Bruno_zh-CN_Windows_x64_Portable.exe"
 
+      - name: Stage NoAdmin portable directory
+        shell: pwsh
+        run: |
+          # Normalize to native absolute Windows paths for robocopy.
+          $source = (Resolve-Path "packages/bruno-electron/out/win-unpacked").Path
+          $stageRoot = Join-Path (Join-Path $PWD.Path "artifacts") "portable-noadmin"
+          $stage = Join-Path $stageRoot "Bruno_zh-CN_Windows_x64_Portable_NoAdmin"
+
+          # app.asar.unpacked may be absent depending on dependency packaging,
+          # so only these files are required.
+          $required = @(
+            "Bruno.exe",
+            "resources/app.asar",
+            "locales/zh-CN.pak",
+            "resources/data/sample-collection.json"
+          )
+
+          # Validate the source bundle before copying/compression.
+          foreach ($rel in $required) {
+            $p = Join-Path $source $rel
+            if (-not (Test-Path $p -PathType Leaf)) {
+              throw "Required file missing in win-unpacked: $p"
+            }
+          }
+
+          New-Item -ItemType Directory -Force -Path $stageRoot | Out-Null
+          if (Test-Path $stage) { Remove-Item -Recurse -Force $stage }
+
+          # robocopy is the reliable Windows tool for large/deep directory copies.
+          # Exit codes 0-7 are success (1 = files copied); >= 8 is a real failure.
+          robocopy $source $stage /E /NFL /NDL /NJH /NJS /NP
+          $robocopyExit = $LASTEXITCODE
+          # Reset so GitHub Actions' trailing `exit $LASTEXITCODE` does not treat
+          # robocopy success codes 1-7 as a step failure.
+          $global:LASTEXITCODE = 0
+          if ($robocopyExit -ge 8) {
+            throw "robocopy failed with exit code $robocopyExit"
+          }
+
+          # Re-validate the staged copies before compression.
+          foreach ($rel in $required) {
+            $p = Join-Path $stage $rel
+            if (-not (Test-Path $p -PathType Leaf)) {
+              throw "Staged file missing: $p"
+            }
+          }
+          Write-Host "Staged NoAdmin portable directory: $stage"
+
+      - name: Create NoAdmin ZIP
+        working-directory: artifacts/portable-noadmin
+        shell: pwsh
+        run: |
+          # 7-Zip is preinstalled on windows-latest and handles large/deep trees reliably.
+          $sevenZip = "C:\Program Files\7-Zip\7z.exe"
+          if (-not (Test-Path $sevenZip)) {
+            throw "7-Zip not found at $sevenZip (expected on windows-latest)"
+          }
+          # Run from artifacts/portable-noadmin and pass the bare folder name so
+          # 7-Zip stores exactly one top-level directory (no artifacts/... prefix).
+          $zip = "Bruno_zh-CN_Windows_x64_Portable_NoAdmin.zip"
+          if (Test-Path $zip) { Remove-Item -Force $zip }
+          & $sevenZip a -tzip -bso0 -bsp0 $zip "Bruno_zh-CN_Windows_x64_Portable_NoAdmin"
+          if ($LASTEXITCODE -ne 0) {
+            throw "7z failed with exit code $LASTEXITCODE"
+          }
+          Write-Host "Created $zip"
+
+      - name: Verify NoAdmin ZIP round-trip
+        shell: pwsh
+        run: |
+          $sevenZip = "C:\Program Files\7-Zip\7z.exe"
+          $zip = "artifacts/portable-noadmin/Bruno_zh-CN_Windows_x64_Portable_NoAdmin.zip"
+          $verifyRoot = "artifacts/verification/portable-noadmin"
+          if (Test-Path $verifyRoot) { Remove-Item -Recurse -Force $verifyRoot }
+          New-Item -ItemType Directory -Force -Path $verifyRoot | Out-Null
+
+          & $sevenZip x -y -bso0 -bsp0 "-o$verifyRoot" $zip
+          if ($LASTEXITCODE -ne 0) {
+            throw "7z extraction failed with exit code $LASTEXITCODE"
+          }
+
+          # Assert the archive contains exactly one top-level directory with the
+          # expected name (no artifacts/... prefix, no extra entries).
+          $topLevel = @(Get-ChildItem -Path $verifyRoot -Force)
+          if ($topLevel.Count -ne 1 -or $topLevel[0].Name -ne "Bruno_zh-CN_Windows_x64_Portable_NoAdmin" -or -not $topLevel[0].PSIsContainer) {
+            throw "Expected exactly one top-level directory 'Bruno_zh-CN_Windows_x64_Portable_NoAdmin' in $zip, found: $(($topLevel | ForEach-Object { $_.Name }) -join ', ')"
+          }
+
+          $extracted = "$verifyRoot/Bruno_zh-CN_Windows_x64_Portable_NoAdmin"
+          $required = @(
+            "Bruno.exe",
+            "resources/app.asar",
+            "locales/zh-CN.pak",
+            "resources/data/sample-collection.json"
+          )
+          foreach ($rel in $required) {
+            $p = Join-Path $extracted $rel
+            if (-not (Test-Path $p -PathType Leaf)) {
+              throw "Required file missing after round-trip extraction: $p"
+            }
+          }
+          Write-Host "Round-trip verification OK: $zip"
+
       - name: Verify artifacts and print SHA256
         shell: pwsh
         run: |
           $files = @(
             "artifacts/installer/Bruno_zh-CN_Windows_x64_Setup.exe",
-            "artifacts/portable/Bruno_zh-CN_Windows_x64_Portable.exe"
+            "artifacts/portable/Bruno_zh-CN_Windows_x64_Portable.exe",
+            "artifacts/portable-noadmin/Bruno_zh-CN_Windows_x64_Portable_NoAdmin.zip"
           )
           foreach ($file in $files) {
             $info = Get-Item $file
@@ -144,6 +248,14 @@ jobs:
             }
             $hash = (Get-FileHash -Algorithm SHA256 $file).Hash
             Write-Host "$file size=$($info.Length) bytes SHA256=$hash"
+          }
+
+          # The NoAdmin ZIP contains the full win-unpacked bundle (hundreds of MB
+          # unpacked), so a 10 MB floor is a safe sanity check against a truncated
+          # or corrupt archive without being brittle.
+          $noAdminZip = Get-Item "artifacts/portable-noadmin/Bruno_zh-CN_Windows_x64_Portable_NoAdmin.zip"
+          if ($noAdminZip.Length -lt 10MB) {
+            throw "NoAdmin ZIP unexpectedly small: $($noAdminZip.Length) bytes"
           }
 
       - name: Upload installer artifact
@@ -159,5 +271,13 @@ jobs:
         with:
           name: Bruno_zh-CN_Windows_x64_Portable
           path: artifacts/portable/Bruno_zh-CN_Windows_x64_Portable.exe
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload NoAdmin portable artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: Bruno_zh-CN_Windows_x64_Portable_NoAdmin
+          path: artifacts/portable-noadmin/Bruno_zh-CN_Windows_x64_Portable_NoAdmin.zip
           if-no-files-found: error
           retention-days: 7
