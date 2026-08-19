@@ -12,6 +12,7 @@
 前往 [GitHub Actions 中文版构建](https://github.com/henryZhouLikeStudy/bruno/actions/workflows/build-windows-portable.yml)，打开最新成功运行，在页面底部下载：
 
 - `Bruno_zh-CN_Windows_x64_Portable_NoAdmin`（推荐）—— 免安装 ZIP 版，无需管理员权限，适合受限账号与远程桌面（RDP）等非管理员环境
+- `Bruno_zh-CN_Windows_x64_Portable_NoAdmin_NoElevate`（实验性诊断产物，非推荐默认）—— 在 NoAdmin 版基础上移除 `resources/elevate.exe`，用于排查受限环境下与权限提升或更新相关的行为；请在与 DBX 能正常运行的同一 RDP 文件夹中测试能否启动
 - `Bruno_zh-CN_Windows_x64_Setup` —— NSIS 安装版
 - `Bruno_zh-CN_Windows_x64_Portable` —— 传统便携 EXE 版（NSIS 自解压，可能在受限环境被拦截）
 
@@ -25,6 +26,10 @@
 > ⚠️ 注意事项：
 > - 请勿在 ZIP 压缩包内直接运行，也请勿从网络共享、`TEMP` 目录或系统受限目录（如 `C:\Windows`、`Program Files`）运行，否则可能无法启动或被安全软件拦截。
 > - 若公司策略禁止运行一切未签名可执行文件，则仍需要管理员放行（allowlist）或使用签名构建版本。
+
+### NoElevate 实验性诊断产物
+
+`Bruno_zh-CN_Windows_x64_Portable_NoAdmin_NoElevate` 是在 NoAdmin 版基础上删除 `resources/elevate.exe` 的实验性诊断产物，不是推荐默认版本。删除该文件可能会禁用与 UAC 权限提升或自动更新相关的行为。如果你在当前 RDP 文件夹中 DBX 能正常启动，请将本产物解压到同一文件夹，测试 `Bruno.exe` 是否能启动，以帮助定位问题。
 
 ## 中文支持
 
